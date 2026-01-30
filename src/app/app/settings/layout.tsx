@@ -1,0 +1,25 @@
+"use client"
+
+import React from "react"
+import { SettingsLayout } from "@/components/settings/SettingsLayout"
+import { SettingsSidebar } from "@/components/settings/SettingsSidebar"
+import { User, CreditCard, Bell, Link as LinkIcon, HelpCircle } from "lucide-react"
+
+const teacherItems = [
+    { label: "Account & Profile", href: "/app/settings/account", icon: User },
+    { label: "Billing & Plans", href: "/app/settings/billing", icon: CreditCard },
+    { label: "Notifications", href: "/app/settings/notifications", icon: Bell },
+    { label: "Integrations", href: "/app/settings/integrations", icon: LinkIcon },
+    { label: "Help Center", href: "/app/settings/help", icon: HelpCircle },
+]
+
+export default function TeacherSettingsLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <SettingsLayout
+            sidebar={<SettingsSidebar items={teacherItems} variant="slate" />}
+            variant="slate"
+        >
+            {children}
+        </SettingsLayout>
+    )
+}
