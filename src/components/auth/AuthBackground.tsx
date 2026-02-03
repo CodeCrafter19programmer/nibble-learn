@@ -60,7 +60,7 @@ export function AuthBackground() {
             </AnimatePresence>
 
             {/* Floating Text Content - Bottom Left */}
-            <div className="absolute bottom-12 left-12 z-10 max-w-lg hidden lg:block">
+            <div className="absolute bottom-12 left-12 z-10 max-w-md hidden lg:block">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={index}
@@ -73,10 +73,10 @@ export function AuthBackground() {
                         <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider mb-2 border border-white/10">
                             {backgrounds[index].label}
                         </span>
-                        <h2 className="text-4xl font-bold leading-tight">
+                        <h2 className="text-3xl font-bold leading-tight">
                             {backgrounds[index].alt}
                         </h2>
-                        <p className="text-lg text-white/80 leading-relaxed font-light">
+                        <p className="text-base text-white/80 leading-snug font-light">
                             {backgrounds[index].desc}
                         </p>
                     </motion.div>
