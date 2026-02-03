@@ -66,19 +66,19 @@ const navItems: NavSection[] = [
     {
         label: "Why NibbleLearn",
         items: [
-            { title: "Privacy & Security", icon: ShieldCheck, href: "/privacy" },
-            { title: "Student Success", icon: BookOpen, href: "/student-success" },
-            { title: "AI Literacy", icon: Zap, href: "/ai-literacy" },
-            { title: "Integrations", icon: Layout, href: "/integrations" },
-            { title: "AI Policy", icon: Map, href: "/ai-policy" },
-            { title: "Compare", icon: Scale, href: "/compare" },
+            { title: "Protect Privacy & Security", icon: ShieldCheck, href: "/privacy" },
+            { title: "Support Student Success", icon: BookOpen, href: "/student-success" },
+            { title: "Build AI Literacy", icon: Zap, href: "/ai-literacy" },
+            { title: "Integrate Quickly", icon: Layout, href: "/integrations" },
+            { title: "Develop AI Readiness", icon: Map, href: "/ai-policy" },
+            { title: "Compare Platforms", icon: Scale, href: "/compare" },
         ]
     },
     {
         label: "Outcomes",
         items: [
             { title: "Safe, Compliant Schools", icon: ShieldCheck, href: "/privacy" },
-            { title: "Stronger Learning", icon: Zap, href: "/student-success" },
+            { title: "Stronger Student Learning", icon: Zap, href: "/student-success" },
             { title: "Strategic AI Roadmap", icon: Map, href: "/ai-policy" },
             { title: "Future-Ready Classrooms", icon: Rocket, href: "/ai-literacy" },
             { title: "Accelerated Impact", icon: Layout, href: "/integrations" },
@@ -90,8 +90,8 @@ const navItems: NavSection[] = [
             { title: "Support Center", icon: LifeBuoy, href: "/support" },
             { title: "Professional Development", icon: Lightbulb, href: "/pd" },
             { title: "AI Certifications", icon: Award, href: "/certifications" },
-            { title: "Pioneers", icon: Trophy, href: "/pioneers" },
-            { title: "AI Tools", icon: PenTool, href: "/tools" },
+            { title: "MagicSchool Pioneers", icon: Trophy, href: "/pioneers" },
+            { title: "AI Tools for Educators", icon: PenTool, href: "/tools" },
             { title: "Blog", icon: FileText, href: "/blog" },
         ]
     }
