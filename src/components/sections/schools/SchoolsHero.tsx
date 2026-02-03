@@ -32,8 +32,8 @@ export function SchoolsHero() {
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
                             <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg text-white" asChild>
-                                <Link href="/school/dashboard">
-                                    Explore Admin Demo
+                                <Link href="/quote-request">
+                                    Explore Demo
                                     <ArrowRight className="ml-2 w-5 h-5" />
                                 </Link>
                             </Button>

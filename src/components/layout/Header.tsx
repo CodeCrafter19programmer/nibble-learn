@@ -192,6 +192,9 @@ export function Header() {
 
                 {/* Desktop CTAs */}
                 <div className="hidden lg:flex items-center gap-3">
+                    <Button variant="outline" size="sm" asChild className="hidden xl:flex border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800">
+                        <Link href="/quote-request">Book a Demo</Link>
+                    </Button>
                     <Button variant="ghost" size="sm" asChild>
                         <Link href="/login">Login</Link>
                     </Button>
@@ -242,7 +245,10 @@ export function Header() {
                                     <Link href="/signup">Sign up free</Link>
                                 </Button>
                                 <Button variant="outline" className="w-full" size="lg" asChild>
-                                    <Link href="/demo">Book a demo</Link>
+                                    <Link href="/quote-request">Book a demo</Link>
+                                </Button>
+                                <Button variant="ghost" className="w-full" size="lg" asChild>
+                                    <Link href="/login">Login</Link>
                                 </Button>
                             </div>
                         </div>
