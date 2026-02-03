@@ -67,7 +67,7 @@ const navItems: NavSection[] = [
         label: "Why NibbleLearn",
         items: [
             { title: "Privacy & Security", icon: ShieldCheck, href: "/privacy" },
-            { title: "Student Success", icon: BookOpen, href: "/student-success" }, // Reusing BookOpen for lack of exact match
+            { title: "Student Success", icon: BookOpen, href: "/student-success" },
             { title: "AI Literacy", icon: Zap, href: "/ai-literacy" },
             { title: "Integrations", icon: Layout, href: "/integrations" },
             { title: "AI Policy", icon: Map, href: "/ai-policy" },
@@ -97,7 +97,13 @@ const navItems: NavSection[] = [
     }
 ]
 
-export function Header() {
+type Theme = "violet" | "blue" | "amber"
+
+interface HeaderProps {
+    theme?: Theme
+}
+
+export function Header({ theme = "violet" }: HeaderProps) {
     const [hoveredNav, setHoveredNav] = useState<string | null>(null)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
@@ -110,6 +116,44 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    const themeConfig = {
+        violet: {
+            logoBg: "bg-violet-600",
+            textHover: "hover:text-violet-600",
+            groupTextHover: "group-hover/item:text-violet-700",
+            iconBg: "bg-violet-100",
+            iconText: "text-violet-600",
+            iconBgHover: "group-hover/item:bg-violet-200",
+            navHoverBg: "hover:bg-violet-50",
+            ctaOutline: "border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800",
+            linkText: "text-violet-600"
+        },
+        blue: {
+            logoBg: "bg-blue-600",
+            textHover: "hover:text-blue-600",
+            groupTextHover: "group-hover/item:text-blue-700",
+            iconBg: "bg-blue-100",
+            iconText: "text-blue-600",
+            iconBgHover: "group-hover/item:bg-blue-200",
+            navHoverBg: "hover:bg-blue-50",
+            ctaOutline: "border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800",
+            linkText: "text-blue-600"
+        },
+        amber: {
+            logoBg: "bg-amber-500",
+            textHover: "hover:text-amber-600",
+            groupTextHover: "group-hover/item:text-amber-700",
+            iconBg: "bg-amber-100",
+            iconText: "text-amber-600",
+            iconBgHover: "group-hover/item:bg-amber-200",
+            navHoverBg: "hover:bg-amber-50",
+            ctaOutline: "border-amber-200 text-amber-700 hover:bg-amber-50 hover:text-amber-800",
+            linkText: "text-amber-600"
+        }
+    }
+
+    const currentTheme = themeConfig[theme]
+
     return (
         <header
             className={cn(
@@ -120,7 +164,7 @@ export function Header() {
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 z-50 relative">
-                    <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xl", currentTheme.logoBg)}>
                         N
                     </div>
                     <span className="font-bold text-xl tracking-tight text-slate-900">
@@ -137,7 +181,7 @@ export function Header() {
                             onMouseEnter={() => setHoveredNav(nav.label)}
                             onMouseLeave={() => setHoveredNav(null)}
                         >
-                            <button className="flex items-center gap-1 font-medium text-sm text-slate-600 hover:text-violet-600 py-2">
+                            <button className={cn("flex items-center gap-1 font-medium text-sm text-slate-600 py-2 transition-colors", currentTheme.textHover)}>
                                 {nav.label}
                                 <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
                             </button>
@@ -156,13 +200,13 @@ export function Header() {
                                                 <Link
                                                     key={item.title}
                                                     href={item.href}
-                                                    className="flex items-start gap-4 p-3 rounded-lg hover:bg-violet-50 transition-colors group/item"
+                                                    className={cn("flex items-start gap-4 p-3 rounded-lg transition-colors group/item", currentTheme.navHoverBg)}
                                                 >
-                                                    <div className="p-2 bg-violet-100 text-violet-600 rounded-md group-hover/item:bg-violet-200 transition-colors">
+                                                    <div className={cn("p-2 rounded-md transition-colors", currentTheme.iconBg, currentTheme.iconText, currentTheme.iconBgHover)}>
                                                         <item.icon className="w-5 h-5" />
                                                     </div>
                                                     <div>
-                                                        <h4 className="font-semibold text-slate-900 text-sm group-hover/item:text-violet-700">
+                                                        <h4 className={cn("font-semibold text-slate-900 text-sm", currentTheme.groupTextHover)}>
                                                             {item.title}
                                                         </h4>
                                                         {item.description && (
@@ -176,7 +220,7 @@ export function Header() {
                                         </div>
                                         {/* Optional Highlight/Featured */}
                                         <div className="mt-4 pt-4 border-t border-slate-100">
-                                            <Link href="/demo" className="text-sm font-medium text-violet-600 flex items-center hover:underline">
+                                            <Link href="/demo" className={cn("text-sm font-medium flex items-center hover:underline", currentTheme.linkText)}>
                                                 See all features for {nav.label} →
                                             </Link>
                                         </div>
@@ -185,20 +229,20 @@ export function Header() {
                             </AnimatePresence>
                         </div>
                     ))}
-                    <Link href="/pricing" className="font-medium text-sm text-slate-600 hover:text-violet-600">
+                    <Link href="/pricing" className={cn("font-medium text-sm text-slate-600", currentTheme.textHover)}>
                         Pricing
                     </Link>
                 </nav>
 
                 {/* Desktop CTAs */}
                 <div className="hidden lg:flex items-center gap-3">
-                    <Button variant="outline" size="sm" asChild className="hidden xl:flex border-violet-200 text-violet-700 hover:bg-violet-50 hover:text-violet-800">
+                    <Button variant="outline" size="sm" asChild className={cn("hidden xl:flex rounded-lg", currentTheme.ctaOutline)}>
                         <Link href="/quote-request">Book a Demo</Link>
                     </Button>
-                    <Button variant="ghost" size="sm" asChild>
+                    <Button variant="ghost" size="sm" asChild className="rounded-lg">
                         <Link href="/login">Login</Link>
                     </Button>
-                    <Button variant="default" size="sm" asChild>
+                    <Button variant="default" size="sm" asChild className={cn("rounded-lg", theme === 'blue' ? "bg-blue-600 hover:bg-blue-700" : theme === 'amber' ? "bg-amber-500 hover:bg-amber-600" : "")}>
                         <Link href="/signup">Sign up free</Link>
                     </Button>
                 </div>
@@ -233,7 +277,7 @@ export function Header() {
                                                 className="flex items-center gap-3 py-2 text-sm text-slate-600"
                                                 onClick={() => setIsMobileMenuOpen(false)}
                                             >
-                                                <item.icon className="w-4 h-4 text-violet-500" />
+                                                <item.icon className={cn("w-4 h-4", currentTheme.iconText)} />
                                                 {item.title}
                                             </Link>
                                         ))}
@@ -241,13 +285,13 @@ export function Header() {
                                 </div>
                             ))}
                             <div className="pt-4 space-y-3">
-                                <Button className="w-full" size="lg" asChild>
+                                <Button className={cn("w-full rounded-lg", theme === 'blue' ? "bg-blue-600 hover:bg-blue-700" : theme === 'amber' ? "bg-amber-500 hover:bg-amber-600" : "")} size="lg" asChild>
                                     <Link href="/signup">Sign up free</Link>
                                 </Button>
-                                <Button variant="outline" className="w-full" size="lg" asChild>
+                                <Button variant="outline" className="w-full rounded-lg" size="lg" asChild>
                                     <Link href="/quote-request">Book a demo</Link>
                                 </Button>
-                                <Button variant="ghost" className="w-full" size="lg" asChild>
+                                <Button variant="ghost" className="w-full rounded-lg" size="lg" asChild>
                                     <Link href="/login">Login</Link>
                                 </Button>
                             </div>

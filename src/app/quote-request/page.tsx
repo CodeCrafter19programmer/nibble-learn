@@ -49,8 +49,8 @@ export default function QuoteRequestPage() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-white">
-            <Header />
+        <div className="min-h-screen flex flex-col bg-slate-50">
+            <Header theme="blue" />
 
             {/* Hero Section */}
             <section className="bg-blue-600 pt-32 pb-20 px-4 text-center">
@@ -290,7 +290,7 @@ export default function QuoteRequestPage() {
                 </div>
             </main>
 
-            <Footer />
+            <Footer theme="blue" />
         </div>
     )
 }

@@ -10,14 +10,14 @@ import { CTASection } from "@/components/sections/CTASection"
 export default function ForTeachersPage() {
     return (
         <main className="min-h-screen bg-white">
-            <Header />
+            <Header theme="violet" />
             <TeachersHero />
             <TeachersBenefits />
             <ToolsShowcase />
             <TestimonialsSection />
             <CommunitySection />
             <CTASection />
-            <Footer />
+            <Footer theme="violet" />
         </main>
     )
 }

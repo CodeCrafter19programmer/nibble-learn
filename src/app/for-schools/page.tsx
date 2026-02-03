@@ -9,7 +9,7 @@ import { CTASection } from "@/components/sections/CTASection"
 export default function ForSchoolsPage() {
     return (
         <main className="min-h-screen bg-white">
-            <Header />
+            <Header theme="blue" />
             <SchoolsHero />
             <SchoolsFeatures />
             <div className="bg-slate-50">
@@ -17,7 +17,7 @@ export default function ForSchoolsPage() {
             </div>
             <TestimonialsSection />
             <CTASection />
-            <Footer />
+            <Footer theme="blue" />
         </main>
     )
 }

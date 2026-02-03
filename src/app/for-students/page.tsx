@@ -8,7 +8,7 @@ import { ToolsShowcase } from "@/components/sections/ToolsShowcase"
 export default function ForStudentsPage() {
     return (
         <main className="min-h-screen bg-white">
-            <Header />
+            <Header theme="amber" />
             <StudentsHero />
             <StudentSafety />
 
@@ -18,7 +18,7 @@ export default function ForStudentsPage() {
             </div>
 
             <CTASection />
-            <Footer />
+            <Footer theme="amber" />
         </main>
     )
 }
