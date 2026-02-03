@@ -238,16 +238,16 @@ export default function QuoteRequestPage() {
                             >
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">How would you measure success of implementation?</label>
-                                        <textarea name="successMeasurement" value={formData.successMeasurement} onChange={handleChange} rows={4} className="w-full p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all" placeholder="How can we support your measurements to drive results for your school community? (Optional)" />
+                                        <label className="text-sm font-bold text-slate-700">How would you measure success of implementation? <span className="text-red-500">*</span></label>
+                                        <textarea name="successMeasurement" value={formData.successMeasurement} onChange={handleChange} rows={4} required className="w-full p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all" placeholder="How can we support your measurements to drive results for your school community?" />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Questions or Concerns?</label>
-                                        <textarea name="questions" value={formData.questions} onChange={handleChange} rows={4} className="w-full p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all" placeholder="(Optional)" />
+                                        <label className="text-sm font-bold text-slate-700">Questions or Concerns? <span className="text-red-500">*</span></label>
+                                        <textarea name="questions" value={formData.questions} onChange={handleChange} rows={4} required className="w-full p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all" placeholder="Any specific questions or concerns we should address?" />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">How did you hear about us?</label>
-                                        <select name="hearAboutUs" value={formData.hearAboutUs} onChange={handleChange} className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
+                                        <label className="text-sm font-bold text-slate-700">How did you hear about us? <span className="text-red-500">*</span></label>
+                                        <select name="hearAboutUs" value={formData.hearAboutUs} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
                                             <option value="">Select one...</option>
                                             <option value="colleague">Colleague</option>
                                             <option value="search">Search</option>
