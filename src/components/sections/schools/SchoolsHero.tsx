@@ -31,14 +31,14 @@ export function SchoolsHero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                            <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg text-white" asChild>
-                                <Link href="/quote-request">
+                            <Button size="lg" className="h-14 px-8 text-lg rounded-xl bg-blue-600 hover:bg-blue-700 shadow-lg text-white active:scale-95 transition-all" asChild>
+                                <Link href="/quote-request" className="flex items-center gap-2">
                                     Explore Demo
-                                    <ArrowRight className="ml-2 w-5 h-5" />
+                                    <ArrowRight className="w-5 h-5" />
                                 </Link>
                             </Button>
-                            <Button variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full border-2" asChild>
-                                <Link href="/pricing">
+                            <Button variant="outline" size="lg" className="h-14 px-8 text-lg rounded-xl border-2 hover:bg-blue-50 hover:border-blue-200 active:scale-95 transition-all" asChild>
+                                <Link href="/pricing" className="flex items-center gap-2">
                                     View pricing
                                 </Link>
                             </Button>

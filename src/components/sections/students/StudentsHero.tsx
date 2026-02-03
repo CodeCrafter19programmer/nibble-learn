@@ -35,10 +35,10 @@ export function StudentsHero() {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-                            <Button size="lg" className="h-14 px-8 text-lg rounded-full bg-amber-500 hover:bg-amber-600 shadow-xl shadow-amber-200 text-white border-0" asChild>
-                                <Link href="/login">
+                            <Button size="lg" className="h-14 px-8 text-lg rounded-xl bg-amber-500 hover:bg-amber-600 shadow-xl shadow-amber-200 text-white border-0 active:scale-95 transition-all" asChild>
+                                <Link href="/login" className="flex items-center gap-2">
                                     Start learning
-                                    <ArrowRight className="ml-2 w-5 h-5" />
+                                    <ArrowRight className="w-5 h-5" />
                                 </Link>
                             </Button>
                         </div>

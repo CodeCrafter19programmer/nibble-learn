@@ -35,14 +35,14 @@ export function TeachersHero() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button size="lg" className="h-14 px-8 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all" asChild>
-                            <Link href="/signup">
+                        <Button size="lg" className="h-14 px-8 text-lg rounded-xl shadow-xl hover:shadow-2xl hover:bg-violet-700 active:scale-95 transition-all" asChild>
+                            <Link href="/signup" className="flex items-center gap-2">
                                 Sign up free
-                                <ArrowRight className="ml-2 w-5 h-5" />
+                                <ArrowRight className="w-5 h-5" />
                             </Link>
                         </Button>
-                        <Button variant="outline" size="lg" className="h-14 px-8 text-lg rounded-full border-2" asChild>
-                            <Link href="/tools">
+                        <Button variant="outline" size="lg" className="h-14 px-8 text-lg rounded-xl border-2 hover:bg-violet-50 hover:border-violet-200 active:scale-95 transition-all" asChild>
+                            <Link href="/tools" className="flex items-center gap-2">
                                 Explore 80+ tools
                             </Link>
                         </Button>
