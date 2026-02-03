@@ -36,15 +36,15 @@ export function CTASection() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button size="lg" className="h-16 px-8 text-lg rounded-full shadow-xl bg-white text-violet-900 hover:bg-slate-100 min-w-[200px]" asChild>
-                            <Link href="/signup">
+                        <Button size="lg" className="h-16 px-8 text-lg rounded-xl shadow-xl bg-white text-violet-900 hover:bg-slate-100 min-w-[200px] active:scale-95 transition-all" asChild>
+                            <Link href="/signup" className="flex items-center justify-center gap-2">
                                 Try it free
-                                <ArrowRight className="ml-2 w-5 h-5" />
+                                <ArrowRight className="w-5 h-5" />
                             </Link>
                         </Button>
-                        <Button variant="outline" size="lg" className="h-16 px-8 text-lg rounded-full border-2 border-slate-700 text-white hover:bg-slate-800 hover:text-white min-w-[200px]" asChild>
-                            <Link href="/demo">
-                                <PlayCircle className="mr-2 w-5 h-5" />
+                        <Button variant="outline" size="lg" className="h-16 px-8 text-lg rounded-xl border-2 border-slate-700 text-white hover:bg-slate-800 hover:text-white min-w-[200px] active:scale-95 transition-all" asChild>
+                            <Link href="/quote-request" className="flex items-center justify-center gap-2">
+                                <PlayCircle className="w-5 h-5" />
                                 Book a demo
                             </Link>
                         </Button>
