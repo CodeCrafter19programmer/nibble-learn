@@ -37,22 +37,7 @@ export default function QuoteRequestPage() {
         }))
     }
 
-    const validateCurrentStep = () => {
-        switch (step) {
-            case 1: return formData.firstName && formData.lastName && formData.workEmail && formData.phoneNumber
-            case 2: return formData.jobTitle && formData.institutionCategory && formData.studentCount && formData.institutionName
-            case 3: return formData.country && formData.city
-            default: return true
-        }
-    }
-
-    const nextStep = () => {
-        if (!validateCurrentStep()) {
-            alert("Please fill in all required fields to proceed.")
-            return
-        }
-        setStep(prev => Math.min(prev + 1, totalSteps))
-    }
+    const nextStep = () => setStep(prev => Math.min(prev + 1, totalSteps))
     const prevStep = () => setStep(prev => Math.max(1, prev - 1))
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -118,32 +103,34 @@ export default function QuoteRequestPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">First Name <span className="text-red-500">*</span></label>
-                                        <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                <form onSubmit={(e) => { e.preventDefault(); nextStep() }} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700">First Name <span className="text-red-500">*</span></label>
+                                            <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700">Last Name <span className="text-red-500">*</span></label>
+                                            <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                        </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Last Name <span className="text-red-500">*</span></label>
-                                        <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700">Phone Number <span className="text-red-500">*</span></label>
+                                            <input name="phoneNumber" type="tel" value={formData.phoneNumber} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700">Work Email <span className="text-red-500">*</span></label>
+                                            <input name="workEmail" type="email" value={formData.workEmail} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Phone Number <span className="text-red-500">*</span></label>
-                                        <input name="phoneNumber" type="tel" value={formData.phoneNumber} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Work Email <span className="text-red-500">*</span></label>
-                                        <input name="workEmail" type="email" value={formData.workEmail} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
-                                    </div>
-                                </div>
 
-                                <div className="flex justify-center pt-8">
-                                    <Button onClick={nextStep} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
-                                        Next Step <ArrowRight className="w-5 h-5 ml-2" />
-                                    </Button>
-                                </div>
+                                    <div className="flex justify-center pt-8">
+                                        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
+                                            Next Step <ArrowRight className="w-5 h-5 ml-2" />
+                                        </Button>
+                                    </div>
+                                </form>
                             </motion.div>
                         )}
 
@@ -155,52 +142,55 @@ export default function QuoteRequestPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-700">Job Title <span className="text-red-500">*</span></label>
-                                    <input name="jobTitle" value={formData.jobTitle} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <form onSubmit={(e) => { e.preventDefault(); nextStep() }} className="space-y-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Institution Category <span className="text-red-500">*</span></label>
+                                        <label className="text-sm font-bold text-slate-700">Job Title <span className="text-red-500">*</span></label>
+                                        <input name="jobTitle" value={formData.jobTitle} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            {['School', 'District', 'Higher Education', 'Other'].map((opt) => (
-                                                <label key={opt} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-blue-50 hover:border-blue-200 cursor-pointer transition-all">
-                                                    <input
-                                                        type="radio"
-                                                        name="institutionCategory"
-                                                        value={opt.toLowerCase()}
-                                                        checked={formData.institutionCategory === opt.toLowerCase()}
-                                                        onChange={handleChange}
-                                                        className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
-                                                    />
-                                                    <span className="text-slate-700 font-medium">{opt}</span>
-                                                </label>
-                                            ))}
+                                            <label className="text-sm font-bold text-slate-700">Institution Category <span className="text-red-500">*</span></label>
+                                            <div className="space-y-2">
+                                                {['School', 'District', 'Higher Education', 'Other'].map((opt) => (
+                                                    <label key={opt} className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 hover:bg-blue-50 hover:border-blue-200 cursor-pointer transition-all">
+                                                        <input
+                                                            type="radio"
+                                                            name="institutionCategory"
+                                                            value={opt.toLowerCase()}
+                                                            checked={formData.institutionCategory === opt.toLowerCase()}
+                                                            onChange={handleChange}
+                                                            required
+                                                            className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
+                                                        />
+                                                        <span className="text-slate-700 font-medium">{opt}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-sm font-bold text-slate-700">Size of Institution (Student Count) <span className="text-red-500">*</span></label>
+                                            <select name="studentCount" value={formData.studentCount} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
+                                                <option value="">Select range...</option>
+                                                <option value="1-100">1-100</option>
+                                                <option value="101-500">101-500</option>
+                                                <option value="500+">500+</option>
+                                                <option value="5000+">5000+</option>
+                                            </select>
                                         </div>
                                     </div>
+
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-slate-700">Size of Institution (Student Count) <span className="text-red-500">*</span></label>
-                                        <select name="studentCount" value={formData.studentCount} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
-                                            <option value="">Select range...</option>
-                                            <option value="1-100">1-100</option>
-                                            <option value="101-500">101-500</option>
-                                            <option value="500+">500+</option>
-                                            <option value="5000+">5000+</option>
-                                        </select>
+                                        <label className="text-sm font-bold text-slate-700">Institution Name <span className="text-red-500">*</span></label>
+                                        <input name="institutionName" value={formData.institutionName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="Ex. Lincoln High School" />
                                     </div>
-                                </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-700">Institution Name <span className="text-red-500">*</span></label>
-                                    <input name="institutionName" value={formData.institutionName} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" placeholder="Ex. Lincoln High School" />
-                                </div>
-
-                                <div className="flex justify-center pt-8">
-                                    <Button onClick={nextStep} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
-                                        Next Step <ArrowRight className="w-5 h-5 ml-2" />
-                                    </Button>
-                                </div>
+                                    <div className="flex justify-center pt-8">
+                                        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
+                                            Next Step <ArrowRight className="w-5 h-5 ml-2" />
+                                        </Button>
+                                    </div>
+                                </form>
                             </motion.div>
                         )}
 
@@ -212,27 +202,29 @@ export default function QuoteRequestPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-700">Country <span className="text-red-500">*</span></label>
-                                    <select name="country" value={formData.country} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
-                                        <option value="">Select country...</option>
-                                        <option value="US">United States</option>
-                                        <option value="UG">Uganda</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="UK">United Kingdom</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-bold text-slate-700">City <span className="text-red-500">*</span></label>
-                                    <input name="city" value={formData.city} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
-                                </div>
+                                <form onSubmit={(e) => { e.preventDefault(); nextStep() }} className="space-y-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold text-slate-700">Country <span className="text-red-500">*</span></label>
+                                        <select name="country" value={formData.country} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none bg-white">
+                                            <option value="">Select country...</option>
+                                            <option value="US">United States</option>
+                                            <option value="UG">Uganda</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold text-slate-700">City <span className="text-red-500">*</span></label>
+                                        <input name="city" value={formData.city} onChange={handleChange} required className="w-full h-12 px-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all" />
+                                    </div>
 
-                                <div className="flex justify-center pt-8">
-                                    <Button onClick={nextStep} className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
-                                        Next Step <ArrowRight className="w-5 h-5 ml-2" />
-                                    </Button>
-                                </div>
+                                    <div className="flex justify-center pt-8">
+                                        <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-12 text-lg shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
+                                            Next Step <ArrowRight className="w-5 h-5 ml-2" />
+                                        </Button>
+                                    </div>
+                                </form>
                             </motion.div>
                         )}
 
