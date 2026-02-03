@@ -47,7 +47,6 @@ export default function SignupPage() {
                         {[
                             { id: "teacher", label: "Teacher", icon: User, desc: "For educators & assistants" },
                             { id: "student", label: "Student", icon: GraduationCap, desc: "For learners in class" },
-                            { id: "school", label: "School Admin", icon: School, desc: "For district management" },
                         ].map((item) => (
                             <button
                                 key={item.id}
