@@ -37,7 +37,22 @@ export default function QuoteRequestPage() {
         }))
     }
 
-    const nextStep = () => setStep(prev => Math.min(prev + 1, totalSteps))
+    const validateCurrentStep = () => {
+        switch (step) {
+            case 1: return formData.firstName && formData.lastName && formData.workEmail && formData.phoneNumber
+            case 2: return formData.jobTitle && formData.institutionCategory && formData.studentCount && formData.institutionName
+            case 3: return formData.country && formData.city
+            default: return true
+        }
+    }
+
+    const nextStep = () => {
+        if (!validateCurrentStep()) {
+            alert("Please fill in all required fields to proceed.")
+            return
+        }
+        setStep(prev => Math.min(prev + 1, totalSteps))
+    }
     const prevStep = () => setStep(prev => Math.max(1, prev - 1))
 
     const handleSubmit = async (e: React.FormEvent) => {

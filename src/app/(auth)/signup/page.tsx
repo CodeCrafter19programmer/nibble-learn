@@ -3,21 +3,44 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, Check, User, GraduationCap, School, Loader2, Mail, Lock, UserCircle } from "lucide-react"
+import { ArrowRight, Check, User, GraduationCap, School, Loader2, Mail, Lock, UserCircle, Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function SignupPage() {
     const [step, setStep] = useState(0)
     const [role, setRole] = useState<"student" | "teacher" | "school" | null>(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    })
 
     const handleRoleSelect = (selected: "student" | "teacher" | "school") => {
         setRole(selected)
         setStep(1)
     }
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match!")
+            return
+        }
+
         setIsLoading(true)
         await new Promise(resolve => setTimeout(resolve, 1500))
         setIsLoading(false)
@@ -72,17 +95,33 @@ export default function SignupPage() {
                         exit={{ opacity: 0, x: -20 }}
                     >
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-semibold text-white/80 uppercase tracking-wider ml-1">
-                                    Full Name
-                                </label>
-                                <div className="relative">
-                                    <UserCircle className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold text-white/80 uppercase tracking-wider ml-1">
+                                        First Name
+                                    </label>
                                     <input
+                                        name="firstName"
                                         type="text"
                                         required
-                                        placeholder="John Doe"
-                                        className="w-full h-12 pl-12 pr-4 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                                        value={formData.firstName}
+                                        onChange={handleChange}
+                                        placeholder="John"
+                                        className="w-full h-12 px-4 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                                    />
+                                </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-xs font-semibold text-white/80 uppercase tracking-wider ml-1">
+                                        Last Name
+                                    </label>
+                                    <input
+                                        name="lastName"
+                                        type="text"
+                                        required
+                                        value={formData.lastName}
+                                        onChange={handleChange}
+                                        placeholder="Doe"
+                                        className="w-full h-12 px-4 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
                                     />
                                 </div>
                             </div>
@@ -94,8 +133,11 @@ export default function SignupPage() {
                                 <div className="relative">
                                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                                     <input
+                                        name="email"
                                         type="email"
                                         required
+                                        value={formData.email}
+                                        onChange={handleChange}
                                         placeholder="you@school.edu"
                                         className="w-full h-12 pl-12 pr-4 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
                                     />
@@ -109,11 +151,46 @@ export default function SignupPage() {
                                 <div className="relative">
                                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                                     <input
-                                        type="password"
+                                        name="password"
+                                        type={showPassword ? "text" : "password"}
                                         required
-                                        placeholder="Week123!?"
-                                        className="w-full h-12 pl-12 pr-4 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        placeholder="••••••••"
+                                        className="w-full h-12 pl-12 pr-12 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                                    >
+                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-semibold text-white/80 uppercase tracking-wider ml-1">
+                                    Confirm Password
+                                </label>
+                                <div className="relative">
+                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+                                    <input
+                                        name="confirmPassword"
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        required
+                                        value={formData.confirmPassword}
+                                        onChange={handleChange}
+                                        placeholder="••••••••"
+                                        className="w-full h-12 pl-12 pr-12 bg-black/20 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50 transition-all"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                                    >
+                                        {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
                                 </div>
                             </div>
 
