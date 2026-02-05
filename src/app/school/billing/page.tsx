@@ -9,7 +9,8 @@ import {
     ArrowRight,
     FileText,
     Zap,
-    Users
+    Users,
+    Download
 } from "lucide-react"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { cn } from "@/lib/utils"
