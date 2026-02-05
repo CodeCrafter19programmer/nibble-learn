@@ -39,7 +39,7 @@ export default function SchoolSecurityPage() {
                                 "w-full",
                                 isLight
                                     ? "border-slate-200 text-slate-700 hover:bg-slate-50"
-                                    : "border-slate-700 text-slate-300"
+                                    : "bg-transparent border-slate-700 text-white hover:bg-slate-800 hover:text-white"
                             )}>
                                 Configure
                             </Button>
@@ -62,7 +62,7 @@ export default function SchoolSecurityPage() {
                                 "w-full",
                                 isLight
                                     ? "border-slate-200 text-slate-700 hover:bg-slate-50"
-                                    : "border-slate-700 text-slate-300"
+                                    : "bg-transparent border-slate-700 text-white hover:bg-slate-800 hover:text-white"
                             )}>
                                 Configure
                             </Button>

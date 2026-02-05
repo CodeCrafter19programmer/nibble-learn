@@ -35,11 +35,11 @@ export default function SchoolOrganizationPage() {
                             </div>
                             <div className="space-y-2">
                                 <h3 className={cn("font-medium", isLight ? "text-slate-900" : "text-white")}>District Logo</h3>
-                                <p className={isLight ? "text-slate-500" : "text-slate-400"}>text-sm Upload a PNG or SVG for your branded portal.</p>
+                                <p className={isLight ? "text-slate-500" : "text-slate-400"}>Upload a PNG or SVG for your branded portal.</p>
                                 <Button variant="outline" size="sm" className={cn(
                                     isLight
                                         ? "border-slate-200 text-slate-700 hover:bg-slate-50"
-                                        : "border-slate-700 text-slate-300"
+                                        : "bg-transparent border-slate-700 text-white hover:bg-slate-800 hover:text-white"
                                 )}>
                                     <Upload className="w-4 h-4 mr-2" /> Upload Logo
                                 </Button>
