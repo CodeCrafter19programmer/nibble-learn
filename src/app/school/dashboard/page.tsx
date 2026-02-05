@@ -4,28 +4,30 @@ import React from "react"
 import { motion } from "framer-motion"
 import {
     Users,
-    FileText,
-    Clock,
+    GraduationCap,
+    BookOpen,
+    Zap,
     TrendingUp,
     ArrowUpRight,
-    MoreHorizontal
+    MoreHorizontal,
+    Activity
 } from "lucide-react"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { cn } from "@/lib/utils"
 
 const metrics = [
-    { label: "Active Teachers", value: "1,247", trend: "+12%", trendUp: true, icon: Users, color: "text-blue-400", bg: "bg-blue-500/10" },
-    { label: "Total Outputs", value: "15,234", trend: "+8%", trendUp: true, icon: FileText, color: "text-emerald-400", bg: "bg-emerald-500/10" },
-    { label: "Hours Saved", value: "3,450", trend: "Est.", trendUp: true, icon: Clock, color: "text-purple-400", bg: "bg-purple-500/10" },
-    { label: "Adoption Rate", value: "78%", trend: "+2%", trendUp: true, icon: TrendingUp, color: "text-amber-400", bg: "bg-amber-500/10" },
+    { label: "Total Students", value: "3,420", trend: "+12%", trendUp: true, icon: GraduationCap, color: "text-blue-600", bg: "bg-blue-100" },
+    { label: "Total Teachers", value: "148", trend: "+4%", trendUp: true, icon: BookOpen, color: "text-indigo-600", bg: "bg-indigo-100" },
+    { label: "AI Usage Limit", value: "78%", subLabel: "45k / 60k Tokens", trend: "Warning", trendUp: false, icon: Zap, color: "text-amber-600", bg: "bg-amber-100" },
+    { label: "Active Users", value: "2,840", trend: "82% Active", trendUp: true, icon: Activity, color: "text-emerald-600", bg: "bg-emerald-100" },
 ]
 
 const recentActivity = [
-    { user: "Sarah Johnson", action: "generated a Lesson Plan", time: "2 mins ago" },
-    { user: "Mark Davis", action: "exported 3 Rubrics", time: "15 mins ago" },
-    { user: "Emily Chen", action: "added 24 students to Room 101", time: "1 hour ago" },
-    { user: "David Wilson", action: "logged in", time: "1 hour ago" },
-    { user: "Jessica Taylor", action: "created a new Collection", time: "2 hours ago" },
+    { user: "Sarah Johnson", role: "Teacher", action: "generated a Lesson Plan", time: "2 mins ago" },
+    { user: "Mark Davis", role: "Student", action: "took 'Algebra Basics' quiz", time: "15 mins ago" },
+    { user: "Admin", role: "System", action: "added 24 students to Grade 10", time: "1 hour ago" },
+    { user: "David Wilson", role: "Teacher", action: "logged in", time: "1 hour ago" },
+    { user: "Jessica Taylor", role: "Student", action: "completed assignment", time: "2 hours ago" },
 ]
 
 export default function SchoolDashboard() {
@@ -37,7 +39,9 @@ export default function SchoolDashboard() {
             {/* Header */}
             <div>
                 <h1 className={cn("text-2xl font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>School Overview</h1>
-                <p className={cn("text-sm", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>Welcome back, Administrator. Here's what's happening today.</p>
+                <p className={cn("text-sm", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>
+                    Welcome back, Administrator. Current Plan: <span className="text-blue-600 font-bold">Standard School Pkg</span>
+                </p>
             </div>
 
             {/* Metrics Grid */}
@@ -49,22 +53,29 @@ export default function SchoolDashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                         className={cn(
-                            "border p-5 rounded-xl transition-colors",
+                            "border p-6 rounded-xl transition-all shadow-sm",
                             isLight
-                                ? "bg-white border-slate-200 shadow-sm hover:border-indigo-200"
+                                ? "bg-white border-slate-100 shadow-slate-200/50 hover:shadow-md hover:border-blue-100"
                                 : "bg-slate-900 border-slate-800 hover:border-slate-700"
                         )}
                     >
                         <div className="flex justify-between items-start mb-4">
-                            <div className={cn("p-2 rounded-lg", metric.bg, metric.color)}>
-                                <metric.icon className="w-5 h-5" />
+                            <div className={cn("p-3 rounded-xl", metric.bg, metric.color)}>
+                                <metric.icon className="w-6 h-6" />
                             </div>
-                            <span className={cn("text-xs font-medium px-2 py-1 rounded", isLight ? "bg-slate-100" : "bg-slate-800", metric.trendUp ? "text-green-500" : "text-red-500")}>
+                            <span className={cn(
+                                "text-xs font-bold px-2.5 py-1 rounded-full",
+                                isLight ? "bg-slate-50 border border-slate-100" : "bg-slate-800",
+                                metric.trend === "Warning" ? "text-amber-600 bg-amber-50" : "text-green-600 bg-green-50"
+                            )}>
                                 {metric.trend}
                             </span>
                         </div>
-                        <h3 className={cn("text-3xl font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>{metric.value}</h3>
-                        <p className={cn("text-sm font-medium", isLight ? "text-slate-600" : "text-slate-500")}>{metric.label}</p>
+                        <h3 className={cn("text-3xl font-bold mb-1 tracking-tight", isLight ? "text-slate-900" : "text-white")}>{metric.value}</h3>
+                        <p className={cn("text-sm font-medium", isLight ? "text-slate-500" : "text-slate-500")}>
+                            {metric.label}
+                            {metric.subLabel && <span className="block text-xs font-normal opacity-80 mt-1">{metric.subLabel}</span>}
+                        </p>
                     </motion.div>
                 ))}
             </div>
@@ -77,15 +88,18 @@ export default function SchoolDashboard() {
                     transition={{ delay: 0.4 }}
                     className={cn(
                         "lg:col-span-2 border rounded-xl p-6",
-                        isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
+                        isLight ? "bg-white border-slate-100 shadow-sm" : "bg-slate-900 border-slate-800"
                     )}
                 >
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className={cn("font-bold", isLight ? "text-slate-900" : "text-white")}>Platform Usage Trends</h3>
+                        <div>
+                            <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>Platform Usage Trends</h3>
+                            <p className="text-sm text-slate-500">Student vs Teacher activity over time</p>
+                        </div>
                         <select className={cn(
-                            "text-sm rounded-lg px-2 py-1 focus:ring-1 focus:ring-indigo-500 outline-none border",
+                            "text-sm rounded-full px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none border font-medium cursor-pointer",
                             isLight
-                                ? "bg-slate-50 border-slate-200 text-black"
+                                ? "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
                                 : "bg-slate-800 border-slate-700 text-slate-300"
                         )}>
                             <option>Last 30 Days</option>
@@ -94,26 +108,27 @@ export default function SchoolDashboard() {
                         </select>
                     </div>
 
-                    {/* Mock Chart Visual */}
-                    <div className="h-64 w-full flex items-end justify-between gap-2 px-2">
-                        {[40, 65, 45, 70, 55, 80, 60, 90, 75, 85, 95, 100].map((h, i) => (
-                            <div key={i} className={cn("w-full rounded-t-sm relative group", isLight ? "bg-slate-100" : "bg-slate-800")}>
+                    {/* Mock Chart Visual - Clean Blue Theme */}
+                    <div className="h-64 w-full flex items-end justify-between gap-3 px-2">
+                        {[40, 65, 45, 70, 55, 80, 60, 90, 75, 85, 95, 80].map((h, i) => (
+                            <div key={i} className={cn("w-full rounded-t-lg relative group", isLight ? "bg-slate-50" : "bg-slate-800/50")}>
                                 <div
-                                    className="absolute bottom-0 left-0 right-0 bg-indigo-500/20 group-hover:bg-indigo-500/40 transition-colors rounded-t-sm"
+                                    className="absolute bottom-0 left-0 right-0 bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors rounded-t-lg"
                                     style={{ height: `${h}%` }}
                                 />
+                                {/* Overlay Bar */}
                                 <div
-                                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-indigo-600 to-violet-500 opacity-60 rounded-t-sm"
-                                    style={{ height: `${h * 0.6}%` }}
+                                    className="absolute bottom-0 left-1 right-1 bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-md shadow-lg shadow-blue-500/20 transition-all group-hover:to-cyan-300"
+                                    style={{ height: `${h * 0.7}%` }}
                                 />
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-between mt-4 text-xs text-slate-500 uppercase font-medium">
-                        <span>Week 1</span>
-                        <span>Week 2</span>
-                        <span>Week 3</span>
-                        <span>Week 4</span>
+                    <div className="flex justify-between mt-4 text-xs text-slate-400 uppercase font-bold tracking-wider">
+                        <span>W1</span>
+                        <span>W2</span>
+                        <span>W3</span>
+                        <span>W4</span>
                     </div>
                 </motion.div>
 
@@ -123,51 +138,51 @@ export default function SchoolDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                     className={cn(
-                        "border rounded-xl p-6",
-                        isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
+                        "border rounded-xl p-6 relative overflow-hidden",
+                        isLight ? "bg-white border-slate-100 shadow-sm" : "bg-slate-900 border-slate-800"
                     )}
                 >
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className={cn("font-bold", isLight ? "text-slate-900" : "text-white")}>Recent Activity</h3>
-                        <button className={cn("transition-colors", isLight ? "text-slate-400 hover:text-black" : "text-slate-500 hover:text-white")}>
+                    <div className="flex justify-between items-center mb-6 relative z-10">
+                        <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>Recent Activity</h3>
+                        <button className={cn("transition-colors p-1 rounded-md", isLight ? "text-slate-400 hover:bg-slate-50 hover:text-black" : "text-slate-500 hover:text-white")}>
                             <MoreHorizontal className="w-5 h-5" />
                         </button>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-6 relative z-10">
                         {recentActivity.map((item, i) => (
-                            <div key={i} className="flex gap-3 relative pb-6 last:pb-0">
-                                {/* Timeline Line */}
-                                {i !== recentActivity.length - 1 && (
-                                    <div className={cn("absolute top-8 left-2.5 bottom-0 w-px", isLight ? "bg-slate-200" : "bg-slate-800")} />
-                                )}
-
+                            <div key={i} className="flex gap-4 relative pb-2 group">
                                 <div className={cn(
-                                    "w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 z-10 mt-0.5",
-                                    isLight ? "bg-white border-slate-200" : "bg-slate-800 border-slate-700"
+                                    "w-8 h-8 rounded-full border flex items-center justify-center flex-shrink-0 z-10 shadow-sm",
+                                    isLight ? "bg-white border-slate-100" : "bg-slate-800 border-slate-700"
                                 )}>
-                                    <div className="w-2 h-2 rounded-full bg-indigo-500" />
+                                    <div className={cn("w-2.5 h-2.5 rounded-full", i === 0 ? "bg-blue-500 animate-pulse" : "bg-slate-300 dark:bg-slate-600")} />
                                 </div>
-                                <div>
-                                    <p className={cn("text-sm", isLight ? "text-slate-600" : "text-slate-300")}>
-                                        <span className={cn("font-semibold cursor-pointer transition-colors", isLight ? "text-slate-900 hover:text-indigo-600" : "text-white hover:text-indigo-400")}>{item.user}</span> {item.action}
+                                <div className="flex-1">
+                                    <p className={cn("text-sm leading-snug", isLight ? "text-slate-600" : "text-slate-300")}>
+                                        <span className={cn("font-semibold block", isLight ? "text-slate-900" : "text-white")}>{item.user} <span className="text-xs font-normal text-slate-400 ml-1">({item.role})</span></span>
+                                        {item.action}
                                     </p>
-                                    <p className="text-xs text-slate-500 mt-1">{item.time}</p>
+                                    <p className="text-xs text-slate-400 mt-1 font-medium">{item.time}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <button className={cn(
-                        "w-full mt-6 py-2 text-sm rounded-lg transition-colors border",
-                        isLight
-                            ? "text-slate-600 hover:text-black hover:bg-slate-50 border-transparent hover:border-slate-200"
-                            : "text-slate-400 hover:text-white hover:bg-slate-800 border-transparent hover:border-slate-700"
-                    )}>
-                        View All Activity
-                    </button>
+                    <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <button className={cn(
+                            "w-full py-2.5 text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 group",
+                            isLight
+                                ? "text-blue-600 hover:bg-blue-50"
+                                : "text-blue-400 hover:bg-blue-500/10"
+                        )}>
+                            View All Activity
+                            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </button>
+                    </div>
                 </motion.div>
             </div>
         </div>
     )
 }
+

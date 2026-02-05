@@ -1,0 +1,176 @@
+"use client"
+
+import React, { useState } from "react"
+import { motion } from "framer-motion"
+import {
+    Search,
+    Plus,
+    Upload,
+    Download,
+    Filter,
+    Trash2,
+    RefreshCw,
+    Edit2,
+    Mail
+} from "lucide-react"
+import { useTheme } from "@/components/providers/ThemeContext"
+import { cn } from "@/lib/utils"
+
+// Mock Data
+const teachers = [
+    { id: 1, name: "Sarah Johnson", email: "sarah.j@school.edu", subject: "Mathematics", status: "Active", students: 120, lastLogin: "1 hour ago" },
+    { id: 2, name: "David Wilson", email: "david.w@school.edu", subject: "History", status: "Active", students: 95, lastLogin: "3 hours ago" },
+    { id: 3, name: "Emily Chen", email: "emily.c@school.edu", subject: "Science", status: "Active", students: 110, lastLogin: "Yesterday" },
+    { id: 4, name: "Michael Brown", email: "m.brown@school.edu", subject: "English", status: "Inactive", students: 0, lastLogin: "1 week ago" },
+    { id: 5, name: "Jessica Taylor", email: "j.taylor@school.edu", subject: "Art", status: "Active", students: 85, lastLogin: "2 days ago" },
+]
+
+export default function TeacherManagement() {
+    const { theme } = useTheme()
+    const isLight = theme === 'light'
+    const [searchTerm, setSearchTerm] = useState("")
+
+    return (
+        <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h1 className={cn("text-2xl font-bold", isLight ? "text-slate-900" : "text-white")}>Teacher Management</h1>
+                    <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>Manage teacher accounts, subjects, and assignments.</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <button className={cn(
+                        "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border",
+                        isLight
+                            ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+                            : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800"
+                    )}>
+                        <Upload className="w-4 h-4" />
+                        Bulk Import
+                    </button>
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-500/20">
+                        <Plus className="w-4 h-4" />
+                        Add Teacher
+                    </button>
+                </div>
+            </div>
+
+            {/* Filters & Search */}
+            <div className={cn(
+                "p-4 rounded-xl border flex flex-col sm:flex-row gap-4 justify-between items-center",
+                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
+            )}>
+                <div className="relative w-full sm:w-96">
+                    <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4", isLight ? "text-slate-400" : "text-slate-500")} />
+                    <input
+                        type="text"
+                        placeholder="Search by name or email..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className={cn(
+                            "w-full pl-9 pr-4 py-2 rounded-lg text-sm outline-none border transition-all",
+                            isLight
+                                ? "bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                                : "bg-slate-950 border-slate-800 focus:border-indigo-500 text-slate-200"
+                        )}
+                    />
+                </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <button className={cn(
+                        "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
+                        isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
+                    )}>
+                        <Filter className="w-4 h-4" />
+                        Filter
+                    </button>
+                    <button className={cn(
+                        "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
+                        isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
+                    )}>
+                        <Download className="w-4 h-4" />
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            {/* Table */}
+            <div className={cn(
+                "border rounded-xl overflow-hidden",
+                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
+            )}>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left">
+                        <thead className={cn(
+                            "text-xs uppercase font-semibold",
+                            isLight ? "bg-slate-50 text-slate-600 border-b border-slate-200" : "bg-slate-950 text-slate-400 border-b border-slate-800"
+                        )}>
+                            <tr>
+                                <th className="px-6 py-4">Teacher Name</th>
+                                <th className="px-6 py-4">Subject</th>
+                                <th className="px-6 py-4">Total Students</th>
+                                <th className="px-6 py-4">Status</th>
+                                <th className="px-6 py-4">Last Login</th>
+                                <th className="px-6 py-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                            {teachers.map((teacher) => (
+                                <tr key={teacher.id} className={cn(
+                                    "transition-colors",
+                                    isLight ? "hover:bg-slate-50" : "hover:bg-slate-800/50"
+                                )}>
+                                    <td className="px-6 py-4 font-medium">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xs text-white font-bold">
+                                                {teacher.name.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <div className={isLight ? "text-slate-900" : "text-white"}>{teacher.name}</div>
+                                                <div className="text-xs text-slate-500 font-normal">{teacher.email}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 text-slate-500">{teacher.subject}</td>
+                                    <td className="px-6 py-4 text-slate-500">{teacher.students}</td>
+                                    <td className="px-6 py-4">
+                                        <span className={cn(
+                                            "px-2 py-1 rounded-full text-xs font-semibold",
+                                            teacher.status === "Active" && (isLight ? "bg-green-100 text-green-700" : "bg-green-900/30 text-green-400"),
+                                            teacher.status === "Inactive" && (isLight ? "bg-slate-100 text-slate-600" : "bg-slate-800 text-slate-400"),
+                                        )}>
+                                            {teacher.status}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 text-slate-500">{teacher.lastLogin}</td>
+                                    <td className="px-6 py-4 text-right">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-indigo-600 hover:bg-indigo-50" : "text-slate-500 hover:text-indigo-400 hover:bg-slate-800")} title="Edit">
+                                                <Edit2 className="w-4 h-4" />
+                                            </button>
+                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-blue-600 hover:bg-blue-50" : "text-slate-500 hover:text-blue-400 hover:bg-slate-800")} title="Email Reset">
+                                                <Mail className="w-4 h-4" />
+                                            </button>
+                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-red-600 hover:bg-red-50" : "text-slate-500 hover:text-red-400 hover:bg-slate-800")} title="Delete">
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                {/* Pagination (Mock) */}
+                <div className={cn(
+                    "px-6 py-4 border-t flex items-center justify-between",
+                    isLight ? "border-slate-200 bg-slate-50" : "border-slate-800 bg-slate-950"
+                )}>
+                    <p className={cn("text-xs", isLight ? "text-slate-500" : "text-slate-400")}>Showing 1-5 of 14 Teachers</p>
+                    <div className="flex gap-2">
+                        <button className="px-3 py-1 text-xs font-medium rounded border disabled:opacity-50">Previous</button>
+                        <button className="px-3 py-1 text-xs font-medium rounded border bg-white text-black">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

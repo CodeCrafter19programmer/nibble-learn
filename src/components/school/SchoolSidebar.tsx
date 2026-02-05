@@ -5,14 +5,16 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
     BarChart3,
-    Users,
     ShieldAlert,
     Settings,
     School,
     LogOut,
     LayoutDashboard,
     Sun,
-    Moon
+    Moon,
+    GraduationCap,
+    BookOpen,
+    CreditCard
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
@@ -22,11 +24,14 @@ interface SidebarProps {
     onMobileClose?: () => void
 }
 
+
+
 const navItems = [
     { href: "/school/dashboard", icon: LayoutDashboard, label: "Overview" },
-    { href: "/school/usage", icon: BarChart3, label: "Usage Analytics" },
-    { href: "/school/users", icon: Users, label: "User Management" },
+    { href: "/school/students", icon: GraduationCap, label: "Students" },
+    { href: "/school/teachers", icon: BookOpen, label: "Teachers" },
     { href: "/school/safety", icon: ShieldAlert, label: "Safety & Monitoring" },
+    { href: "/school/billing", icon: CreditCard, label: "Billing & Plans" },
     { href: "/school/settings", icon: Settings, label: "School Settings" },
 ]
 
