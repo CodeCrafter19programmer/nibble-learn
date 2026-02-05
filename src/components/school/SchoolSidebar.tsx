@@ -30,7 +30,6 @@ const navItems = [
     { href: "/school/dashboard", icon: LayoutDashboard, label: "Overview" },
     { href: "/school/students", icon: GraduationCap, label: "Students" },
     { href: "/school/teachers", icon: BookOpen, label: "Teachers" },
-    { href: "/school/safety", icon: ShieldAlert, label: "Safety & Monitoring" },
     { href: "/school/billing", icon: CreditCard, label: "Billing & Plans" },
     { href: "/school/settings", icon: Settings, label: "School Settings" },
 ]
