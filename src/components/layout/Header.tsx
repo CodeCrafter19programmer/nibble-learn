@@ -24,6 +24,7 @@ import {
     FileText,
     Rocket
 } from "lucide-react"
+import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -164,9 +165,7 @@ export function Header({ theme = "violet" }: HeaderProps) {
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 z-50 relative">
-                    <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-xl", currentTheme.logoBg)}>
-                        N
-                    </div>
+                    <Logo className={cn("w-8 h-8 rounded-lg", currentTheme.logoBg)} />
                     <span className="font-bold text-xl tracking-tight text-slate-900">
                         NibbleLearn
                     </span>

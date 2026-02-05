@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
+import { Logo } from "@/components/logo"
 
 interface SidebarProps {
     onMobileClose?: () => void
@@ -43,9 +44,7 @@ export function SchoolSidebar({ onMobileClose }: SidebarProps) {
         )}>
             {/* Brand */}
             <Link href="/" className="p-6 flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-bold shadow-lg shadow-indigo-500/30 text-white">
-                    N
-                </div>
+                <Logo className="w-8 h-8 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-500/30" />
                 <div className="flex flex-col">
                     <span className={cn("font-bold text-lg tracking-tight", isLight ? "text-slate-900" : "text-white")}>NibbleLearn</span>
                     <span className={cn("text-[10px] uppercase font-bold tracking-wider", isLight ? "text-indigo-600" : "text-indigo-300")}>Admin Portal</span>

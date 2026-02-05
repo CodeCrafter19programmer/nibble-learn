@@ -2,6 +2,7 @@
 
 import React from "react"
 import { AuthBackground } from "@/components/auth/AuthBackground"
+import { Logo } from "@/components/logo"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
@@ -25,9 +26,7 @@ export default function AuthLayout({
                     className="flex justify-center mb-8"
                 >
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-xl shadow-violet-500/20 group-hover:scale-105 transition-transform">
-                            N
-                        </div>
+                        <Logo className="w-10 h-10 rounded-xl shadow-xl shadow-violet-500/20 group-hover:scale-105 transition-transform" />
                         <span className="font-bold text-2xl tracking-tight text-white drop-shadow-md">
                             NibbleLearn
                         </span>

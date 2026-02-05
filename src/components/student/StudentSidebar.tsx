@@ -14,6 +14,7 @@ import {
     Moon
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Logo } from "@/components/logo"
 
 interface StudentSidebarProps {
     onCheckClicks?: () => void
@@ -40,10 +41,9 @@ export function StudentSidebar({ onCheckClicks, theme = 'dark', onToggleTheme }:
                 : "bg-white/10 border-r border-white/20 text-white"
         )}>
             {/* Brand */}
+
             <Link href="/" className="p-6 flex items-center gap-3 hover:opacity-80 transition-opacity">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold shadow-lg shadow-blue-500/30 text-white">
-                    N
-                </div>
+                <Logo className="w-8 h-8 bg-blue-500 rounded-lg shadow-lg shadow-blue-500/30" />
                 <span className={cn("font-bold text-xl tracking-tight", isLight ? "text-slate-900" : "text-white")}>
                     NibbleStudent
                 </span>

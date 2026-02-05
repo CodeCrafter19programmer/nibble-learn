@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { StudentThemeProvider, useStudentTheme } from "@/components/student/StudentThemeContext"
+import { Logo } from "@/components/logo"
 
 function StudentLayoutContent({ children }: { children: React.ReactNode }) {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
@@ -35,9 +36,7 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
                     : "bg-blue-900/80 border-white/10 text-white"
             )}>
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center font-bold text-white">
-                        N
-                    </div>
+                    <Logo className="w-8 h-8 bg-blue-500 rounded-lg" />
                     <span className="font-bold text-lg">NibbleStudent</span>
                 </Link>
                 <button
