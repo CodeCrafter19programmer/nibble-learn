@@ -106,8 +106,25 @@ export default function StudentToolsPage() {
     const [searchQuery, setSearchQuery] = useState("")
     const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
     const [favorites, setFavorites] = useState<number[]>([10, 33, 43]) // Default mock favorites
+    const [isMounted, setIsMounted] = useState(false)
     const { theme } = useStudentTheme()
     const isLight = theme === 'light'
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    const SkeletonCard = () => (
+        <div className={cn(
+            "rounded-[20px] p-5 border h-[240px] animate-pulse",
+            isLight ? "bg-white/60 border-slate-200" : "bg-white/5 border-white/10"
+        )}>
+            <div className={cn("w-12 h-12 rounded-[14px] mb-4", isLight ? "bg-slate-200" : "bg-white/10")} />
+            <div className={cn("h-6 w-3/4 rounded mb-3", isLight ? "bg-slate-200" : "bg-white/10")} />
+            <div className={cn("h-4 w-full rounded mb-2", isLight ? "bg-slate-200/60" : "bg-white/5")} />
+            <div className={cn("h-4 w-2/3 rounded", isLight ? "bg-slate-200/60" : "bg-white/5")} />
+        </div>
+    )
     const [isCategoryOpen, setIsCategoryOpen] = useState(false)
     const [isSearchFocused, setIsSearchFocused] = useState(false)
 
@@ -331,7 +348,12 @@ export default function StudentToolsPage() {
             {/* Tools Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 <AnimatePresence mode="popLayout">
-                    {filteredTools.map((tool, index) => (
+                    {!isMounted && Array.from({ length: 8 }).map((_, i) => (
+                        <motion.div key={`skel-${i}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                            <SkeletonCard />
+                        </motion.div>
+                    ))}
+                    {isMounted && filteredTools.map((tool, index) => (
                         <motion.div
                             layout
                             key={tool.id}
