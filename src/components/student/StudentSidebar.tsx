@@ -11,7 +11,8 @@ import {
     LogOut,
     Settings,
     Sun,
-    Moon
+    Moon,
+    Zap
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Logo } from "@/components/logo"
@@ -41,12 +42,16 @@ export function StudentSidebar({ onCheckClicks, theme = 'dark', onToggleTheme }:
                 : "bg-white/10 border-r border-white/20 text-white"
         )}>
             {/* Brand */}
-
             <Link href="/" className="p-6 flex items-center gap-3 hover:opacity-80 transition-opacity">
                 <Logo className="w-8 h-8 bg-blue-500 rounded-lg shadow-lg shadow-blue-500/30" />
-                <span className={cn("font-bold text-xl tracking-tight", isLight ? "text-slate-900" : "text-white")}>
-                    NibbleStudent
-                </span>
+                <div className="flex flex-col">
+                    <span className={cn("font-bold text-lg tracking-tight leading-none", isLight ? "text-slate-900" : "text-white")}>
+                        NibbleStudent
+                    </span>
+                    <span className={cn("text-[10px] font-bold uppercase tracking-wider mt-0.5", isLight ? "text-slate-500" : "text-blue-300")}>
+                        Free Plan
+                    </span>
+                </div>
             </Link>
 
             {/* Navigation */}
@@ -84,6 +89,20 @@ export function StudentSidebar({ onCheckClicks, theme = 'dark', onToggleTheme }:
 
             {/* Bottom Section */}
             <div className={cn("p-4 space-y-4 border-t", isLight ? "border-slate-300" : "border-white/10")}>
+
+                {/* Upgrade Button */}
+                <Link
+                    href="/student/upgrade"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all group"
+                >
+                    <div className="p-1 rounded bg-white/20">
+                        <Zap className="w-4 h-4 fill-current" />
+                    </div>
+                    <div className="flex-1">
+                        <p className="text-sm font-bold">Upgrade to Plus</p>
+                        <p className="text-[10px] opacity-80 font-medium">Unlock all AI tools</p>
+                    </div>
+                </Link>
 
                 {/* Theme Toggle */}
                 {onToggleTheme && (

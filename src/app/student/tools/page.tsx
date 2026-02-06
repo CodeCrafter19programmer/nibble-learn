@@ -10,7 +10,7 @@ import {
     Bot, Users, ClipboardCheck, Layers, FileInput, FileMinus, ClipboardList, Brain,
     Book, Feather, Image as ImageIcon, Presentation, UserPlus, Terminal, Hourglass,
     CloudLightning, Languages, ShieldCheck, StickyNote, LifeBuoy, Calendar, MessageSquarePlus,
-    Filter, ChevronDown, Flame
+    Filter, ChevronDown, Flame, TrendingUp, X
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useStudentTheme } from "@/components/student/StudentThemeContext"
@@ -89,9 +89,8 @@ const tools = [
     // AI Literacy
     { id: 49, name: "Ask About AI", category: "ai", icon: Bot, color: "bg-indigo-100 text-indigo-600", desc: "Learn how AI works." },
     { id: 50, name: "Prompt Helper", category: "ai", icon: Terminal, color: "bg-indigo-100 text-indigo-600", desc: "Learn to write better prompts." },
-    { id: 51, name: "Historical Chat", category: "ai", icon: Hourglass, color: "bg-indigo-100 text-indigo-600", desc: "Chat with a person from history." },
-    { id: 52, name: "Character Chat", category: "ai", icon: MessageSquarePlus, color: "bg-indigo-100 text-indigo-600", desc: "Chat with a book character." },
-    { id: 53, name: "Custom Chatbot", category: "ai", icon: Bot, color: "bg-indigo-100 text-indigo-600", desc: "Build a chatbot on any topic." },
+    { id: 52, name: "Character Chat", category: "ai", icon: MessageSquarePlus, color: "bg-indigo-100 text-indigo-600", desc: "Chat with a book character.", isHot: true },
+    { id: 53, name: "Custom Chatbot", category: "ai", icon: Bot, color: "bg-indigo-100 text-indigo-600", desc: "Build a chatbot on any topic.", isHot: true },
     { id: 54, name: "Idea Generator", category: "ai", icon: CloudLightning, color: "bg-indigo-100 text-indigo-600", desc: "Brainstorm ideas on any topic." },
     { id: 55, name: "Translator", category: "ai", icon: Languages, color: "bg-indigo-100 text-indigo-600", desc: "Translate text to other languages." },
     { id: 56, name: "Source Eval", category: "ai", icon: ShieldCheck, color: "bg-indigo-100 text-indigo-600", desc: "Learn if a source is reliable." },
@@ -109,6 +108,10 @@ export default function StudentToolsPage() {
     const { theme } = useStudentTheme()
     const isLight = theme === 'light'
     const [isCategoryOpen, setIsCategoryOpen] = useState(false)
+    const [isSearchFocused, setIsSearchFocused] = useState(false)
+
+    // Get trending tools (mock logic: take first 5 hot tools)
+    const trendingTools = tools.filter(t => t.isHot).slice(0, 5)
 
     // Toggle Favorite
     const toggleFavorite = (e: React.MouseEvent, id: number) => {
@@ -145,20 +148,89 @@ export default function StudentToolsPage() {
                 </h1>
 
                 {/* Large Search Bar */}
-                <div className="relative max-w-xl mx-auto group">
-                    <Search className={cn("absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 transition-colors", isLight ? "text-slate-400 group-focus-within:text-blue-500" : "text-slate-500 group-focus-within:text-blue-400")} />
-                    <input
-                        type="text"
-                        placeholder="Search all tools..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={cn(
-                            "w-full pl-14 pr-6 py-4 rounded-full shadow-sm text-base transition-all outline-none border-2",
-                            isLight
-                                ? "bg-white/70 backdrop-blur-md border border-slate-200/90 text-[#334155] placeholder:text-slate-400 shadow-[0_8px_24px_rgba(0,0,0,0.05)] focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
-                                : "bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white placeholder:text-slate-400 focus:bg-white/[0.12] focus:border-blue-400/50"
+                {/* Large Search Bar - Glass Input */}
+                <div className="relative max-w-xl mx-auto group z-50">
+                    <div className={cn(
+                        "relative flex items-center w-full transition-all duration-300",
+                        isSearchFocused && "scale-[1.02]"
+                    )}>
+                        <Search className={cn("absolute left-5 w-5 h-5 transition-colors z-10", isLight ? "text-[#2563EB]" : "text-blue-300")} />
+                        <input
+                            type="text"
+                            placeholder="Search all tools..."
+                            value={searchQuery}
+                            onFocus={() => setIsSearchFocused(true)}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className={cn(
+                                "w-full pl-14 pr-6 py-4 rounded-full text-base transition-all outline-none border-2",
+                                isLight
+                                    ? "bg-white/80 backdrop-blur-xl border-slate-200 text-[#334155] placeholder:text-slate-400 shadow-[0_8px_30px_rgba(0,0,0,0.08)] focus:border-blue-500 focus:shadow-[0_12px_40px_rgba(37,99,235,0.15)]"
+                                    : "bg-white/[0.08] backdrop-blur-xl border-white/[0.15] text-white placeholder:text-slate-400 focus:bg-white/[0.12] focus:border-blue-400/50"
+                            )}
+                        />
+                        {isSearchFocused && (
+                            <button
+                                onClick={() => setIsSearchFocused(false)}
+                                className="absolute right-4 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 text-slate-400 z-10"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
                         )}
-                    />
+                    </div>
+
+                    {/* Search Dropdown */}
+                    <AnimatePresence>
+                        {isSearchFocused && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                                className={cn(
+                                    "absolute top-full left-0 right-0 mt-2 rounded-2xl shadow-2xl border overflow-hidden backdrop-blur-2xl p-2",
+                                    isLight
+                                        ? "bg-white/95 border-slate-100 ring-1 ring-slate-200"
+                                        : "bg-[#0F172A]/95 border-white/10"
+                                )}
+                            >
+                                <div className="p-2">
+                                    <h3 className={cn("text-xs font-semibold mb-2 uppercase tracking-wider px-2", isLight ? "text-slate-500" : "text-slate-400")}>Trending</h3>
+                                    <div className="space-y-1">
+                                        {trendingTools.map(tool => (
+                                            <button
+                                                key={tool.id}
+                                                className={cn(
+                                                    "w-full flex items-center justify-between p-3 rounded-xl transition-colors group text-left",
+                                                    isLight
+                                                        ? "hover:bg-blue-50/80 text-slate-700 hover:text-blue-700"
+                                                        : "hover:bg-white/10 text-slate-300 hover:text-white"
+                                                )}
+                                                onClick={() => {
+                                                    setSearchQuery(tool.name)
+                                                    setIsSearchFocused(false)
+                                                }}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <TrendingUp className={cn("w-4 h-4", isLight ? "text-slate-400 group-hover:text-blue-500" : "text-slate-500 group-hover:text-blue-300")} />
+                                                    <span className="font-medium">{tool.name}</span>
+                                                </div>
+                                                <div className="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-[10px] font-bold flex items-center gap-1">
+                                                    <Flame className="w-3 h-3 fill-current" /> Hot
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Backdrop to close search */}
+                    {isSearchFocused && (
+                        <div
+                            className="fixed inset-0 z-[-1]"
+                            onClick={() => setIsSearchFocused(false)}
+                        />
+                    )}
                 </div>
             </motion.div>
 
@@ -267,9 +339,9 @@ export default function StudentToolsPage() {
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ delay: index * 0.03 }}
                             className={cn(
-                                "group relative rounded-[18px] p-5 border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl",
+                                "group relative rounded-[20px] p-5 border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl",
                                 isLight
-                                    ? "bg-white/65 border-white/60 shadow-[0_10px_30px_rgba(15,23,42,0.08)] hover:bg-white/78 hover:-translate-y-[3px] hover:shadow-[0_18px_48px_rgba(30,64,175,0.18)]"
+                                    ? "bg-white/60 border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:bg-blue-50/40 hover:border-blue-200 hover:-translate-y-[4px] hover:shadow-[0_20px_40px_rgba(37,99,235,0.1)] ring-1 ring-slate-900/5"
                                     : "bg-white/[0.08] border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-white/[0.12] hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(30,78,216,0.35)]"
                             )}
                         >
