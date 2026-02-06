@@ -4,7 +4,7 @@ import {
     Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles,
     Shapes, BookMarked, MessageCircle, Users, ClipboardCheck, Layers, FileMinus, Pencil, Brain,
     Feather, Image, Presentation, PersonStanding, Music, Key, UserCheck, Languages, User, Clock,
-    Calendar, Layout, ListChecks, HeartHandshake
+    Calendar, Layout, ListChecks, HeartHandshake, CheckSquare
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -1562,9 +1562,41 @@ export const toolsData: Record<string, ToolConfig> = {
         ]
     },
 
-    // 56. Note-Taking Template
+    // 56. Source Evaluation Guide
     "56": {
         id: "56",
+        name: "Source Evaluation Guide",
+        description: "Learn if a source is reliable for research",
+        icon: CheckSquare,
+        color: "bg-red-500",
+        inputs: [
+            {
+                id: "url",
+                type: "text",
+                label: "Source URL or Title",
+                placeholder: "e.g., wikipedia.org/wiki/...",
+                required: true
+            },
+            {
+                id: "type",
+                type: "dropdown",
+                label: "Source Type",
+                options: ["Website", "Book", "Article", "Social Media"],
+                defaultValue: "Website"
+            },
+            {
+                id: "author",
+                type: "text",
+                label: "Author/Publisher",
+                placeholder: "Who wrote this?",
+                required: true
+            }
+        ]
+    },
+
+    // 57. Note-Taking Template
+    "57": {
+        id: "57",
         name: "Note-Taking Template",
         description: "Organize your notes better",
         icon: Layout,
@@ -1593,9 +1625,9 @@ export const toolsData: Record<string, ToolConfig> = {
         ]
     },
 
-    // 57. Homework Helper
-    "57": {
-        id: "57",
+    // 58. Homework Helper
+    "58": {
+        id: "58",
         name: "Homework Helper",
         description: "Get help understanding your homework",
         icon: HelpCircle,
@@ -1625,10 +1657,10 @@ export const toolsData: Record<string, ToolConfig> = {
         ]
     },
 
-    // 58. Home Planner (Time Management)
-    "58": {
-        id: "58",
-        name: "Home Planner",
+    // 59. Time Management Planner
+    "59": {
+        id: "59",
+        name: "Time Management Planner",
         description: "Plan your study time and assignments",
         icon: Calendar,
         color: "bg-blue-500",
@@ -1657,10 +1689,10 @@ export const toolsData: Record<string, ToolConfig> = {
         ]
     },
 
-    // 59. Peer Feedback
-    "59": {
-        id: "59",
-        name: "Peer Feedback",
+    // 60. Peer Feedback Generator
+    "60": {
+        id: "60",
+        name: "Peer Feedback Generator",
         description: "Give helpful feedback to classmates",
         icon: HeartHandshake,
         color: "bg-pink-500",
