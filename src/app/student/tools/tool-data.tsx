@@ -2,7 +2,8 @@ import {
     FileText, AlignLeft, FileSearch, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, MessageSquare,
     Minimize2, RotateCw, Book, Mail, Scale, Link, BookA, BookOpen, Volume2, ArrowDown,
     Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles,
-    Shapes, BookMarked, MessageCircle, Users, ClipboardCheck, Layers, FileMinus, Pencil, Brain
+    Shapes, BookMarked, MessageCircle, Users, ClipboardCheck, Layers, FileMinus, Pencil, Brain,
+    Feather, Image, Presentation, PersonStanding, Music, Key, UserCheck, Languages, User, Clock,
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -1118,6 +1119,444 @@ export const toolsData: Record<string, ToolConfig> = {
                 label: "Memory type",
                 options: ["Acronym", "Rhyme", "Story", "Visualization"],
                 defaultValue: "Acronym"
+            }
+        ]
+    },
+
+    // 41. Story Generator
+    "41": {
+        id: "41",
+        name: "Story Generator",
+        description: "Create creative stories with AI",
+        icon: Book,
+        color: "bg-purple-500",
+        inputs: [
+            {
+                id: "genre",
+                type: "dropdown",
+                label: "Story Genre",
+                options: ["Adventure", "Mystery", "Fantasy", "Sci-Fi", "Comedy", "Horror"],
+                defaultValue: "Adventure"
+            },
+            {
+                id: "character",
+                type: "text",
+                label: "Main Character",
+                placeholder: "e.g., A robot named Zog",
+                required: true
+            },
+            {
+                id: "setting",
+                type: "text",
+                label: "Setting",
+                placeholder: "e.g., A city in the clouds",
+                required: true
+            },
+            {
+                id: "prompt",
+                type: "textarea",
+                label: "Story Beginning (Optional)",
+                placeholder: "Start the story..."
+            }
+        ]
+    },
+
+    // 42. Poem Writer
+    "42": {
+        id: "42",
+        name: "Poem Writer",
+        description: "Write poems about any topic",
+        icon: Feather,
+        color: "bg-pink-500",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Poem Topic",
+                placeholder: "e.g., Spring Rain",
+                required: true
+            },
+            {
+                id: "style",
+                type: "dropdown",
+                label: "Poem Style",
+                options: ["Haiku", "Rhyming", "Free Verse", "Limerick", "Sonnet"],
+                defaultValue: "Rhyming"
+            },
+            {
+                id: "mood",
+                type: "dropdown",
+                label: "Mood",
+                options: ["Happy", "Sad", "Inspiring", "Funny", "Mysterious"],
+                defaultValue: "Happy"
+            }
+        ]
+    },
+
+    // 43. Image Generator
+    "43": {
+        id: "43",
+        name: "Image Generator",
+        studentFriendlyName: "Make a picture",
+        description: "Create images for your projects using AI",
+        icon: Image,
+        color: "bg-orange-500",
+        inputs: [
+            {
+                id: "prompt",
+                type: "textarea",
+                label: "Describe the image you want",
+                placeholder: "e.g., A futuristic city on Mars at sunset",
+                required: true
+            },
+            {
+                id: "style",
+                type: "dropdown",
+                label: "Image Style",
+                options: ["Realistic", "Cartoon", "Drawing", "Oil Painting", "3D Render"],
+                defaultValue: "Cartoon"
+            },
+            {
+                id: "size",
+                type: "dropdown",
+                label: "Size",
+                options: ["Square", "Landscape", "Portrait"],
+                defaultValue: "Square"
+            }
+        ]
+    },
+
+    // 44. Project Idea Generator
+    "44": {
+        id: "44",
+        name: "Project Idea Generator",
+        description: "Get ideas for school projects",
+        icon: Lightbulb,
+        color: "bg-yellow-500",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "Subject or Topic",
+                placeholder: "e.g., Science Fair",
+                required: true
+            },
+            {
+                id: "type",
+                type: "dropdown",
+                label: "Project Type",
+                options: ["Research", "Presentation", "Creative", "Experiment"],
+                defaultValue: "Research"
+            },
+            {
+                id: "interests",
+                type: "textarea",
+                label: "What interests you?",
+                placeholder: "e.g., I like space and robots",
+                required: true
+            }
+        ]
+    },
+
+    // 45. Presentation Helper
+    "45": {
+        id: "45",
+        name: "Presentation Helper",
+        description: "Create an outline for your presentation",
+        icon: Presentation,
+        color: "bg-blue-600",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Presentation Topic",
+                placeholder: "e.g., The Life of Dolphins",
+                required: true
+            },
+            {
+                id: "slides",
+                type: "dropdown",
+                label: "Number of Slides",
+                options: ["5", "8", "10", "12"],
+                defaultValue: "8"
+            },
+            {
+                id: "content",
+                type: "textarea",
+                label: "What should you include?",
+                placeholder: "Key points you want to cover...",
+                required: true
+            }
+        ]
+    },
+
+    // 46. Creative Writing Prompts
+    "46": {
+        id: "46",
+        name: "Creative Writing Prompts",
+        description: "Get ideas for creative writing",
+        icon: Sparkles,
+        color: "bg-violet-500",
+        inputs: [
+            {
+                id: "genre",
+                type: "dropdown",
+                label: "Genre Preference",
+                options: ["Adventure", "Fantasy", "Sci-Fi", "Mystery", "Realistic Fiction"],
+                defaultValue: "Fantasy"
+            },
+            {
+                id: "interests",
+                type: "textarea",
+                label: "Interests (Optional)",
+                placeholder: "e.g., Dragons, Time Travel..."
+            }
+        ]
+    },
+
+    // 47. Character Creator
+    "47": {
+        id: "47",
+        name: "Character Creator",
+        description: "Develop characters for your stories",
+        icon: PersonStanding,
+        color: "bg-indigo-400",
+        inputs: [
+            {
+                id: "role",
+                type: "text",
+                label: "Character Role",
+                placeholder: "e.g., Hero, Villain, Sidekick",
+                required: true
+            },
+            {
+                id: "genre",
+                type: "dropdown",
+                label: "Story Genre",
+                options: ["Fantasy", "Sci-Fi", "Modern", "Super Hero"],
+                defaultValue: "Fantasy"
+            },
+            {
+                id: "traits",
+                type: "textarea",
+                label: "Personality Traits",
+                placeholder: "e.g., Brave but clumsy...",
+                required: true
+            }
+        ]
+    },
+
+    // 48. Rhyme Finder
+    "48": {
+        id: "48",
+        name: "Rhyme Finder",
+        description: "Find words that rhyme for poems or songs",
+        icon: Music,
+        color: "bg-pink-400",
+        inputs: [
+            {
+                id: "word",
+                type: "text",
+                label: "Word to rhyme with",
+                placeholder: "e.g., Star",
+                required: true
+            },
+            {
+                id: "count",
+                type: "dropdown",
+                label: "How many rhymes?",
+                options: ["5", "10", "15", "All"],
+                defaultValue: "10"
+            }
+        ]
+    },
+
+    // 49. Ask About AI
+    "49": {
+        id: "49",
+        name: "Ask About AI",
+        studentFriendlyName: "What is AI?",
+        description: "Learn how AI works and ask questions about AI",
+        icon: HelpCircle,
+        color: "bg-emerald-500",
+        inputs: [
+            {
+                id: "question",
+                type: "textarea",
+                label: "Ask a question about AI",
+                placeholder: "e.g., How does AI learn?",
+                required: true
+            }
+        ]
+    },
+
+    // 50. Prompt Helper
+    "50": {
+        id: "50",
+        name: "Prompt Helper",
+        description: "Learn how to write better prompts for AI",
+        icon: Key,
+        color: "bg-cyan-500",
+        inputs: [
+            {
+                id: "prompt",
+                type: "textarea",
+                label: "Your current prompt",
+                placeholder: "Paste the prompt you want to improve...",
+                required: true
+            },
+            {
+                id: "goal",
+                type: "text",
+                label: "What are you trying to do?",
+                placeholder: "e.g., Write a story about cats",
+                required: true
+            }
+        ]
+    },
+
+    // 51. Historical Figure Chat
+    "51": {
+        id: "51",
+        name: "Historical Figure Chat",
+        description: "Chat with any person from history",
+        icon: Clock,
+        color: "bg-amber-600",
+        inputs: [
+            {
+                id: "person",
+                type: "text",
+                label: "Who do you want to talk to?",
+                placeholder: "e.g., Abraham Lincoln, Marie Curie",
+                required: true
+            },
+            {
+                id: "question",
+                type: "textarea",
+                label: "What do you want to ask them?",
+                placeholder: "e.g., What was your biggest challenge?",
+                required: true
+            }
+        ]
+    },
+
+    // 52. Book Character Chat
+    "52": {
+        id: "52",
+        name: "Book Character Chat",
+        description: "Have a conversation with a character from a book",
+        icon: BookOpen,
+        color: "bg-indigo-600",
+        inputs: [
+            {
+                id: "character",
+                type: "text",
+                label: "Character Name",
+                placeholder: "e.g., Harry Potter",
+                required: true
+            },
+            {
+                id: "book",
+                type: "text",
+                label: "Book Title",
+                placeholder: "e.g., Harry Potter and the Sorcerer's Stone",
+                required: true
+            },
+            {
+                id: "question",
+                type: "textarea",
+                label: "What do you want to ask them?",
+                placeholder: "Hello!",
+                required: true
+            }
+        ]
+    },
+
+    // 53. Custom Chatbot Creator
+    "53": {
+        id: "53",
+        name: "Custom Chatbot Creator",
+        description: "Build your own AI chatbot on any topic",
+        icon: UserCheck,
+        color: "bg-slate-600",
+        inputs: [
+            {
+                id: "name",
+                type: "text",
+                label: "Chatbot Name",
+                placeholder: "e.g., Math Buddy",
+                required: true
+            },
+            {
+                id: "expertise",
+                type: "text",
+                label: "Chatbot Topic/Expertise",
+                placeholder: "e.g., Solar System Facts",
+                required: true
+            },
+            {
+                id: "personality",
+                type: "textarea",
+                label: "Chatbot Personality",
+                placeholder: "e.g., Friendly, funny, speaks in riddles...",
+                required: true
+            }
+        ]
+    },
+
+    // 54. Idea Generator
+    "54": {
+        id: "54",
+        name: "Idea Generator",
+        description: "Brainstorm ideas on any topic",
+        icon: Lightbulb,
+        color: "bg-yellow-400",
+        inputs: [
+            {
+                id: "topic",
+                type: "textarea",
+                label: "What do you need ideas for?",
+                placeholder: "e.g., A gift for my mom, a theme for a party...",
+                required: true
+            },
+            {
+                id: "count",
+                type: "dropdown",
+                label: "How many ideas?",
+                options: ["5", "10", "15"],
+                defaultValue: "10"
+            }
+        ]
+    },
+
+    // 55. Language Translator
+    "55": {
+        id: "55",
+        name: "Language Translator",
+        description: "Translate text to other languages",
+        icon: Languages,
+        color: "bg-blue-500",
+        inputs: [
+            {
+                id: "text",
+                type: "textarea",
+                label: "Text to Translate",
+                placeholder: "Paste text here...",
+                required: true
+            },
+            {
+                id: "from",
+                type: "dropdown",
+                label: "From Language",
+                options: ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Auto-Detect"],
+                defaultValue: "Auto-Detect"
+            },
+            {
+                id: "to",
+                type: "dropdown",
+                label: "To Language",
+                options: ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Italian", "Portuguese"],
+                defaultValue: "Spanish"
             }
         ]
     }
