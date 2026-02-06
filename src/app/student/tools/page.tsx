@@ -155,8 +155,8 @@ export default function StudentToolsPage() {
                         className={cn(
                             "w-full pl-14 pr-6 py-4 rounded-full shadow-sm text-base transition-all outline-none border-2",
                             isLight
-                                ? "bg-white border-slate-100 focus:border-blue-500 placeholder:text-slate-400 text-slate-900 shadow-slate-200/50"
-                                : "bg-slate-900/50 border-slate-800 focus:border-blue-500/50 placeholder:text-slate-500 text-white"
+                                ? "bg-white/70 backdrop-blur-md border border-slate-200/90 text-[#334155] placeholder:text-slate-400 shadow-[0_8px_24px_rgba(0,0,0,0.05)] focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                                : "bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white placeholder:text-slate-400 focus:bg-white/[0.12] focus:border-blue-400/50"
                         )}
                     />
                 </div>
@@ -168,10 +168,10 @@ export default function StudentToolsPage() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className={cn(
-                    "rounded-2xl p-6 relative overflow-hidden flex items-center justify-between",
+                    "rounded-2xl p-6 relative overflow-hidden flex items-center justify-between backdrop-blur-xl",
                     isLight
-                        ? "bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-100"
-                        : "bg-gradient-to-r from-purple-900/10 to-blue-900/10 border border-white/5"
+                        ? "bg-white/60 border border-white/60 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
+                        : "bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
                 )}
             >
                 <div>
@@ -192,10 +192,10 @@ export default function StudentToolsPage() {
                     <button
                         onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                         className={cn(
-                            "flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all min-w-[160px] justify-between",
+                            "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all min-w-[160px] justify-between backdrop-blur-md",
                             isLight
-                                ? "bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-                                : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800"
+                                ? "bg-white/70 border border-slate-200/90 text-[#334155] hover:bg-white/90 shadow-sm"
+                                : "bg-white/[0.08] border border-white/[0.15] text-slate-200 hover:bg-white/[0.12]"
                         )}
                     >
                         <div className="flex items-center gap-2">
@@ -212,8 +212,8 @@ export default function StudentToolsPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: 5 }}
                                 className={cn(
-                                    "absolute top-full left-0 mt-2 w-56 rounded-xl shadow-xl border z-50 overflow-hidden py-1",
-                                    isLight ? "bg-white border-slate-100" : "bg-slate-900 border-slate-700"
+                                    "absolute top-full left-0 mt-2 w-56 rounded-xl shadow-xl border z-50 overflow-hidden py-1 backdrop-blur-xl",
+                                    isLight ? "bg-white/80 border-slate-100" : "bg-[#0A1A3A]/90 border-white/[0.15]"
                                 )}
                             >
                                 {categories.map(cat => (
@@ -226,8 +226,8 @@ export default function StudentToolsPage() {
                                         className={cn(
                                             "w-full text-left px-4 py-2.5 text-sm font-medium transition-colors",
                                             activeCategory === cat.id
-                                                ? (isLight ? "bg-blue-50 text-blue-600" : "bg-blue-900/20 text-blue-400")
-                                                : (isLight ? "text-slate-600 hover:bg-slate-50" : "text-slate-300 hover:bg-slate-800")
+                                                ? (isLight ? "bg-blue-50 text-[#2563EB]" : "bg-blue-900/40 text-blue-300")
+                                                : (isLight ? "text-[#334155] hover:bg-slate-50" : "text-slate-300 hover:bg-white/[0.08]")
                                         )}
                                     >
                                         {cat.label}
@@ -242,10 +242,12 @@ export default function StudentToolsPage() {
                 <button
                     onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
                     className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all",
+                        "flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all backdrop-blur-md",
                         showFavoritesOnly
-                            ? "border-yellow-400 bg-yellow-50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-600/50"
-                            : (isLight ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50" : "bg-slate-900 border-slate-700 text-slate-300 hover:bg-slate-800")
+                            ? "border-yellow-400 bg-yellow-50/50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-600/50"
+                            : (isLight
+                                ? "bg-white/70 border-slate-200/90 text-[#334155] hover:bg-white/90 shadow-sm"
+                                : "bg-white/[0.08] border-white/[0.15] text-slate-200 hover:bg-white/[0.12]")
                     )}
                 >
                     <Star className={cn("w-4 h-4", showFavoritesOnly ? "fill-current" : "")} />
@@ -265,10 +267,10 @@ export default function StudentToolsPage() {
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ delay: index * 0.03 }}
                             className={cn(
-                                "group relative rounded-xl p-5 border transition-all cursor-pointer overflow-hidden hover:-translate-y-1 hover:shadow-lg",
+                                "group relative rounded-[18px] p-5 border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl",
                                 isLight
-                                    ? "bg-white border-slate-100 shadow-sm hover:border-blue-200"
-                                    : "bg-slate-900/50 border-slate-800 hover:border-slate-700"
+                                    ? "bg-white/65 border-white/60 shadow-[0_10px_30px_rgba(15,23,42,0.08)] hover:bg-white/78 hover:-translate-y-[3px] hover:shadow-[0_18px_48px_rgba(30,64,175,0.18)]"
+                                    : "bg-white/[0.08] border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-white/[0.12] hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(30,78,216,0.35)]"
                             )}
                         >
                             {/* Hot Badge */}
@@ -292,14 +294,19 @@ export default function StudentToolsPage() {
                             </button>
 
                             <div className="flex flex-col gap-4">
-                                <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm", tool.color)}>
-                                    <tool.icon className="w-8 h-8" />
+                                <div className={cn(
+                                    "w-12 h-12 rounded-[14px] flex items-center justify-center backdrop-blur-md",
+                                    isLight
+                                        ? "bg-blue-500/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_16px_rgba(37,99,235,0.15)]"
+                                        : "bg-white/[0.15] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_6px_16px_rgba(0,0,0,0.3)]"
+                                )}>
+                                    <tool.icon className={cn("w-6 h-6", isLight ? "text-[#2563EB]" : "text-blue-300")} />
                                 </div>
                                 <div className="space-y-1">
-                                    <h3 className={cn("font-bold text-lg leading-tight", isLight ? "text-slate-900" : "text-white")}>
+                                    <h3 className={cn("font-bold text-lg leading-tight", isLight ? "text-[#0F172A]" : "text-white")}>
                                         {tool.name}
                                     </h3>
-                                    <p className={cn("text-xs leading-relaxed line-clamp-2", isLight ? "text-slate-500" : "text-slate-400")}>
+                                    <p className={cn("text-xs leading-relaxed line-clamp-2 font-medium", isLight ? "text-[#334155]" : "text-slate-300")}>
                                         {tool.desc}
                                     </p>
                                 </div>
