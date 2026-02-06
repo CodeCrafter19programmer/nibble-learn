@@ -1,6 +1,7 @@
 import {
     FileText, AlignLeft, FileSearch, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, MessageSquare,
-    Minimize2, RotateCw, Book, Mail, Scale, Link, BookA, BookOpen, Volume2, ArrowDown
+    Minimize2, RotateCw, Book, Mail, Scale, Link, BookA, BookOpen, Volume2, ArrowDown,
+    Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -587,6 +588,263 @@ export const toolsData: Record<string, ToolConfig> = {
                 label: "Reading Speed",
                 options: ["Slow", "Normal", "Fast"],
                 defaultValue: "Normal"
+            }
+        ]
+    },
+
+    // 21. Text Simplifier
+    "21": {
+        id: "21",
+        name: "Text Simplifier",
+        description: "Make difficult text easier to understand",
+        icon: ArrowDown,
+        color: "bg-teal-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Paste difficult text",
+                placeholder: "Paste the text you want to simplify...",
+                required: true
+            },
+            {
+                id: "level",
+                type: "dropdown",
+                label: "Reading level needed",
+                options: ["Elementary", "Middle School", "High School"],
+                defaultValue: "Elementary"
+            }
+        ]
+    },
+
+    // 22. Main Idea Finder
+    "22": {
+        id: "22",
+        name: "Main Idea Finder",
+        description: "Identify the main idea of a text or paragraph",
+        icon: Target,
+        color: "bg-red-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Paste your text",
+                placeholder: "Paste the text here...",
+                required: true
+            }
+        ]
+    },
+
+    // 23. Character Analysis
+    "23": {
+        id: "23",
+        name: "Character Analysis",
+        description: "Analyze characters from stories you're reading",
+        icon: Book,
+        color: "bg-indigo-400",
+        inputs: [
+            {
+                id: "character",
+                type: "text",
+                label: "Character Name",
+                placeholder: "e.g., Harry Potter, Katniss Everdeen",
+                required: true
+            },
+            {
+                id: "story",
+                type: "text",
+                label: "Story/Book Name",
+                placeholder: "e.g., The Hunger Games",
+                required: true
+            },
+            {
+                id: "traits",
+                type: "textarea",
+                label: "What do you know about this character?",
+                placeholder: "Describe what they do or say in the story...",
+                required: true
+            }
+        ]
+    },
+
+    // 24. Theme Identifier
+    "24": {
+        id: "24",
+        name: "Theme Identifier",
+        description: "Find themes in stories and texts",
+        icon: Lightbulb,
+        color: "bg-yellow-400",
+        inputs: [
+            {
+                id: "title",
+                type: "text",
+                label: "Story or Text Title",
+                placeholder: "e.g., Romeo and Juliet",
+                required: true
+            },
+            {
+                id: "summary",
+                type: "textarea",
+                label: "Brief Summary",
+                placeholder: "What happens in the story?",
+                required: true
+            }
+        ]
+    },
+
+    // 25. Figurative Language Detector
+    "25": {
+        id: "25",
+        name: "Figurative Language Detector",
+        description: "Identify metaphors, similes, and other figurative language",
+        icon: Sparkles,
+        color: "bg-pink-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Paste the text",
+                placeholder: "Paste the text you want to analyze...",
+                required: true
+            }
+        ]
+    },
+
+    // 26. Context Clues Helper
+    "26": {
+        id: "26",
+        name: "Context Clues Helper",
+        description: "Figure out word meanings using context clues",
+        icon: FileSearch,
+        color: "bg-cyan-400",
+        inputs: [
+            {
+                id: "sentence",
+                type: "textarea",
+                label: "Sentence with unknown word",
+                placeholder: "Paste the full sentence here...",
+                required: true
+            },
+            {
+                id: "word",
+                type: "text",
+                label: "Unknown Word",
+                placeholder: "Which word don't you know?",
+                required: true
+            }
+        ]
+    },
+
+    // 27. Math Tutor
+    "27": {
+        id: "27",
+        name: "Math Tutor",
+        description: "Get help solving math problems step-by-step",
+        icon: Calculator,
+        color: "bg-blue-500",
+        inputs: [
+            {
+                id: "grade",
+                type: "dropdown",
+                label: "Grade Level",
+                options: ["Elementary", "Middle School", "High School", "College"],
+                defaultValue: "Middle School"
+            },
+            {
+                id: "problem",
+                type: "textarea",
+                label: "Math Problem",
+                placeholder: "Type your math problem here...",
+                required: true
+            },
+            {
+                id: "helpType",
+                type: "dropdown",
+                label: "What do you need help with?",
+                options: ["Solve it", "Explain steps", "Check my work"],
+                defaultValue: "Explain steps"
+            }
+        ]
+    },
+
+    // 28. Word Problem Solver
+    "28": {
+        id: "28",
+        name: "Word Problem Solver",
+        description: "Understand and solve math word problems",
+        icon: FileSpreadsheet,
+        color: "bg-green-500",
+        inputs: [
+            {
+                id: "problem",
+                type: "textarea",
+                label: "Word Problem",
+                placeholder: "Paste the word problem here...",
+                required: true
+            },
+            {
+                id: "outputType",
+                type: "dropdown",
+                label: "Show me",
+                options: ["Steps only", "Answer only", "Both"],
+                defaultValue: "Both"
+            }
+        ]
+    },
+
+    // 29. Math Concept Explainer
+    "29": {
+        id: "29",
+        name: "Math Concept Explainer",
+        description: "Understand difficult math concepts",
+        icon: Lightbulb,
+        color: "bg-yellow-500",
+        inputs: [
+            {
+                id: "concept",
+                type: "text",
+                label: "Math Concept",
+                placeholder: "e.g., Fractions, Algebra, Pythagorean Theorem",
+                required: true
+            },
+            {
+                id: "question",
+                type: "textarea",
+                label: "What don't you understand?",
+                placeholder: "Explain what part takes you...",
+                required: true
+            }
+        ]
+    },
+
+    // 30. Fraction Helper
+    "30": {
+        id: "30",
+        name: "Fraction Helper",
+        description: "Work with fractions - add, subtract, multiply, divide",
+        icon: PieChart,
+        color: "bg-orange-500",
+        inputs: [
+            {
+                id: "fraction1",
+                type: "text",
+                label: "First Fraction",
+                placeholder: "e.g., 1/2",
+                required: true
+            },
+            {
+                id: "operation",
+                type: "dropdown",
+                label: "Operation",
+                options: ["Add (+)", "Subtract (-)", "Multiply (×)", "Divide (÷)"],
+                defaultValue: "Add (+)"
+            },
+            {
+                id: "fraction2",
+                type: "text",
+                label: "Second Fraction",
+                placeholder: "e.g., 3/4",
+                required: true
             }
         ]
     }
