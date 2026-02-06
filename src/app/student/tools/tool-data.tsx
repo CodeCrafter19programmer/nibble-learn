@@ -1,7 +1,8 @@
 import {
     FileText, AlignLeft, FileSearch, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, MessageSquare,
     Minimize2, RotateCw, Book, Mail, Scale, Link, BookA, BookOpen, Volume2, ArrowDown,
-    Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles
+    Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles,
+    Shapes, BookMarked, MessageCircle, Users, ClipboardCheck, Layers, FileMinus, Pencil, Brain
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -845,6 +846,278 @@ export const toolsData: Record<string, ToolConfig> = {
                 label: "Second Fraction",
                 placeholder: "e.g., 3/4",
                 required: true
+            }
+        ]
+    },
+
+    // 31. Geometry Helper
+    "31": {
+        id: "31",
+        name: "Geometry Helper",
+        description: "Calculate area, perimeter, volume, and more",
+        icon: Shapes,
+        color: "bg-indigo-500",
+        inputs: [
+            {
+                id: "shape",
+                type: "dropdown",
+                label: "Shape Type",
+                options: ["Triangle", "Square", "Rectangle", "Circle", "Cube", "Cylinder"],
+                defaultValue: "Rectangle"
+            },
+            {
+                id: "calculation",
+                type: "dropdown",
+                label: "What do you need?",
+                options: ["Area", "Perimeter", "Volume"],
+                defaultValue: "Area"
+            },
+            {
+                id: "measurements",
+                type: "text",
+                label: "Measurements (e.g., width=5, height=10)",
+                placeholder: "Enter the dimensions...",
+                required: true
+            }
+        ]
+    },
+
+    // 32. Math Formula Reference
+    "32": {
+        id: "32",
+        name: "Math Formula Reference",
+        description: "Look up math formulas you need",
+        icon: BookMarked,
+        color: "bg-teal-500",
+        inputs: [
+            {
+                id: "topic",
+                type: "dropdown",
+                label: "Math Topic",
+                options: ["Algebra", "Geometry", "Trigonometry", "Calculus"],
+                defaultValue: "Algebra"
+            },
+            {
+                id: "formula",
+                type: "text",
+                label: "Specific formula needed",
+                placeholder: "e.g., Quadratic Formula, Area of Circle",
+                required: true
+            }
+        ]
+    },
+
+    // 33. AI Tutor (Raina)
+    "33": {
+        id: "33",
+        name: "AI Tutor",
+        studentFriendlyName: "Ask Raina for help",
+        description: "Ask Raina questions about anything you're learning",
+        icon: MessageCircle,
+        color: "bg-purple-600",
+        inputs: [
+            {
+                id: "question",
+                type: "textarea",
+                label: "What is your question?",
+                placeholder: "Ask Raina anything...",
+                required: true
+            }
+        ]
+    },
+
+    // 34. Study Partner
+    "34": {
+        id: "34",
+        name: "Study Partner",
+        description: "Use AI as a study buddy for any test or subject",
+        icon: Users,
+        color: "bg-blue-400",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "What are you studying?",
+                placeholder: "e.g., Biology Test",
+                required: true
+            },
+            {
+                id: "activity",
+                type: "dropdown",
+                label: "What kind of help do you need?",
+                options: ["Quiz me", "Explain concepts", "Make flashcards", "Review my notes"],
+                defaultValue: "Quiz me"
+            }
+        ]
+    },
+
+    // 35. Quiz Yourself
+    "35": {
+        id: "35",
+        name: "Quiz Yourself",
+        description: "Create a practice quiz on any topic",
+        icon: ClipboardCheck,
+        color: "bg-green-500",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Topic or subject",
+                placeholder: "e.g., The Solar System",
+                required: true
+            },
+            {
+                id: "count",
+                type: "dropdown",
+                label: "Number of questions",
+                options: ["5", "10", "15", "20"],
+                defaultValue: "5"
+            },
+            {
+                id: "type",
+                type: "dropdown",
+                label: "Question type",
+                options: ["Multiple choice", "True/False", "Fill-in-blank"],
+                defaultValue: "Multiple choice"
+            },
+            {
+                id: "difficulty",
+                type: "dropdown",
+                label: "Difficulty",
+                options: ["Easy", "Medium", "Hard"],
+                defaultValue: "Medium"
+            }
+        ]
+    },
+
+    // 36. Flashcard Generator
+    "36": {
+        id: "36",
+        name: "Flashcard Generator",
+        description: "Make flashcards to help you study",
+        icon: Layers,
+        color: "bg-yellow-500",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Topic or chapter",
+                placeholder: "e.g., French Vocabulary",
+                required: true
+            },
+            {
+                id: "content",
+                type: "textarea",
+                label: "What do you need to remember?",
+                placeholder: "Paste notes or list of terms here...",
+                required: true
+            },
+            {
+                id: "count",
+                type: "dropdown",
+                label: "Number of cards",
+                options: ["10", "15", "20", "25"],
+                defaultValue: "10"
+            }
+        ]
+    },
+
+    // 37. Study Guide Creator
+    "37": {
+        id: "37",
+        name: "Study Guide Creator",
+        description: "Create a study guide for your test",
+        icon: FileText,
+        color: "bg-orange-500",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "Subject",
+                placeholder: "e.g., History",
+                required: true
+            },
+            {
+                id: "topics",
+                type: "textarea",
+                label: "Topics covered",
+                placeholder: "List the topics going to be on the test...",
+                required: true
+            }
+        ]
+    },
+
+    // 38. Note Summarizer
+    "38": {
+        id: "38",
+        name: "Note Summarizer",
+        description: "Turn your notes into a quick summary",
+        icon: FileMinus,
+        color: "bg-pink-500",
+        inputs: [
+            {
+                id: "notes",
+                type: "textarea",
+                label: "Paste your notes",
+                placeholder: "Paste your detailed notes here...",
+                required: true
+            }
+        ]
+    },
+
+    // 39. Test Prep Questions
+    "39": {
+        id: "39",
+        name: "Test Prep Questions",
+        description: "Practice questions for your upcoming test",
+        icon: Pencil,
+        color: "bg-blue-600",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "Subject",
+                placeholder: "e.g., Chemistry",
+                required: true
+            },
+            {
+                id: "topics",
+                type: "textarea",
+                label: "Topics on the test",
+                placeholder: "What specific topics do you need to practice?",
+                required: true
+            },
+            {
+                id: "type",
+                type: "dropdown",
+                label: "Question type",
+                options: ["Multiple Choice", "Short Answer", "Essay"],
+                defaultValue: "Multiple Choice"
+            }
+        ]
+    },
+
+    // 40. Memory Techniques
+    "40": {
+        id: "40",
+        name: "Memory Techniques",
+        description: "Get ideas for remembering information",
+        icon: Brain,
+        color: "bg-purple-500",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "What do you need to remember?",
+                placeholder: "List the facts or items you need to memorize...",
+                required: true
+            },
+            {
+                id: "method",
+                type: "dropdown",
+                label: "Memory type",
+                options: ["Acronym", "Rhyme", "Story", "Visualization"],
+                defaultValue: "Acronym"
             }
         ]
     }
