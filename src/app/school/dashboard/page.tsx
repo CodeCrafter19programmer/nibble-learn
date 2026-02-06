@@ -87,48 +87,71 @@ export default function SchoolDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                     className={cn(
-                        "lg:col-span-2 border rounded-xl p-6",
+                        "md:col-span-2 border rounded-xl p-6 relative overflow-hidden",
                         isLight ? "bg-white border-slate-100 shadow-sm" : "bg-slate-900 border-slate-800"
                     )}
                 >
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex justify-between items-center mb-8 relative z-10">
                         <div>
                             <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>Platform Usage Trends</h3>
-                            <p className="text-sm text-slate-500">Student vs Teacher activity over time</p>
+                            <p className={cn("text-xs font-medium", isLight ? "text-slate-500" : "text-slate-400")}>Student vs Teacher activity over time</p>
                         </div>
                         <select className={cn(
-                            "text-sm rounded-full px-3 py-1.5 focus:ring-2 focus:ring-blue-500 outline-none border font-medium cursor-pointer",
+                            "text-xs font-medium p-1.5 rounded-lg border outline-none",
                             isLight
                                 ? "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                                : "bg-slate-800 border-slate-700 text-slate-300"
+                                : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
                         )}>
                             <option>Last 30 Days</option>
                             <option>Last 7 Days</option>
-                            <option>Year to Date</option>
+                            <option>Last 90 Days</option>
                         </select>
                     </div>
 
-                    {/* Mock Chart Visual - Clean Blue Theme */}
-                    <div className="h-64 w-full flex items-end justify-between gap-3 px-2">
-                        {[40, 65, 45, 70, 55, 80, 60, 90, 75, 85, 95, 80].map((h, i) => (
-                            <div key={i} className={cn("w-full rounded-t-lg relative group", isLight ? "bg-slate-50" : "bg-slate-800/50")}>
+                    <div className="h-48 flex items-end justify-between gap-2 relative z-10 pl-2">
+                        {/* Grid Lines */}
+                        <div className="absolute inset-0 flex flex-col justify-between -z-10 text-[10px] text-slate-400 font-medium">
+                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
+                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
+                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
+                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
+                        </div>
+
+                        {[
+                            { d: "Mon", s: 65, t: 30 },
+                            { d: "Tue", s: 80, t: 45 },
+                            { d: "Wed", s: 95, t: 60 },
+                            { d: "Thu", s: 50, t: 25 },
+                            { d: "Fri", s: 85, t: 50 },
+                            { d: "Sat", s: 30, t: 15 },
+                            { d: "Sun", s: 20, t: 10 },
+                            { d: "Mon", s: 75, t: 40 },
+                            { d: "Tue", s: 90, t: 65 },
+                            { d: "Wed", s: 88, t: 55 },
+                            { d: "Thu", s: 60, t: 35 },
+                            { d: "Fri", s: 92, t: 70 },
+                            { d: "Sat", s: 40, t: 20 },
+                            { d: "Sun", s: 25, t: 12 }
+                        ].map((day, i) => (
+                            <div key={i} className="flex-1 flex flex-col justify-end gap-1 h-full group relative">
+                                {/* Tooltip */}
+                                <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
+                                    <div className="font-bold">{day.d}</div>
+                                    <div>Students: {day.s}%</div>
+                                    <div>Teachers: {day.t}%</div>
+                                </div>
+
+                                {/* Bars */}
                                 <div
-                                    className="absolute bottom-0 left-0 right-0 bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors rounded-t-lg"
-                                    style={{ height: `${h}%` }}
+                                    className="w-full bg-blue-500/80 rounded-t-sm hover:bg-blue-500 transition-colors cursor-pointer"
+                                    style={{ height: `${day.s * 0.7}%` }}
                                 />
-                                {/* Overlay Bar */}
                                 <div
-                                    className="absolute bottom-0 left-1 right-1 bg-gradient-to-t from-blue-600 to-cyan-400 rounded-t-md shadow-lg shadow-blue-500/20 transition-all group-hover:to-cyan-300"
-                                    style={{ height: `${h * 0.7}%` }}
+                                    className="w-full bg-indigo-400/50 rounded-t-sm hover:bg-indigo-400 transition-colors cursor-pointer"
+                                    style={{ height: `${day.t * 0.5}%` }}
                                 />
                             </div>
                         ))}
-                    </div>
-                    <div className="flex justify-between mt-4 text-xs text-slate-400 uppercase font-bold tracking-wider">
-                        <span>W1</span>
-                        <span>W2</span>
-                        <span>W3</span>
-                        <span>W4</span>
                     </div>
                 </motion.div>
 

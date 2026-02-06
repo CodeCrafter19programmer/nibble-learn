@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Menu, X, Bell, Search, Settings, CreditCard, User, LogOut } from "lucide-react"
+import { Menu, X, Bell, Settings, CreditCard, User, LogOut } from "lucide-react"
 import { SchoolSidebar } from "@/components/school/SchoolSidebar"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTheme } from "@/components/providers/ThemeContext"
@@ -55,20 +55,6 @@ export default function SchoolLayout({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="relative hidden md:block w-64">
-                        <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4", isLight ? "text-slate-400" : "text-slate-500")} />
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            className={cn(
-                                "w-full border rounded-full pl-9 pr-4 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all",
-                                isLight
-                                    ? "bg-slate-100 border-transparent text-slate-900 placeholder:text-slate-500 focus:bg-white"
-                                    : "bg-slate-900 border-slate-800 text-slate-200 placeholder:text-slate-500"
-                            )}
-                        />
-                    </div>
-
                     <div className={cn("h-6 w-px mx-1", isLight ? "bg-slate-200" : "bg-slate-800")} />
 
                     <button className={cn("relative p-2 transition-colors", isLight ? "text-slate-500 hover:text-blue-600" : "text-slate-400 hover:text-white")}>
