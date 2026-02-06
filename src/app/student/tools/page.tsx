@@ -2,10 +2,11 @@
 
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
 import {
     Search, Sparkles, BookOpen, PenTool, Calculator, MessageSquare, Music, Video, Star,
     FileText, AlignLeft, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, Minimize2,
-    RefreshCw, Zap, Mail, Scale, FileSearch, Link, BookA, BookOpenCheck, Volume2, ArrowDown,
+    RefreshCw, Zap, Mail, Scale, FileSearch, Link as LinkIcon, BookA, BookOpenCheck, Volume2, ArrowDown,
     Focus, UserSearch, Lightbulb, BrainCircuit, PieChart, Triangle, Sigma,
     Bot, Users, ClipboardCheck, Layers, FileInput, FileMinus, ClipboardList, Brain,
     Book, Feather, Image as ImageIcon, Presentation, UserPlus, Terminal, Hourglass,
@@ -45,7 +46,7 @@ const tools = [
     { id: 14, name: "Email Writer", category: "writing", icon: Mail, color: "bg-blue-100 text-blue-600", desc: "Write a professional email to your teacher." },
     { id: 15, name: "Counter-Argument", category: "writing", icon: Scale, color: "bg-blue-100 text-blue-600", desc: "Find opposing views for your essay." },
     { id: 16, name: "Evidence Finder", category: "writing", icon: FileSearch, color: "bg-blue-100 text-blue-600", desc: "Get ideas for evidence to support claims." },
-    { id: 17, name: "Transition Words", category: "writing", icon: Link, color: "bg-blue-100 text-blue-600", desc: "Find words to connect your ideas." },
+    { id: 17, name: "Transition Words", category: "writing", icon: LinkIcon, color: "bg-blue-100 text-blue-600", desc: "Find words to connect your ideas." },
     { id: 18, name: "Vocabulary Builder", category: "writing", icon: BookA, color: "bg-blue-100 text-blue-600", desc: "Learn new words related to your topic." },
 
     // Reading & Learning
@@ -345,6 +346,7 @@ export default function StudentToolsPage() {
                                     : "bg-white/[0.08] border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-white/[0.12] hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(30,78,216,0.35)]"
                             )}
                         >
+                            <Link href={`/student/tools/${tool.id}`} className="absolute inset-0 z-10" />
                             {/* Hot Badge */}
                             {tool.isHot && (
                                 <div className="absolute top-4 right-12 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-[10px] uppercase font-bold tracking-wider flex items-center gap-1">
