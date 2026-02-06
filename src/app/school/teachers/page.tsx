@@ -28,26 +28,146 @@ const teachers = [
 export default function TeacherManagement() {
     const { theme } = useTheme()
     const isLight = theme === 'light'
+    const [teachersData, setTeachersData] = useState(teachers)
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
+    const [filterStatus, setFilterStatus] = useState("All")
     const [searchTerm, setSearchTerm] = useState("")
 
+    const [newTeacher, setNewTeacher] = useState({
+        name: "",
+        email: "",
+        subject: "",
+        status: "Active"
+    })
+
+    const filteredTeachers = teachersData.filter(teacher => {
+        const matchesSearch = teacher.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            teacher.email.toLowerCase().includes(searchTerm.toLowerCase())
+        const matchesFilter = filterStatus === "All" || teacher.status === filterStatus
+        return matchesSearch && matchesFilter
+    })
+
+    const handleAddTeacher = () => {
+        const id = teachersData.length + 1
+        const teacher = {
+            id,
+            ...newTeacher,
+            students: 0,
+            lastLogin: "Never"
+        }
+        setTeachersData([...teachersData, teacher])
+        setNewTeacher({ name: "", email: "", subject: "", status: "Active" })
+        setIsAddModalOpen(false)
+    }
+
+    const handleImport = () => {
+        setTimeout(() => {
+            const newTeachers = [
+                { id: teachersData.length + 1, name: "Imported Teacher 1", email: `import1@school.edu`, subject: "Physics", status: "Active", students: 0, lastLogin: "Never" },
+                { id: teachersData.length + 2, name: "Imported Teacher 2", email: `import2@school.edu`, subject: "Chemistry", status: "Active", students: 0, lastLogin: "Never" }
+            ]
+            setTeachersData([...teachersData, ...newTeachers])
+            setIsImportModalOpen(false)
+        }, 1000)
+    }
+
+    const handleExport = () => {
+        const headers = ["Name", "Email", "Subject", "Status", "Last Login"]
+        const csvContent = [
+            headers.join(","),
+            ...filteredTeachers.map(t => `${t.name},${t.email},${t.subject},${t.status},${t.lastLogin}`)
+        ].join("\n")
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+        const link = document.createElement("a")
+        link.href = URL.createObjectURL(blob)
+        link.download = "teachers_export.csv"
+        link.click()
+    }
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative">
+            {/* Add Teacher Modal */}
+            {isAddModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                    <div className={cn("w-full max-w-md rounded-xl p-6 shadow-2xl", isLight ? "bg-white" : "bg-slate-900 border border-slate-800")}>
+                        <h2 className={cn("text-lg font-bold mb-4", isLight ? "text-slate-900" : "text-white")}>Add New Teacher</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Full Name</label>
+                                <input
+                                    type="text"
+                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
+                                    value={newTeacher.name}
+                                    onChange={e => setNewTeacher({ ...newTeacher, name: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Email</label>
+                                <input
+                                    type="email"
+                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
+                                    value={newTeacher.email}
+                                    onChange={e => setNewTeacher({ ...newTeacher, email: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Subject</label>
+                                <input
+                                    type="text"
+                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
+                                    value={newTeacher.subject}
+                                    onChange={e => setNewTeacher({ ...newTeacher, subject: e.target.value })}
+                                />
+                            </div>
+                            <div className="flex justify-end gap-2 mt-6">
+                                <button onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                                <button onClick={handleAddTeacher} className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Add Teacher</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Import Modal */}
+            {isImportModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                    <div className={cn("w-full max-w-md rounded-xl p-6 shadow-2xl", isLight ? "bg-white" : "bg-slate-900 border border-slate-800")}>
+                        <h2 className={cn("text-lg font-bold mb-4", isLight ? "text-slate-900" : "text-white")}>Bulk Import Teachers</h2>
+                        <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-8 text-center space-y-2">
+                            <Upload className="w-8 h-8 mx-auto text-slate-400" />
+                            <p className="text-sm text-slate-500">Drag and drop a CSV file here, or click to browse</p>
+                        </div>
+                        <div className="flex justify-end gap-2 mt-6">
+                            <button onClick={() => setIsImportModalOpen(false)} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                            <button onClick={handleImport} className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Import Data</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className={cn("text-2xl font-bold", isLight ? "text-slate-900" : "text-white")}>Teacher Management</h1>
                     <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>Manage teacher accounts, subjects, and assignments.</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border",
-                        isLight
-                            ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-                            : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800"
-                    )}>
+                    <button
+                        onClick={() => setIsImportModalOpen(true)}
+                        className={cn(
+                            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border",
+                            isLight
+                                ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+                                : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800"
+                        )}>
                         <Upload className="w-4 h-4" />
                         Bulk Import
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-500/20">
+                    <button
+                        onClick={() => setIsAddModalOpen(true)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-500/20">
                         <Plus className="w-4 h-4" />
                         Add Teacher
                     </button>
@@ -74,18 +194,48 @@ export default function TeacherManagement() {
                         )}
                     />
                 </div>
-                <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <button className={cn(
-                        "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
-                        isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
-                    )}>
-                        <Filter className="w-4 h-4" />
-                        Filter
-                    </button>
-                    <button className={cn(
-                        "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
-                        isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
-                    )}>
+                <div className="flex items-center gap-2 w-full sm:w-auto relative">
+                    <div className="relative">
+                        <button
+                            onClick={() => setIsFilterOpen(!isFilterOpen)}
+                            className={cn(
+                                "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
+                                isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
+                            )}>
+                            <Filter className="w-4 h-4" />
+                            Filter
+                        </button>
+                        {isFilterOpen && (
+                            <div className={cn(
+                                "absolute right-0 top-full mt-2 w-48 rounded-lg shadow-xl border z-20 p-2",
+                                isLight ? "bg-white border-slate-200" : "bg-slate-900 border-slate-800"
+                            )}>
+                                {["All", "Active", "Inactive"].map(status => (
+                                    <button
+                                        key={status}
+                                        onClick={() => {
+                                            setFilterStatus(status)
+                                            setIsFilterOpen(false)
+                                        }}
+                                        className={cn(
+                                            "w-full text-left px-3 py-2 text-sm rounded-md transition-colors",
+                                            filterStatus === status
+                                                ? (isLight ? "bg-indigo-50 text-indigo-600" : "bg-indigo-900/20 text-indigo-400")
+                                                : (isLight ? "hover:bg-slate-50 text-slate-600" : "hover:bg-slate-800 text-slate-300")
+                                        )}
+                                    >
+                                        {status}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <button
+                        onClick={handleExport}
+                        className={cn(
+                            "flex items-center gap-2 px-3 py-2 rounded-lg text-sm border font-medium",
+                            isLight ? "border-slate-200 text-slate-600 hover:bg-slate-50" : "border-slate-800 text-slate-400 hover:bg-slate-800"
+                        )}>
                         <Download className="w-4 h-4" />
                         Export
                     </button>
@@ -113,49 +263,57 @@ export default function TeacherManagement() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                            {teachers.map((teacher) => (
-                                <tr key={teacher.id} className={cn(
-                                    "transition-colors",
-                                    isLight ? "hover:bg-slate-50" : "hover:bg-slate-800/50"
-                                )}>
-                                    <td className="px-6 py-4 font-medium">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xs text-white font-bold">
-                                                {teacher.name.charAt(0)}
+                            {filteredTeachers.length > 0 ? (
+                                filteredTeachers.map((teacher) => (
+                                    <tr key={teacher.id} className={cn(
+                                        "transition-colors",
+                                        isLight ? "hover:bg-slate-50" : "hover:bg-slate-800/50"
+                                    )}>
+                                        <td className="px-6 py-4 font-medium">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xs text-white font-bold">
+                                                    {teacher.name.charAt(0)}
+                                                </div>
+                                                <div>
+                                                    <div className={isLight ? "text-slate-900" : "text-white"}>{teacher.name}</div>
+                                                    <div className="text-xs text-slate-500 font-normal">{teacher.email}</div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <div className={isLight ? "text-slate-900" : "text-white"}>{teacher.name}</div>
-                                                <div className="text-xs text-slate-500 font-normal">{teacher.email}</div>
+                                        </td>
+                                        <td className="px-6 py-4 text-slate-500">{teacher.subject}</td>
+                                        <td className="px-6 py-4 text-slate-500">{teacher.students}</td>
+                                        <td className="px-6 py-4">
+                                            <span className={cn(
+                                                "px-2 py-1 rounded-full text-xs font-semibold",
+                                                teacher.status === "Active" && (isLight ? "bg-green-100 text-green-700" : "bg-green-900/30 text-green-400"),
+                                                teacher.status === "Inactive" && (isLight ? "bg-slate-100 text-slate-600" : "bg-slate-800 text-slate-400"),
+                                            )}>
+                                                {teacher.status}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-4 text-slate-500">{teacher.lastLogin}</td>
+                                        <td className="px-6 py-4 text-right">
+                                            <div className="flex items-center justify-end gap-2">
+                                                <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-indigo-600 hover:bg-indigo-50" : "text-slate-500 hover:text-indigo-400 hover:bg-slate-800")} title="Edit">
+                                                    <Edit2 className="w-4 h-4" />
+                                                </button>
+                                                <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-blue-600 hover:bg-blue-50" : "text-slate-500 hover:text-blue-400 hover:bg-slate-800")} title="Email Reset">
+                                                    <Mail className="w-4 h-4" />
+                                                </button>
+                                                <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-red-600 hover:bg-red-50" : "text-slate-500 hover:text-red-400 hover:bg-slate-800")} title="Delete">
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500">{teacher.subject}</td>
-                                    <td className="px-6 py-4 text-slate-500">{teacher.students}</td>
-                                    <td className="px-6 py-4">
-                                        <span className={cn(
-                                            "px-2 py-1 rounded-full text-xs font-semibold",
-                                            teacher.status === "Active" && (isLight ? "bg-green-100 text-green-700" : "bg-green-900/30 text-green-400"),
-                                            teacher.status === "Inactive" && (isLight ? "bg-slate-100 text-slate-600" : "bg-slate-800 text-slate-400"),
-                                        )}>
-                                            {teacher.status}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500">{teacher.lastLogin}</td>
-                                    <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2">
-                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-indigo-600 hover:bg-indigo-50" : "text-slate-500 hover:text-indigo-400 hover:bg-slate-800")} title="Edit">
-                                                <Edit2 className="w-4 h-4" />
-                                            </button>
-                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-blue-600 hover:bg-blue-50" : "text-slate-500 hover:text-blue-400 hover:bg-slate-800")} title="Email Reset">
-                                                <Mail className="w-4 h-4" />
-                                            </button>
-                                            <button className={cn("p-1.5 rounded-md transition-colors", isLight ? "text-slate-400 hover:text-red-600 hover:bg-red-50" : "text-slate-500 hover:text-red-400 hover:bg-slate-800")} title="Delete">
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
-                                        </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
+                                        No teachers found matching your filters.
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -164,10 +322,12 @@ export default function TeacherManagement() {
                     "px-6 py-4 border-t flex items-center justify-between",
                     isLight ? "border-slate-200 bg-slate-50" : "border-slate-800 bg-slate-950"
                 )}>
-                    <p className={cn("text-xs", isLight ? "text-slate-500" : "text-slate-400")}>Showing 1-5 of 14 Teachers</p>
+                    <p className={cn("text-xs", isLight ? "text-slate-500" : "text-slate-400")}>
+                        Showing {filteredTeachers.length > 0 ? 1 : 0}-{filteredTeachers.length} of {filteredTeachers.length} teachers
+                    </p>
                     <div className="flex gap-2">
-                        <button className="px-3 py-1 text-xs font-medium rounded border disabled:opacity-50">Previous</button>
-                        <button className="px-3 py-1 text-xs font-medium rounded border bg-white text-black">Next</button>
+                        <button className="px-3 py-1 text-xs font-medium rounded border disabled:opacity-50" disabled>Previous</button>
+                        <button className="px-3 py-1 text-xs font-medium rounded border bg-white text-black" disabled>Next</button>
                     </div>
                 </div>
             </div>
