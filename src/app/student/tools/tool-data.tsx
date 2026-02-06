@@ -4,6 +4,7 @@ import {
     Calculator, FileSpreadsheet, Lightbulb, PieChart, Triangle, HelpCircle, Sparkles,
     Shapes, BookMarked, MessageCircle, Users, ClipboardCheck, Layers, FileMinus, Pencil, Brain,
     Feather, Image, Presentation, PersonStanding, Music, Key, UserCheck, Languages, User, Clock,
+    Calendar, Layout, ListChecks, HeartHandshake
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -1557,6 +1558,132 @@ export const toolsData: Record<string, ToolConfig> = {
                 label: "To Language",
                 options: ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Italian", "Portuguese"],
                 defaultValue: "Spanish"
+            }
+        ]
+    },
+
+    // 56. Note-Taking Template
+    "56": {
+        id: "56",
+        name: "Note-Taking Template",
+        description: "Organize your notes better",
+        icon: Layout,
+        color: "bg-teal-500",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "Subject or Topic",
+                placeholder: "e.g., Biology - Cell Structure",
+                required: true
+            },
+            {
+                id: "style",
+                type: "dropdown",
+                label: "Note Style",
+                options: ["Cornell Method", "Outline", "Mind Map", "Chart/Table"],
+                defaultValue: "Cornell Method"
+            },
+            {
+                id: "concepts",
+                type: "textarea",
+                label: "Key Concepts to Cover (Optional)",
+                placeholder: "List main ideas..."
+            }
+        ]
+    },
+
+    // 57. Homework Helper
+    "57": {
+        id: "57",
+        name: "Homework Helper",
+        description: "Get help understanding your homework",
+        icon: HelpCircle,
+        color: "bg-orange-500",
+        inputs: [
+            {
+                id: "subject",
+                type: "text",
+                label: "Subject",
+                placeholder: "e.g., Math",
+                required: true
+            },
+            {
+                id: "assignment",
+                type: "textarea",
+                label: "Assignment or Question",
+                placeholder: "Paste the question you're stuck on...",
+                required: true
+            },
+            {
+                id: "issue",
+                type: "textarea",
+                label: "Where are you stuck?",
+                placeholder: "Explain what part is confusing...",
+                required: true
+            }
+        ]
+    },
+
+    // 58. Home Planner (Time Management)
+    "58": {
+        id: "58",
+        name: "Home Planner",
+        description: "Plan your study time and assignments",
+        icon: Calendar,
+        color: "bg-blue-500",
+        inputs: [
+            {
+                id: "tasks",
+                type: "textarea",
+                label: "List your tasks/homework",
+                placeholder: "1. Math worksheet\n2. Read history chapter...",
+                required: true
+            },
+            {
+                id: "time",
+                type: "text",
+                label: "How much time do you have?",
+                placeholder: "e.g., 2 hours",
+                required: true
+            },
+            {
+                id: "priority",
+                type: "dropdown",
+                label: "Prioritize by",
+                options: ["Due Date", "Difficulty", "Subject"],
+                defaultValue: "Due Date"
+            }
+        ]
+    },
+
+    // 59. Peer Feedback
+    "59": {
+        id: "59",
+        name: "Peer Feedback",
+        description: "Give helpful feedback to classmates",
+        icon: HeartHandshake,
+        color: "bg-pink-500",
+        inputs: [
+            {
+                id: "workType",
+                type: "text",
+                label: "What are you reviewing?",
+                placeholder: "e.g., Essay, Presentation, Art Project",
+                required: true
+            },
+            {
+                id: "criteria",
+                type: "checkbox",
+                label: "Focus Areas",
+                options: ["Clarity", "Creativity", "Effort", "Meeting Requirements"]
+            },
+            {
+                id: "tone",
+                type: "dropdown",
+                label: "Feedback Tone",
+                options: ["Encouraging", "Constructive", "Questioning"],
+                defaultValue: "Encouraging"
             }
         ]
     }
