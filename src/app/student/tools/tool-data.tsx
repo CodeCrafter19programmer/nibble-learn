@@ -1,5 +1,6 @@
 import {
-    FileText, AlignLeft, FileSearch, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, MessageSquare
+    FileText, AlignLeft, FileSearch, Quote, Target, ArrowRight, CheckCircle, PenLine, Check, MessageSquare,
+    Minimize2, RotateCw, Book, Mail, Scale, Link, BookA, BookOpen, Volume2, ArrowDown
 } from "lucide-react"
 
 export type ToolInputType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'number'
@@ -343,6 +344,249 @@ export const toolsData: Record<string, ToolConfig> = {
                 // Note: For checkboxes, we might handle options differently in valid implementation
                 // For now, simpler implementation:
                 options: ["Grammar & Spelling", "Organization", "Word Choice", "Evidence & Examples"]
+            }
+        ]
+    },
+
+    // 11. Text Summarizer
+    "11": {
+        id: "11",
+        name: "Text Summarizer",
+        studentFriendlyName: "Summarize this for me",
+        description: "Summarize long texts to help you understand the main ideas",
+        icon: Minimize2,
+        color: "bg-orange-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Paste your text here",
+                placeholder: "Paste the article or text you want to summarize...",
+                required: true
+            },
+            {
+                id: "length",
+                type: "dropdown",
+                label: "Summary Length",
+                options: ["Short", "Medium", "Detailed"],
+                defaultValue: "Medium"
+            }
+        ]
+    },
+
+    // 12. Text Rewriter
+    "12": {
+        id: "12",
+        name: "Text Rewriter",
+        description: "Rewrite text in your own words to avoid copying",
+        icon: RotateCw,
+        color: "bg-green-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Original Text",
+                placeholder: "Paste the text you want to rewrite...",
+                required: true
+            },
+            {
+                id: "style",
+                type: "dropdown",
+                label: "How should I rewrite it?",
+                options: ["Simpler", "More detailed", "Different words"],
+                defaultValue: "Simpler"
+            }
+        ]
+    },
+
+    // 13. Word Choice Improver
+    "13": {
+        id: "13",
+        name: "Word Choice Improver",
+        description: "Find better words to make your writing stronger",
+        icon: Book,
+        color: "bg-indigo-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Your sentence or paragraph",
+                placeholder: "Paste your text here...",
+                required: true
+            },
+            {
+                id: "goal",
+                type: "checkbox",
+                label: "What do you want to improve?",
+                options: ["Stronger verbs", "More descriptive adjectives", "Academic vocabulary", "Remove repetition"]
+            }
+        ]
+    },
+
+    // 14. Email Writer
+    "14": {
+        id: "14",
+        name: "Email Writer",
+        description: "Write a professional email to your teacher",
+        icon: Mail,
+        color: "bg-blue-400",
+        inputs: [
+            {
+                id: "recipient",
+                type: "text",
+                label: "Who are you emailing?",
+                placeholder: "e.g., My teacher, The Principal",
+                required: true
+            },
+            {
+                id: "topic",
+                type: "textarea",
+                label: "What is the email about?",
+                placeholder: "Explain what you need to say...",
+                required: true
+            },
+            {
+                id: "tone",
+                type: "dropdown",
+                label: "Tone",
+                options: ["Formal", "Friendly", "Apologetic"],
+                defaultValue: "Formal"
+            }
+        ]
+    },
+
+    // 15. Counter-Argument Generator
+    "15": {
+        id: "15",
+        name: "Counter-Argument Generator",
+        description: "Find opposing views for your argumentative essay",
+        icon: Scale,
+        color: "bg-red-400",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Topic",
+                placeholder: "e.g., School Uniforms",
+                required: true
+            },
+            {
+                id: "argument",
+                type: "textarea",
+                label: "Your argument/position",
+                placeholder: "What is your stance on this topic?",
+                required: true
+            }
+        ]
+    },
+
+    // 16. Evidence Finder
+    "16": {
+        id: "16",
+        name: "Evidence Finder",
+        description: "Get ideas for evidence to support your claims",
+        icon: FileSearch,
+        color: "bg-yellow-400",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Topic Area",
+                placeholder: "e.g., Renewable Energy",
+                required: true
+            },
+            {
+                id: "claim",
+                type: "textarea",
+                label: "Your claim or argument",
+                placeholder: "What specific point are you trying to prove?",
+                required: true
+            }
+        ]
+    },
+
+    // 17. Transition Words Helper
+    "17": {
+        id: "17",
+        name: "Transition Words Helper",
+        description: "Find the right words to connect your ideas",
+        icon: Link,
+        color: "bg-cyan-400",
+        inputs: [
+            {
+                id: "type",
+                type: "dropdown",
+                label: "What kind of transition?",
+                options: ["Addition", "Contrast", "Cause/Effect", "Time", "Example", "Conclusion"],
+                defaultValue: "Addition"
+            }
+        ]
+    },
+
+    // 18. Vocabulary Builder
+    "18": {
+        id: "18",
+        name: "Vocabulary Builder",
+        description: "Learn new words related to your topic",
+        icon: BookA,
+        color: "bg-purple-400",
+        inputs: [
+            {
+                id: "topic",
+                type: "text",
+                label: "Topic or Subject",
+                placeholder: "e.g., Ecology, The Civil War",
+                required: true
+            }
+        ]
+    },
+
+    // 19. Reading Comprehension Questions
+    "19": {
+        id: "19",
+        name: "Reading Comprehension Questions",
+        description: "Answer questions about what you read to check understanding",
+        icon: BookOpen,
+        color: "bg-emerald-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Paste the text you read",
+                placeholder: "Paste the story or article here...",
+                required: true
+            },
+            {
+                id: "difficulty",
+                type: "dropdown",
+                label: "Question Difficulty",
+                options: ["Easy", "Medium", "Hard"],
+                defaultValue: "Medium"
+            }
+        ]
+    },
+
+    // 20. Text-to-Speech
+    "20": {
+        id: "20",
+        name: "Text-to-Speech",
+        description: "Listen to text read aloud",
+        icon: Volume2,
+        color: "bg-pink-400",
+        inputs: [
+            {
+                id: "content",
+                type: "textarea",
+                label: "Text to read",
+                placeholder: "Paste the text you want to listen to...",
+                required: true
+            },
+            {
+                id: "speed",
+                type: "dropdown",
+                label: "Reading Speed",
+                options: ["Slow", "Normal", "Fast"],
+                defaultValue: "Normal"
             }
         ]
     }
