@@ -14,5 +14,6 @@ export type ToolConfig = {
     icon: any
     color: string
     inputs: ToolInput[]
+    category?: string
     systemPrompt?: string
 }
