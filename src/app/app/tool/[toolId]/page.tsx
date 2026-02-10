@@ -26,6 +26,14 @@ export default function ToolPage() {
     const [isGenerating, setIsGenerating] = useState(false)
     const [output, setOutput] = useState("")
     const [formData, setFormData] = useState<Record<string, string>>({})
+    const [mobileView, setMobileView] = useState<'input' | 'output'>('input')
+
+    // Auto-switch to output view on mobile when generating starts
+    useEffect(() => {
+        if (isGenerating && window.innerWidth < 768) {
+            setMobileView('output')
+        }
+    }, [isGenerating])
 
     useEffect(() => {
         // Load config based on ID
@@ -65,7 +73,10 @@ export default function ToolPage() {
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="w-full md:w-1/2 lg:w-5/12 flex flex-col h-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden"
+                className={cn(
+                    "w-full md:w-1/2 lg:w-5/12 flex flex-col h-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all",
+                    mobileView === 'output' ? "hidden md:flex" : "flex"
+                )}
             >
                 {/* Header */}
                 <div className="p-6 border-b border-slate-800 bg-slate-900/50">
@@ -151,8 +162,17 @@ export default function ToolPage() {
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="flex-1 flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-2xl relative"
+                className={cn(
+                    "flex-1 flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-2xl relative transition-all",
+                    mobileView === 'input' ? "hidden md:flex" : "flex"
+                )}
             >
+                {/* Mobile: Back to Input Button */}
+                <div className="md:hidden p-2 bg-slate-50 border-b border-slate-200 flex justify-start">
+                    <Button variant="ghost" size="sm" onClick={() => setMobileView('input')} className="text-slate-500">
+                        <ArrowLeft className="w-4 h-4 mr-2" /> Edit Inputs
+                    </Button>
+                </div>
                 {/* Output Header */}
                 <div className="h-14 border-b border-slate-100 flex items-center justify-between px-6 bg-white">
                     <h2 className="font-semibold text-slate-700 flex items-center gap-2">
