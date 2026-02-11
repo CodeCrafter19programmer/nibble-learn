@@ -19,11 +19,11 @@ export default function ToolPage() {
     const [formData, setFormData] = useState<Record<string, any>>({})
     const [isLoading, setIsLoading] = useState(false)
     const [result, setResult] = useState<string | null>(null)
-    const [mobileView, setMobileView] = useState<'input' | 'output'>('input')
+    const [mobileView, setMobileView] = useState<'input' | 'output'>('input') // Actually used as general viewMode now
 
-    // Auto-switch to output view on mobile when generating starts
+    // Auto-switch to output view when generating starts
     useEffect(() => {
-        if (isLoading && window.innerWidth < 1024) {
+        if (isLoading) {
             setMobileView('output')
             window.scrollTo({ top: 0, behavior: 'smooth' })
         }
@@ -84,18 +84,18 @@ export default function ToolPage() {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+            <div className="relative max-w-3xl mx-auto">
 
                 {/* Input Section - Glass Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
-                        "p-6 md:p-8 rounded-[24px] backdrop-blur-xl border transition-all",
+                        "p-6 md:p-8 rounded-[24px] backdrop-blur-xl border transition-all duration-500 ease-in-out",
                         isLight
                             ? "bg-white/70 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
                             : "bg-white/[0.05] border-white/[0.1] shadow-[0_8px_32px_rgba(0,0,0,0.35)]",
-                        mobileView === 'output' ? "hidden lg:block" : "block"
+                        mobileView === 'output' ? "opacity-0 h-0 overflow-hidden py-0 my-0 border-0 pointer-events-none" : "opacity-100 h-auto"
                     )}
                 >
                     {/* Tool Header */}
@@ -233,15 +233,15 @@ export default function ToolPage() {
                 {/* Output Section */}
                 <div className="relative">
                     <AnimatePresence>
-                        {/* Mobile: Back to Input Button (only when output acts as full page) */}
-                        <div className={cn("lg:hidden mb-4", mobileView === 'input' ? 'hidden' : 'block')}>
+                        {/* Back to Input Button */}
+                        <div className={cn("mb-6 flex justify-start", mobileView === 'input' ? 'hidden' : 'block')}>
                             <button
                                 onClick={() => setMobileView('input')}
                                 className={cn(
-                                    "flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg border shadow-sm transition-all w-full justify-center",
+                                    "flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl border shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0",
                                     isLight
-                                        ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-                                        : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
+                                        ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:shadow-md"
+                                        : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:border-slate-600 hover:shadow-lg hover:shadow-black/20"
                                 )}
                             >
                                 <ArrowLeft className="w-4 h-4" /> Edit Inputs
@@ -258,7 +258,7 @@ export default function ToolPage() {
                                     isLight
                                         ? "bg-white/80 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ring-1 ring-blue-100"
                                         : "bg-[#0F172A]/80 border-white/10 shadow-2xl",
-                                    mobileView === 'input' ? "hidden lg:flex" : "flex"
+                                    mobileView === 'input' ? "hidden" : "flex"
                                 )}
                             >
                                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-dashed border-slate-200 dark:border-white/10">
@@ -304,7 +304,7 @@ export default function ToolPage() {
                         <div className={cn(
                             "h-full rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center p-12 text-center opacity-60 min-h-[400px]",
                             isLight ? "border-slate-300 bg-slate-50/50" : "border-white/10 bg-white/5",
-                            mobileView === 'input' ? "hidden lg:flex" : "flex"
+                            mobileView === 'input' ? "hidden" : "flex"
                         )}>
                             <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center mb-4">
                                 <Sparkles className="w-8 h-8 text-slate-400" />
@@ -318,7 +318,7 @@ export default function ToolPage() {
                         <div className={cn(
                             "h-full rounded-[24px] border border-transparent flex flex-col items-center justify-center p-12 text-center min-h-[400px]",
                             isLight ? "bg-white/40" : "bg-white/5",
-                            mobileView === 'input' ? "hidden lg:flex" : "flex"
+                            mobileView === 'input' ? "hidden" : "flex"
                         )}>
                             <div className="relative">
                                 <div className="w-20 h-20 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin" />
