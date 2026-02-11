@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { Logo } from "@/components/logo"
+import { TokenUsage } from "@/components/common/TokenUsage"
 
 interface SidebarProps {
     onMobileClose?: () => void
@@ -39,6 +40,7 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
     const pathname = usePathname()
     const { theme, toggleTheme } = useTheme()
     const isLight = theme === 'light'
+    const isPlusUser = true // Simulated Plus status for demonstration
 
     return (
         <aside className={cn(
@@ -90,6 +92,12 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
 
             {/* Bottom Section */}
             <div className={cn("p-4 border-t space-y-2", isLight ? "border-violet-200" : "border-white/10")}>
+
+                {/* Token Usage for Plus Users */}
+                {isPlusUser && (
+                    <TokenUsage usagePercentage={45} theme={theme} userType="teacher" />
+                )}
+
                 {/* Theme Toggle */}
                 <button
                     onClick={toggleTheme}
@@ -134,7 +142,7 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
                     </div>
                     <div className="flex-1 overflow-hidden">
                         <h4 className={cn("text-sm font-bold truncate transition-colors cursor-pointer", isLight ? "text-black hover:text-violet-700" : "text-white hover:text-violet-300")}>Jane Smith</h4>
-                        <p className={cn("text-xs truncate", isLight ? "text-slate-600" : "text-slate-400")}>Free Plan</p>
+                        <p className={cn("text-xs truncate", isLight ? "text-slate-600" : "text-slate-400")}>{isPlusUser ? "Plus Plan" : "Free Plan"}</p>
                     </div>
                     <Link href="/app/settings" className={cn("transition-colors", isLight ? "text-slate-400 hover:text-violet-700" : "text-slate-500 hover:text-white")}>
                         <Settings className="w-4 h-4" />
