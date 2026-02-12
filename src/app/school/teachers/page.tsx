@@ -11,7 +11,10 @@ import {
     Trash2,
     RefreshCw,
     Edit2,
-    Mail
+    Edit2,
+    Mail,
+    Send,
+    UserPlus
 } from "lucide-react"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { cn } from "@/lib/utils"
@@ -30,16 +33,16 @@ export default function TeacherManagement() {
     const isLight = theme === 'light'
     const [teachersData, setTeachersData] = useState(teachers)
     const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-    const [isImportModalOpen, setIsImportModalOpen] = useState(false)
+    const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [filterStatus, setFilterStatus] = useState("All")
     const [searchTerm, setSearchTerm] = useState("")
 
-    const [newTeacher, setNewTeacher] = useState({
+    const [inviteForm, setInviteForm] = useState({
         name: "",
         email: "",
-        subject: "",
-        status: "Active"
+        role: "",
+        department: ""
     })
 
     const filteredTeachers = teachersData.filter(teacher => {
@@ -49,29 +52,30 @@ export default function TeacherManagement() {
         return matchesSearch && matchesFilter
     })
 
-    const handleAddTeacher = () => {
-        const id = teachersData.length + 1
-        const teacher = {
-            id,
-            ...newTeacher,
-            students: 0,
-            lastLogin: "Never"
-        }
-        setTeachersData([...teachersData, teacher])
-        setNewTeacher({ name: "", email: "", subject: "", status: "Active" })
-        setIsAddModalOpen(false)
-    }
+    const handleInvite = () => {
+        // Simulate sending email
+        console.log(`Sending invite to ${inviteForm.email}...`)
 
-    const handleImport = () => {
         setTimeout(() => {
-            const newTeachers = [
-                { id: teachersData.length + 1, name: "Imported Teacher 1", email: `import1@school.edu`, subject: "Physics", status: "Active", students: 0, lastLogin: "Never" },
-                { id: teachersData.length + 2, name: "Imported Teacher 2", email: `import2@school.edu`, subject: "Chemistry", status: "Active", students: 0, lastLogin: "Never" }
-            ]
-            setTeachersData([...teachersData, ...newTeachers])
-            setIsImportModalOpen(false)
+            const id = teachersData.length + 1
+            const newTeacher = {
+                id,
+                name: inviteForm.name,
+                email: inviteForm.email,
+                subject: inviteForm.department, // Mapping department to subject for now as per table structure
+                status: "Active", // Or "Invited"
+                students: 0,
+                lastLogin: "Never"
+            }
+            setTeachersData([...teachersData, newTeacher])
+            setInviteForm({ name: "", email: "", role: "", department: "" })
+            setIsInviteModalOpen(false)
+            // Ideally show a toast here
+            alert(`Invite sent to ${inviteForm.name}!`)
         }, 1000)
     }
+
+
 
     const handleExport = () => {
         const headers = ["Name", "Email", "Subject", "Status", "Last Login"]
@@ -89,60 +93,65 @@ export default function TeacherManagement() {
 
     return (
         <div className="space-y-6 relative">
-            {/* Add Teacher Modal */}
-            {isAddModalOpen && (
+            {/* Invite Teacher Modal */}
+            {isInviteModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
                     <div className={cn("w-full max-w-md rounded-xl p-6 shadow-2xl", isLight ? "bg-white" : "bg-slate-900 border border-slate-800")}>
-                        <h2 className={cn("text-lg font-bold mb-4", isLight ? "text-slate-900" : "text-white")}>Add New Teacher</h2>
+                        <h2 className={cn("text-lg font-bold mb-4", isLight ? "text-slate-900" : "text-white")}>Invite New Teacher</h2>
+                        <p className={cn("text-sm mb-6", isLight ? "text-slate-500" : "text-slate-400")}>
+                            Enter the teacher's details below. An invitation email will be sent to them to join the school.
+                        </p>
+
                         <div className="space-y-4">
                             <div>
-                                <label className="text-sm font-medium mb-1 block">Full Name</label>
+                                <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Full Name</label>
                                 <input
                                     type="text"
-                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
-                                    value={newTeacher.name}
-                                    onChange={e => setNewTeacher({ ...newTeacher, name: e.target.value })}
+                                    placeholder="e.g. Jane Doe"
+                                    className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
+                                    value={inviteForm.name}
+                                    onChange={e => setInviteForm({ ...inviteForm, name: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="text-sm font-medium mb-1 block">Email</label>
+                                <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Email Address</label>
                                 <input
                                     type="email"
-                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
-                                    value={newTeacher.email}
-                                    onChange={e => setNewTeacher({ ...newTeacher, email: e.target.value })}
+                                    placeholder="e.g. jane@school.edu"
+                                    className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
+                                    value={inviteForm.email}
+                                    onChange={e => setInviteForm({ ...inviteForm, email: e.target.value })}
                                 />
                             </div>
-                            <div>
-                                <label className="text-sm font-medium mb-1 block">Subject</label>
-                                <input
-                                    type="text"
-                                    className={cn("w-full p-2 rounded-lg border", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-800 border-slate-700")}
-                                    value={newTeacher.subject}
-                                    onChange={e => setNewTeacher({ ...newTeacher, subject: e.target.value })}
-                                />
-                            </div>
-                            <div className="flex justify-end gap-2 mt-6">
-                                <button onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
-                                <button onClick={handleAddTeacher} className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Add Teacher</button>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Role / Title</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Math Teacher"
+                                        className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
+                                        value={inviteForm.role}
+                                        onChange={e => setInviteForm({ ...inviteForm, role: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Department</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Mathematics"
+                                        className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
+                                        value={inviteForm.department}
+                                        onChange={e => setInviteForm({ ...inviteForm, department: e.target.value })}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            )}
 
-            {/* Import Modal */}
-            {isImportModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <div className={cn("w-full max-w-md rounded-xl p-6 shadow-2xl", isLight ? "bg-white" : "bg-slate-900 border border-slate-800")}>
-                        <h2 className={cn("text-lg font-bold mb-4", isLight ? "text-slate-900" : "text-white")}>Bulk Import Teachers</h2>
-                        <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-8 text-center space-y-2">
-                            <Upload className="w-8 h-8 mx-auto text-slate-400" />
-                            <p className="text-sm text-slate-500">Drag and drop a CSV file here, or click to browse</p>
-                        </div>
-                        <div className="flex justify-end gap-2 mt-6">
-                            <button onClick={() => setIsImportModalOpen(false)} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Cancel</button>
-                            <button onClick={handleImport} className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Import Data</button>
+                        <div className="flex justify-end gap-3 mt-8">
+                            <button onClick={() => setIsInviteModalOpen(false)} className={cn("px-4 py-2.5 text-sm font-medium rounded-lg transition-colors", isLight ? "hover:bg-slate-100 text-slate-600" : "hover:bg-slate-800 text-slate-300")}>Cancel</button>
+                            <button onClick={handleInvite} className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/20 transition-all active:scale-95">
+                                <Send className="w-4 h-4" /> Send Invite
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -155,21 +164,10 @@ export default function TeacherManagement() {
                 </div>
                 <div className="flex items-center gap-2">
                     <button
-                        onClick={() => setIsImportModalOpen(true)}
-                        className={cn(
-                            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border",
-                            isLight
-                                ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
-                                : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800"
-                        )}>
-                        <Upload className="w-4 h-4" />
-                        Bulk Import
-                    </button>
-                    <button
-                        onClick={() => setIsAddModalOpen(true)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-500/20">
-                        <Plus className="w-4 h-4" />
-                        Add Teacher
+                        onClick={() => setIsInviteModalOpen(true)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/25 active:scale-95">
+                        <UserPlus className="w-4 h-4" />
+                        Invite Teacher
                     </button>
                 </div>
             </div>
