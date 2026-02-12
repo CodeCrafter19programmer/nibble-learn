@@ -40,8 +40,7 @@ export default function TeacherManagement() {
     const [inviteForm, setInviteForm] = useState({
         name: "",
         email: "",
-        role: "",
-        department: ""
+        role: "Teacher"
     })
 
     const filteredTeachers = teachersData.filter(teacher => {
@@ -61,13 +60,13 @@ export default function TeacherManagement() {
                 id,
                 name: inviteForm.name,
                 email: inviteForm.email,
-                subject: inviteForm.department, // Mapping department to subject for now as per table structure
+                subject: inviteForm.role === "Admin" ? "Administration" : "General", // Placeholder subject logic
                 status: "Active", // Or "Invited"
                 students: 0,
                 lastLogin: "Never"
             }
             setTeachersData([...teachersData, newTeacher])
-            setInviteForm({ name: "", email: "", role: "", department: "" })
+            setInviteForm({ name: "", email: "", role: "Teacher" })
             setIsInviteModalOpen(false)
             // Ideally show a toast here
             alert(`Invite sent to ${inviteForm.name}!`)
@@ -122,26 +121,25 @@ export default function TeacherManagement() {
                                     onChange={e => setInviteForm({ ...inviteForm, email: e.target.value })}
                                 />
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Role / Title</label>
-                                    <input
-                                        type="text"
-                                        placeholder="e.g. Math Teacher"
-                                        className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
+                            <div>
+                                <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Role / Title</label>
+                                <div className="relative">
+                                    <select
+                                        className={cn(
+                                            "w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer",
+                                            isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white"
+                                        )}
                                         value={inviteForm.role}
                                         onChange={e => setInviteForm({ ...inviteForm, role: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className={cn("text-xs font-bold uppercase tracking-wider mb-1 block", isLight ? "text-slate-500" : "text-slate-400")}>Department</label>
-                                    <input
-                                        type="text"
-                                        placeholder="e.g. Mathematics"
-                                        className={cn("w-full p-2.5 rounded-lg border outline-none focus:ring-2 focus:ring-blue-500/20 transition-all", isLight ? "bg-slate-50 border-slate-200 focus:border-blue-500 text-slate-800" : "bg-slate-800 border-slate-700 focus:border-blue-500 text-white")}
-                                        value={inviteForm.department}
-                                        onChange={e => setInviteForm({ ...inviteForm, department: e.target.value })}
-                                    />
+                                    >
+                                        <option value="Teacher">Teacher</option>
+                                        <option value="Admin">Admin</option>
+                                    </select>
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
+                                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
