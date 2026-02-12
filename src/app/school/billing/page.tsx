@@ -62,7 +62,7 @@ export default function BillingOverview() {
 
                             <div>
                                 <div className="flex justify-between text-xs font-medium mb-1.5">
-                                    <span className={isLight ? "text-slate-700" : "text-slate-300"}>AI Token Usage</span>
+                                    <span className={isLight ? "text-slate-700" : "text-slate-300"}>Credits Usage</span>
                                     <span className="text-amber-600 font-bold">78% Used</span>
                                 </div>
                                 <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
