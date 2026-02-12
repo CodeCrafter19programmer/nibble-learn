@@ -11,7 +11,6 @@ import {
     Trash2,
     RefreshCw,
     Edit2,
-    Edit2,
     Mail,
     Send,
     UserPlus
