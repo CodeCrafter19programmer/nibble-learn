@@ -355,12 +355,12 @@ export default function StudentToolsPage() {
                     ))}
                     {isMounted && filteredTools.map((tool, index) => (
                         <motion.div
-                            layout
+                            // layout // Removed for performance
                             key={tool.id}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ delay: index * 0.03 }}
+                            transition={{ duration: 0.2 }}
                             className={cn(
                                 "group relative rounded-[20px] p-5 border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl",
                                 isLight
