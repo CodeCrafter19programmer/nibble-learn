@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2, FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus } from "lucide-react"
+import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2, FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus, Minimize2, RefreshCw, Languages, SpellCheck, Music, Smile, Snowflake, Gift, Youtube, Bell, DoorOpen, FlaskConical, GitCompare, BarChart2, AlertCircle, ArrowUp, Bot, Wrench, Files, FileSpreadsheet } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
@@ -61,6 +61,42 @@ const tools = [
     { id: "letter-of-recommendation", name: "Letter of Recommendation", category: "communication", icon: Scroll, color: "bg-slate-600", desc: "Generate a strong letter of recommendation for a student.", new: false, plus: true },
     { id: "positive-phone-call", name: "Positive Phone Call", category: "communication", icon: Phone, color: "bg-green-500", desc: "Get talking points for positive calls home to parents.", new: false, plus: false },
     { id: "parent-teacher-conference", name: "Conference Script", category: "communication", icon: MessageSquarePlus, color: "bg-blue-500", desc: "Prepare a script and talking points for conferences.", new: false, plus: false },
+    { id: "text-summarizer", name: "Text Summarizer", category: "productivity", icon: Minimize2, color: "bg-violet-500", desc: "Summarize long texts to get the main ideas quickly.", new: false, plus: false },
+    { id: "text-rewriter", name: "Text Rewriter", category: "productivity", icon: RefreshCw, color: "bg-fuchsia-500", desc: "Take any text and rewrite it with custom criteria.", new: false, plus: false },
+    { id: "text-translator", name: "Text Translator", category: "productivity", icon: Languages, color: "bg-blue-400", desc: "Translate text into 30+ languages.", new: false, plus: false },
+    { id: "text-proofreader", name: "Text Proofreader", category: "productivity", icon: SpellCheck, color: "bg-green-500", desc: "Check and correct grammar, spelling, and punctuation.", new: false, plus: false },
+    { id: "song-lyrics", name: "Song Lyrics Generator", category: "planning", icon: Music, color: "bg-pink-500", desc: "Create educational song lyrics to teach concepts.", new: false, plus: false },
+    { id: "joke-generator", name: "Joke Generator", category: "planning", icon: Smile, color: "bg-yellow-400", desc: "Generate age-appropriate jokes for your class.", new: false, plus: false },
+    { id: "saying-simplifier", name: "Saying Simplifier", category: "support", icon: MessageCircleIcon, color: "bg-teal-500", desc: "Explain idioms and figurative language simply.", new: false, plus: false },
+    { id: "team-builder", name: "Team Builder Activities", category: "communication", icon: Users, color: "bg-indigo-500", desc: "Create activities to build classroom community.", new: false, plus: false },
+    { id: "ice-breaker", name: "Ice Breaker Generator", category: "communication", icon: Snowflake, color: "bg-cyan-500", desc: "Generate ice breaker questions and activities.", new: false, plus: false },
+    { id: "class-norms", name: "Class Norms & Expectations", category: "planning", icon: Scale, color: "bg-slate-500", desc: "Create classroom rules and expectations based on values.", new: false, plus: false },
+    { id: "student-survey", name: "Student Survey Generator", category: "communication", icon: ClipboardList, color: "bg-violet-600", desc: "Create surveys to get student feedback.", new: false, plus: false },
+    { id: "get-to-know-you", name: "Get to Know You Questions", category: "communication", icon: MessageCircleIcon, color: "bg-orange-400", desc: "Generate questions to learn about your students.", new: false, plus: false },
+    { id: "class-incentives", name: "Class Incentive Ideas", category: "planning", icon: Gift, color: "bg-yellow-500", desc: "Get ideas for classroom rewards and incentives.", new: false, plus: false },
+    { id: "restorative-circle", name: "Restorative Circle Questions", category: "support", icon: Users, color: "bg-teal-600", desc: "Generate questions for restorative practice circles.", new: false, plus: false },
+    { id: "youtube-questions", name: "YouTube Video Questions", category: "planning", icon: Youtube, color: "bg-red-600", desc: "Generate comprehension questions for any YouTube video.", new: false, plus: false },
+    { id: "reading-comprehension", name: "Reading Comprehension", category: "assessment", icon: BookOpen, color: "bg-blue-600", desc: "Create questions to check reading comprehension.", new: false, plus: false },
+    { id: "worksheet-generator", name: "Worksheet Generator", category: "planning", icon: FileSpreadsheet, color: "bg-emerald-500", desc: "Generate a worksheet based on any topic or text.", new: false, plus: false },
+    { id: "warm-up", name: "Warm-Up & Bell Ringer", category: "planning", icon: Bell, color: "bg-amber-500", desc: "Create quick activities to start class.", new: false, plus: false },
+    { id: "closure-activity", name: "Closure Activity", category: "planning", icon: DoorOpen, color: "bg-slate-600", desc: "Design activities to end your lesson effectively.", new: false, plus: false },
+    { id: "science-lab", name: "Science Lab Generator", category: "planning", icon: FlaskConical, color: "bg-green-600", desc: "Create science lab procedures and materials lists.", new: false, plus: false },
+    { id: "sat-act-prep", name: "SAT/ACT Prep Questions", category: "assessment", icon: PenTool, color: "bg-blue-800", desc: "Generate test prep questions for SAT or ACT.", new: false, plus: false },
+    { id: "group-work-roles", name: "Group Work Roles", category: "planning", icon: Users, color: "bg-indigo-400", desc: "Define roles for collaborative group work.", new: false, plus: false },
+    { id: "compare-contrast", name: "Compare & Contrast", category: "planning", icon: GitCompare, color: "bg-purple-500", desc: "Create comparison activities and organizers.", new: false, plus: false },
+    { id: "newsletter-translation", name: "Newsletter Translation", category: "communication", icon: Languages, color: "bg-teal-500", desc: "Translate newsletters into multiple languages.", new: false, plus: false },
+    { id: "academic-content", name: "Academic Content", category: "planning", icon: BookOpen, color: "bg-slate-700", desc: "Generate original academic content customized to criteria.", new: false, plus: false },
+    { id: "pbl-unit", name: "PBL Unit Generator", category: "planning", icon: Wrench, color: "bg-orange-600", desc: "Design project-based learning units.", new: false, plus: false },
+    { id: "accommodations-generator-504", name: "Accommodations (504/IEP)", category: "support", icon: FileMinus, color: "bg-red-500", desc: "Generate specific accommodations for plans.", new: false, plus: false },
+    { id: "vertical-alignment", name: "Vertical Alignment Tool", category: "planning", icon: ArrowUp, color: "bg-blue-700", desc: "See how concepts progress across grade levels.", new: false, plus: false },
+    { id: "data-chat", name: "Data Chat", category: "assessment", icon: BarChart2, color: "bg-emerald-600", desc: "Analyze student data with AI assistance.", new: false, plus: true },
+    { id: "curriculum-gap", name: "Curriculum Gap Analysis", category: "planning", icon: AlertCircle, color: "bg-rose-500", desc: "Identify gaps in curriculum coverage.", new: false, plus: false },
+    { id: "learning-objective", name: "Learning Objective Writer", category: "planning", icon: Target, color: "bg-fuchsia-600", desc: "Write clear, measurable learning objectives.", new: false, plus: false },
+    { id: "differentiation-stations", name: "Differentiation Stations", category: "planning", icon: Grid, color: "bg-purple-500", desc: "Create differentiated station/center activities.", new: false, plus: false },
+    { id: "student-grouping", name: "Student Grouping", category: "planning", icon: Users, color: "bg-cyan-600", desc: "Get suggestions for grouping students.", new: false, plus: false },
+    { id: "raina-coach", name: "Raina - AI Coach", category: "productivity", icon: Bot, color: "bg-violet-600", desc: "Chat with Raina, your AI instructional coach.", new: true, plus: true },
+    { id: "custom-tool", name: "Custom Tool Creator", category: "productivity", icon: Wrench, color: "bg-slate-800", desc: "Build your own custom AI tools.", new: true, plus: true },
+    { id: "batch-feedback", name: "Batch Feedback Writer", category: "assessment", icon: Files, color: "bg-indigo-600", desc: "Provide AI-generated feedback in batches.", new: true, plus: true },
 ]
 
 export default function TeacherToolsPage() {

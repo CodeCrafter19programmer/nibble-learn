@@ -5,7 +5,8 @@ import {
     RotateCcw, Sparkles, Wand2, Scale, Link,
     Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle, CalendarDays, Grid, Heart,
     ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, ClipboardList, UserCheck, Users2,
-    FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus
+    FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus,
+    Minimize2, RefreshCw, Languages, SpellCheck, Music, Smile, Snowflake, Gift, Youtube, Bell, DoorOpen, FlaskConical, GitCompare, BarChart2, AlertCircle, ArrowUp, Bot, Wrench, Files, FileSpreadsheet
 } from "lucide-react"
 
 export const TOOLS_CONFIG: Record<string, ToolConfig> = {
@@ -772,6 +773,422 @@ export const TOOLS_CONFIG: Record<string, ToolConfig> = {
         ]
     },
 
+    "text-summarizer": {
+        id: "text-summarizer",
+        name: "Text Summarizer",
+        description: "Summarize long texts to get the main ideas quickly.",
+        icon: Minimize2,
+        color: "bg-violet-500",
+        inputs: [
+            { id: "text", label: "Text to Summarize", type: "textarea", placeholder: "Paste text here..." },
+            { id: "length", label: "Summary Length", type: "select", options: ["Brief", "Moderate", "Detailed"] },
+            { id: "format", label: "Format", type: "select", options: ["Paragraph", "Bullet Points"] }
+        ]
+    },
+    "text-rewriter": {
+        id: "text-rewriter",
+        name: "Text Rewriter",
+        description: "Take any text and rewrite it with custom criteria.",
+        icon: RefreshCw,
+        color: "bg-fuchsia-500",
+        inputs: [
+            { id: "text", label: "Original Text", type: "textarea", placeholder: "Paste text..." },
+            { id: "criteria", label: "How to Rewrite", type: "select", options: ["Simpler", "More Formal", "Different Tone", "Concise"] },
+            { id: "notes", label: "Additional Instructions", type: "text", placeholder: "e.g., Use active voice..." }
+        ]
+    },
+    "text-translator": {
+        id: "text-translator",
+        name: "Text Translator",
+        description: "Translate text into 30+ languages.",
+        icon: Languages,
+        color: "bg-blue-400",
+        inputs: [
+            { id: "text", label: "Text to Translate", type: "textarea", placeholder: "Paste text..." },
+            { id: "language", label: "To Language", type: "select", options: ["Spanish", "French", "German", "Chinese (Mandarin)", "Arabic", "Russian", "Portuguese", "Japanese", "Korean", "Vietnamese", "Hindi"] }
+        ]
+    },
+    "text-proofreader": {
+        id: "text-proofreader",
+        name: "Text Proofreader",
+        description: "Check and correct grammar, spelling, and punctuation.",
+        icon: SpellCheck,
+        color: "bg-green-500",
+        inputs: [
+            { id: "text", label: "Text to Proofread", type: "textarea", placeholder: "Paste text..." }
+        ]
+    },
+    "song-lyrics": {
+        id: "song-lyrics",
+        name: "Song Lyrics Generator",
+        description: "Create educational song lyrics to teach concepts.",
+        icon: Music,
+        color: "bg-pink-500",
+        inputs: [
+            { id: "topic", label: "Topic to Teach", type: "text", placeholder: "e.g., The Water Cycle" },
+            { id: "style", label: "Song Style", type: "select", options: ["Pop", "Rap", "Country", "Rock", "Musical Theater"] },
+            { id: "concepts", label: "Key Concepts to Include", type: "textarea", placeholder: "List keywords or ideas..." }
+        ]
+    },
+    "joke-generator": {
+        id: "joke-generator",
+        name: "Joke Generator",
+        description: "Generate age-appropriate jokes for your class.",
+        icon: Smile,
+        color: "bg-yellow-400",
+        inputs: [
+            { id: "topic", label: "Topic (Optional)", type: "text", placeholder: "e.g., Math, Science, School" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Joke Type", type: "select", options: ["Puns", "Riddles", "Knock-knock", "Any"] }
+        ]
+    },
+    "saying-simplifier": {
+        id: "saying-simplifier",
+        name: "Saying Simplifier",
+        description: "Explain idioms and figurative language simply.",
+        icon: MessageCircle,
+        color: "bg-teal-500",
+        inputs: [
+            { id: "idiom", label: "Idiom or Saying", type: "text", placeholder: "e.g., Break a leg, It's raining cats and dogs" },
+            { id: "grade", label: "Target Audience", type: "select", options: ["Elementary", "ELL Students", "General"] }
+        ]
+    },
+    "team-builder": {
+        id: "team-builder",
+        name: "Team Builder Activities",
+        description: "Create activities to build classroom community.",
+        icon: Users,
+        color: "bg-indigo-500",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "duration", label: "Activity Duration", type: "select", options: ["5 min", "10 min", "15 min", "30 min"] },
+            { id: "size", label: "Group Size", type: "select", options: ["Pairs", "Small Groups", "Whole Class"] }
+        ]
+    },
+    "ice-breaker": {
+        id: "ice-breaker",
+        name: "Ice Breaker Generator",
+        description: "Generate ice breaker questions and activities.",
+        icon: Snowflake,
+        color: "bg-cyan-500",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "Adults"] },
+            { id: "type", label: "Icebreaker Type", type: "select", options: ["Questions", "Games", "Movement Activity"] },
+            { id: "time", label: "Time Available", type: "text", placeholder: "e.g., 5-10 minutes" }
+        ]
+    },
+    "class-norms": {
+        id: "class-norms",
+        name: "Class Norms & Expectations",
+        description: "Create classroom rules and expectations based on values.",
+        icon: Scale,
+        color: "bg-slate-500",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "values", label: "Key Values", type: "textarea", placeholder: "e.g., Respect, Responsibility, Safety, Kindness" }
+        ]
+    },
+    "student-survey": {
+        id: "student-survey",
+        name: "Student Survey Generator",
+        description: "Create surveys to get student feedback.",
+        icon: ClipboardList,
+        color: "bg-violet-600",
+        inputs: [
+            { id: "purpose", label: "Survey Purpose", type: "text", placeholder: "e.g., Course Feedback, Interest Inventory" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["5", "10", "15"] }
+        ]
+    },
+    "get-to-know-you": {
+        id: "get-to-know-you",
+        name: "Get to Know You Questions",
+        description: "Generate questions to learn about your students.",
+        icon: MessageCircle,
+        color: "bg-orange-400",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "context", label: "Context", type: "select", options: ["First Day of School", "Throughout Year", "Monday Morning"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["5", "10", "15"] }
+        ]
+    },
+    "class-incentives": {
+        id: "class-incentives",
+        name: "Class Incentive Ideas",
+        description: "Get ideas for classroom rewards and incentives.",
+        icon: Gift,
+        color: "bg-yellow-500",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Incentive Type", type: "select", options: ["Individual", "Whole Class", "Low-cost", "No-cost"] }
+        ]
+    },
+    "restorative-circle": {
+        id: "restorative-circle",
+        name: "Restorative Circle Questions",
+        description: "Generate questions for restorative practice circles.",
+        icon: Users,
+        color: "bg-teal-600",
+        inputs: [
+            { id: "purpose", label: "Circle Purpose", type: "select", options: ["Check-in", "Community Building", "Conflict Resolution", "Reflection"] },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] }
+        ]
+    },
+    "youtube-questions": {
+        id: "youtube-questions",
+        name: "YouTube Video Questions",
+        description: "Generate comprehension questions for any YouTube video.",
+        icon: Youtube,
+        color: "bg-red-600",
+        inputs: [
+            { id: "url", label: "YouTube Video URL", type: "text", placeholder: "Paste YouTube Link..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["3", "5", "8", "10"] }
+        ]
+    },
+    "reading-comprehension": {
+        id: "reading-comprehension",
+        name: "Reading Comprehension Questions",
+        description: "Create questions to check reading comprehension.",
+        icon: BookOpen,
+        color: "bg-blue-600",
+        inputs: [
+            { id: "text", label: "Text or Passage", type: "textarea", placeholder: "Paste text here..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "types", label: "Question Levels", type: "text", placeholder: "e.g., Literal, Inferential, Evaluative" }
+        ]
+    },
+    "worksheet-generator": {
+        id: "worksheet-generator",
+        name: "Worksheet Generator",
+        description: "Generate a worksheet based on any topic or text.",
+        icon: FileSpreadsheet,
+        color: "bg-emerald-500",
+        inputs: [
+            { id: "topic", label: "Topic or Standard", type: "text", placeholder: "e.g., Photosynthesis" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Worksheet Type", type: "select", options: ["Practice Problems", "Fill in the Blank", "Matching", "Review"] }
+        ]
+    },
+    "warm-up": {
+        id: "warm-up",
+        name: "Warm-Up & Bell Ringer",
+        description: "Create quick activities to start class.",
+        icon: Bell,
+        color: "bg-amber-500",
+        inputs: [
+            { id: "subject", label: "Subject", type: "text", placeholder: "e.g., Math, History" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "topic", label: "Topic (Optional)", type: "text", placeholder: "e.g., Fractions" }
+        ]
+    },
+    "closure-activity": {
+        id: "closure-activity",
+        name: "Closure Activity",
+        description: "Design activities to end your lesson effectively.",
+        icon: DoorOpen,
+        color: "bg-slate-600",
+        inputs: [
+            { id: "objective", label: "Lesson Objective", type: "textarea", placeholder: "What did students learn?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "time", label: "Time Available", type: "select", options: ["2 min", "5 min", "10 min"] }
+        ]
+    },
+    "science-lab": {
+        id: "science-lab",
+        name: "Science Lab Generator",
+        description: "Create science lab procedures and materials lists.",
+        icon: FlaskConical,
+        color: "bg-green-600",
+        inputs: [
+            { id: "concept", label: "Science Concept", type: "text", placeholder: "e.g., Density, Chemical Reactions" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Lab Type", type: "select", options: ["Hands-on", "Demonstration", "Virtual"] }
+        ]
+    },
+    "sat-act-prep": {
+        id: "sat-act-prep",
+        name: "SAT/ACT Prep Questions",
+        description: "Generate test prep questions for SAT or ACT.",
+        icon: PenTool,
+        color: "bg-blue-800",
+        inputs: [
+            { id: "test", label: "Test Type", type: "select", options: ["SAT", "ACT"] },
+            { id: "section", label: "Section", type: "select", options: ["Math", "Reading", "Writing/English", "Science (ACT)"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["3", "5", "10"] }
+        ]
+    },
+    "group-work-roles": {
+        id: "group-work-roles",
+        name: "Group Work Roles",
+        description: "Define roles for collaborative group work.",
+        icon: Users,
+        color: "bg-indigo-400",
+        inputs: [
+            { id: "project", label: "Project/Task Type", type: "text", placeholder: "e.g., Science Lab, Literature Circle" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "size", label: "Group Size", type: "select", options: ["3", "4", "5", "6"] }
+        ]
+    },
+    "compare-contrast": {
+        id: "compare-contrast",
+        name: "Compare & Contrast Generator",
+        description: "Create comparison activities and organizers.",
+        icon: GitCompare,
+        color: "bg-purple-500",
+        inputs: [
+            { id: "items", label: "Items to Compare", type: "text", placeholder: "e.g., Plant Cells vs. Animal Cells" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Organizer Type", type: "select", options: ["Venn Diagram", "T-Chart", "Matrix"] }
+        ]
+    },
+    "newsletter-translation": {
+        id: "newsletter-translation",
+        name: "Newsletter Translation",
+        description: "Translate newsletters into multiple languages.",
+        icon: Languages,
+        color: "bg-teal-500",
+        inputs: [
+            { id: "text", label: "Original Newsletter Text", type: "textarea", placeholder: "Paste newsletter content..." },
+            { id: "languages", label: "Target Languages", type: "text", placeholder: "e.g., Spanish, Vietnamese, Arabic" }
+        ]
+    },
+    "academic-content": {
+        id: "academic-content",
+        name: "Academic Content Generator",
+        description: "Generate original academic content customized to criteria.",
+        icon: BookOpen,
+        color: "bg-slate-700",
+        inputs: [
+            { id: "topic", label: "Topic", type: "text", placeholder: "e.g., The Civil War" },
+            { id: "type", label: "Content Type", type: "select", options: ["Passage", "Article", "story"] },
+            { id: "level", label: "Reading Level", type: "text", placeholder: "e.g., 5th Grade Lexile" }
+        ]
+    },
+    "pbl-unit": {
+        id: "pbl-unit",
+        name: "PBL Unit Generator",
+        description: "Design project-based learning units.",
+        icon: Wrench,
+        color: "bg-orange-600",
+        inputs: [
+            { id: "question", label: "Driving Question", type: "text", placeholder: "e.g., How can we reduce plastic waste?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "duration", label: "Duration", type: "text", placeholder: "e.g., 4 weeks" }
+        ]
+    },
+    "accommodations-generator-504": {
+        id: "accommodations-generator-504",
+        name: "Accommodations Generator (504/IEP)",
+        description: "Generate specific accommodations for plans.",
+        icon: FileMinus,
+        color: "bg-red-500",
+        inputs: [
+            { id: "need", label: "Disability/Need", type: "text", placeholder: "e.g., ADHD, Dyslexia, Anxiety" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "area", label: "Areas Needing Support", type: "text", placeholder: "e.g., Testing, Focus, Reading" }
+        ]
+    },
+    "vertical-alignment": {
+        id: "vertical-alignment",
+        name: "Vertical Alignment Tool",
+        description: "See how concepts progress across grade levels.",
+        icon: ArrowUp,
+        color: "bg-blue-700",
+        inputs: [
+            { id: "standard", label: "Concept/Standard", type: "text", placeholder: "e.g., Fractions" },
+            { id: "range", label: "Grade Range", type: "text", placeholder: "e.g., K-5, 6-8" }
+        ]
+    },
+    "data-chat": {
+        id: "data-chat",
+        name: "Data Chat",
+        description: "Analyze student data with AI assistance.",
+        icon: BarChart2,
+        color: "bg-emerald-600",
+        inputs: [
+            { id: "data", label: "Paste Data or Description", type: "textarea", placeholder: "Paste CSV data or describe the data set..." },
+            { id: "question", label: "Question about Data", type: "textarea", placeholder: "What do you want to know?" }
+        ]
+    },
+    "curriculum-gap": {
+        id: "curriculum-gap",
+        name: "Curriculum Gap Analysis",
+        description: "Identify gaps in curriculum coverage.",
+        icon: AlertCircle,
+        color: "bg-rose-500",
+        inputs: [
+            { id: "standard", label: "Standards Set", type: "text", placeholder: "e.g., CCSS ELA 5th Grade" },
+            { id: "curriculum", label: "Current Curriculum Covered", type: "textarea", placeholder: "List units or topics covered..." }
+        ]
+    },
+    "learning-objective": {
+        id: "learning-objective",
+        name: "Learning Objective Writer",
+        description: "Write clear, measurable learning objectives.",
+        icon: Target,
+        color: "bg-fuchsia-600",
+        inputs: [
+            { id: "topic", label: "Standard or Topic", type: "text", placeholder: "e.g., Photosynthesis" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "bloom", label: "Bloom's Level", type: "select", options: ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"] }
+        ]
+    },
+    "differentiation-stations": {
+        id: "differentiation-stations",
+        name: "Differentiation Station Ideas",
+        description: "Create differentiated station/center activities.",
+        icon: Grid,
+        color: "bg-purple-500",
+        inputs: [
+            { id: "objective", label: "Learning Objective", type: "textarea", placeholder: "What skill are they practicing?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] }
+        ]
+    },
+    "student-grouping": {
+        id: "student-grouping",
+        name: "Student Grouping Suggestions",
+        description: "Get suggestions for grouping students.",
+        icon: Users,
+        color: "bg-cyan-600",
+        inputs: [
+            { id: "purpose", label: "Grouping Purpose", type: "select", options: ["Skill Level", "Mixed Ability", "Interest-based", "Random"] },
+            { id: "size", label: "Class Size", type: "text", placeholder: "e.g., 25 students" }
+        ]
+    },
+    "raina-coach": {
+        id: "raina-coach",
+        name: "Raina - AI Instructional Coach",
+        description: "Chat with Raina, your AI instructional coach.",
+        icon: Bot,
+        color: "bg-violet-600",
+        inputs: [
+            { id: "question", label: "Ask Raina", type: "textarea", placeholder: "Ask for advice, resources, or coaching..." }
+        ]
+    },
+    "custom-tool": {
+        id: "custom-tool",
+        name: "Custom Tool Creator",
+        description: "Build your own custom AI tools.",
+        icon: Wrench,
+        color: "bg-slate-800",
+        inputs: [
+            { id: "name", label: "Tool Name", type: "text", placeholder: "My Custom Tool" },
+            { id: "purpose", label: "Tool Purpose", type: "textarea", placeholder: "What does this tool do?" },
+            { id: "prompt", label: "System Prompt", type: "textarea", placeholder: "Instructions for the AI..." }
+        ]
+    },
+    "batch-feedback": {
+        id: "batch-feedback",
+        name: "Batch Feedback Writer",
+        description: "Provide AI-generated feedback on written assignments in batches.",
+        icon: Files,
+        color: "bg-indigo-600",
+        inputs: [
+            { id: "rubric", label: "Rubric/Criteria", type: "textarea", placeholder: "Paste rubric here..." },
+            { id: "papers", label: "Paste Student Work (One per line or section)", type: "textarea", placeholder: "Student 1: ..." }
+        ]
+    },
     // Default fallback for generic IDs
     "default": {
         id: "default",
