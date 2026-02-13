@@ -13,6 +13,8 @@ import {
     ArrowLeft,
     Wand2
 } from "lucide-react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -235,15 +237,18 @@ export default function ToolPage() {
                 {/* Content Area */}
                 <div className={cn("flex-1 overflow-y-auto p-8 custom-scrollbar", isLight ? "bg-white" : "bg-slate-950")}>
                     {output ? (
-                        <div className={cn("prose max-w-none prose-lg", isLight ? "prose-slate" : "prose-invert text-slate-100")}>
-                            {/* Simple formatting for demo */}
-                            {output.split('\n').map((line, i) => (
-                                <p key={i} className="mb-4">{line}</p>
-                            ))}
+                        <>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                className={cn("prose max-w-none prose-lg", isLight ? "prose-slate" : "prose-invert text-slate-100")}
+                            >
+                                {output}
+                            </ReactMarkdown>
                             {isGenerating && (
-                                <span className="inline-block w-2 H-4 bg-violet-500 animate-pulse ml-1 opacity-70">|</span>
+                                <span className="inline-block w-2 h-4 bg-violet-500 animate-pulse ml-1 opacity-70">|</span>
                             )}
-                        </div>
+                        </>
+
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center text-center px-4">
                             <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors", isLight ? "bg-slate-50 border border-slate-100" : "bg-white/5 border border-white/5")}>
@@ -254,7 +259,7 @@ export default function ToolPage() {
                         </div>
                     )}
                 </div>
-            </motion.div>
-        </div>
+            </motion.div >
+        </div >
     )
 }
