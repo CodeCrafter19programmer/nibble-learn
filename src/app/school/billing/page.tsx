@@ -20,6 +20,16 @@ export default function BillingOverview() {
     const { theme } = useTheme()
     const isLight = theme === 'light'
 
+    // Mock Data & Logic for Backend Implementation
+    // TODO: Replace with actual data from backend
+    const creditsUsedPercentage = 85 // Example: 85% used means 15% remaining
+    const showTopUp = creditsUsedPercentage >= 80 // Show Top Up if less than 20% credits remaining (i.e., usage >= 80%)
+
+    // TODO: Implement date check logic for backend
+    // Only allow upgrade if within X days of billing cycle end or if billing cycle has ended
+    const isBillingCycleEnd = true // Mocked as true for demonstration
+    const showUpgrade = isBillingCycleEnd
+
     return (
         <div className="space-y-6">
             <div>
@@ -63,10 +73,13 @@ export default function BillingOverview() {
                             <div>
                                 <div className="flex justify-between text-xs font-medium mb-1.5">
                                     <span className={isLight ? "text-slate-700" : "text-slate-300"}>Credits Usage</span>
-                                    <span className="text-amber-600 font-bold">78% Used</span>
+                                    <span className={cn("font-bold", creditsUsedPercentage >= 80 ? "text-red-500" : "text-amber-600")}>{creditsUsedPercentage}% Used</span>
                                 </div>
                                 <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                    <div className="h-full bg-amber-500 w-[78%] rounded-full" />
+                                    <div
+                                        className={cn("h-full rounded-full", creditsUsedPercentage >= 80 ? "bg-red-500" : "bg-amber-500")}
+                                        style={{ width: `${creditsUsedPercentage}%` }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -79,61 +92,72 @@ export default function BillingOverview() {
                         <span className={cn("font-medium", isLight ? "text-slate-900" : "text-white")}>March 1, 2026</span>
                     </div>
                     <div className="flex gap-3">
-                        <Link href="/school/billing/invoices">
-                            <button className={cn(
-                                "px-4 py-2 rounded-lg text-sm font-medium border transition-colors",
-                                isLight
-                                    ? "border-slate-200 text-slate-600 hover:bg-slate-50"
-                                    : "border-slate-700 text-slate-300 hover:bg-slate-800"
-                            )}>
-                                View Invoices
-                            </button>
-                        </Link>
-                        <Link href="/school/billing/plans">
-                            <button className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md shadow-blue-500/20">
-                                Upgrade Plan
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
-            {/* Invoices Preview */}
-            <div className={cn(
-                "border rounded-xl overflow-hidden",
-                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
-            )}>
-                <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                    <h3 className={cn("font-bold", isLight ? "text-slate-900" : "text-white")}>Recent Invoices</h3>
-                    <Link href="/school/billing/invoices" className="text-xs text-blue-600 font-medium hover:underline">See All</Link>
-                </div>
-                <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {[
-                        { id: "INV-001", date: "Feb 1, 2026", amount: "$499.00", status: "Paid" },
-                        { id: "INV-002", date: "Jan 1, 2026", amount: "$499.00", status: "Paid" },
-                        { id: "INV-003", date: "Dec 1, 2025", amount: "$499.00", status: "Paid" },
-                    ].map((inv) => (
-                        <div key={inv.id} className="p-4 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                            <div className="flex items-center gap-3">
-                                <div className={cn("p-2 rounded-lg", isLight ? "bg-slate-100 text-slate-500" : "bg-slate-800 text-slate-400")}>
-                                    <FileText className="w-4 h-4" />
-                                </div>
-                                <div>
-                                    <p className={cn("text-sm font-medium", isLight ? "text-slate-900" : "text-white")}>{inv.id}</p>
-                                    <p className="text-xs text-slate-500">{inv.date}</p>
-                                </div>
-                            </div>
-                            <div className="text-right flex items-center gap-4">
-                                <span className={cn("text-sm font-semibold", isLight ? "text-slate-900" : "text-white")}>{inv.amount}</span>
-                                <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-green-100 text-green-700">Paid</span>
-                                <button className="text-slate-400 hover:text-blue-600">
-                                    <Download className="w-4 h-4" />
+                        <div className="flex gap-3">
+                            {/* Top Up Button - Only appears when credits are low (< 20% remaining) */}
+                            {showTopUp && (
+                                <button className="px-4 py-2 rounded-lg text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-500/20 flex items-center gap-2">
+                                    <Zap className="w-4 h-4" />
+                                    Top Up Credits
                                 </button>
+                            )}
+
+                            <Link href="/school/billing/invoices">
+                                <button className={cn(
+                                    "px-4 py-2 rounded-lg text-sm font-medium border transition-colors",
+                                    isLight
+                                        ? "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        : "border-slate-700 text-slate-300 hover:bg-slate-800"
+                                )}>
+                                    View Invoices
+                                </button>
+                            </Link>
+
+                            {/* Upgrade Plan - Only appears at end of billing cycle */}
+                            {showUpgrade && (
+                                <Link href="/school/billing/plans">
+                                    <button className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md shadow-blue-500/20">
+                                        Upgrade Plan
+                                    </button>
+                                </Link>
+                            )}
+                        </div>
+
+                        {/* Invoices Preview */}
+                        <div className={cn(
+                            "border rounded-xl overflow-hidden",
+                            isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800"
+                        )}>
+                            <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                                <h3 className={cn("font-bold", isLight ? "text-slate-900" : "text-white")}>Recent Invoices</h3>
+                                <Link href="/school/billing/invoices" className="text-xs text-blue-600 font-medium hover:underline">See All</Link>
+                            </div>
+                            <div className="divide-y divide-slate-100 dark:divide-slate-800">
+                                {[
+                                    { id: "INV-001", date: "Feb 1, 2026", amount: "$499.00", status: "Paid" },
+                                    { id: "INV-002", date: "Jan 1, 2026", amount: "$499.00", status: "Paid" },
+                                    { id: "INV-003", date: "Dec 1, 2025", amount: "$499.00", status: "Paid" },
+                                ].map((inv) => (
+                                    <div key={inv.id} className="p-4 flex justify-between items-center hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <div className={cn("p-2 rounded-lg", isLight ? "bg-slate-100 text-slate-500" : "bg-slate-800 text-slate-400")}>
+                                                <FileText className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <p className={cn("text-sm font-medium", isLight ? "text-slate-900" : "text-white")}>{inv.id}</p>
+                                                <p className="text-xs text-slate-500">{inv.date}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right flex items-center gap-4">
+                                            <span className={cn("text-sm font-semibold", isLight ? "text-slate-900" : "text-white")}>{inv.amount}</span>
+                                            <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-green-100 text-green-700">Paid</span>
+                                            <button className="text-slate-400 hover:text-blue-600">
+                                                <Download className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    )
+                    </div>
+                    )
 }
