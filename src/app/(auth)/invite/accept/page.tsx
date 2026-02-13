@@ -7,7 +7,9 @@ import { Lock, Eye, EyeOff, Loader2, ArrowRight, CheckCircle2 } from "lucide-rea
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-export default function InviteAcceptPage() {
+import { Suspense } from "react"
+
+function InviteAcceptContent() {
     const searchParams = useSearchParams()
     const router = useRouter()
 
@@ -172,5 +174,13 @@ export default function InviteAcceptPage() {
                 <a href="#" className="text-white/60 hover:text-white underline underline-offset-2 decoration-white/20">Terms</a> and <a href="#" className="text-white/60 hover:text-white underline underline-offset-2 decoration-white/20">Privacy Policy</a>
             </p>
         </div>
+    )
+}
+
+export default function InviteAcceptPage() {
+    return (
+        <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+            <InviteAcceptContent />
+        </Suspense>
     )
 }
