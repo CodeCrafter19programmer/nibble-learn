@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { getToolConfig } from "@/components/tool/tool-registry"
 import { ToolConfig } from "@/components/tool/types"
+import { useTheme } from "@/components/providers/ThemeContext"
 
 export default function ToolPage() {
     const params = useParams()
@@ -27,6 +28,8 @@ export default function ToolPage() {
     const [output, setOutput] = useState("")
     const [formData, setFormData] = useState<Record<string, string>>({})
     const [mobileView, setMobileView] = useState<'input' | 'output'>('input')
+    const { theme } = useTheme()
+    const isLight = theme === 'light'
 
     // Auto-switch to output view on mobile when generating starts
     useEffect(() => {
@@ -50,7 +53,7 @@ export default function ToolPage() {
         setOutput("")
 
         // Simulate AI Streaming
-        const fakeResponse = `Here is a ${config.name} based on your inputs:\n\n**Response:**\n\nThis is a simulated AI output for ${config.name}. in a real application, this would stream data from an LLM API.\n\n*   Point 1: Based on ${formData[config.inputs[0].id] || 'your input'}\n*   Point 2: Customized for your needs.\n\nThank you for using NibbleLearn!`
+        const fakeResponse = `Here is a ${config.name} based on your inputs:\n\n**Response:**\n\nThis is a simulated AI output for ${config.name}. In a real application, this would stream data from an LLM API.\n\n*   Point 1: Based on ${formData[config.inputs[0].id] || 'your input'}\n*   Point 2: Customized for your needs.\n\nThank you for using NibbleLearn!`
 
         let currentText = ""
         const words = fakeResponse.split(" ")
@@ -64,23 +67,29 @@ export default function ToolPage() {
         setIsGenerating(false)
     }
 
-    if (!config) return <div className="p-10 text-white">Loading tool...</div>
+    if (!config) return <div className={cn("p-10 text-center", isLight ? "text-slate-500" : "text-slate-400")}>Loading tool...</div>
 
     return (
-        <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 overflow-hidden">
+        <div className="h-[calc(100vh-6rem)] flex flex-col md:flex-row gap-6 overflow-hidden pb-4">
 
             {/* LEFT PANE: Input Form */}
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 className={cn(
-                    "w-full md:w-1/2 lg:w-5/12 flex flex-col h-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all",
+                    "w-full md:w-1/2 lg:w-5/12 flex flex-col h-full border rounded-2xl overflow-hidden transition-all",
+                    isLight
+                        ? "bg-white border-slate-200 shadow-sm"
+                        : "bg-slate-900 border-slate-800",
                     mobileView === 'output' ? "hidden md:flex" : "flex"
                 )}
             >
                 {/* Header */}
-                <div className="p-6 border-b border-slate-800 bg-slate-900/50">
-                    <Link href="/app/tools" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white mb-4 transition-colors">
+                <div className={cn(
+                    "p-6 border-b transition-colors",
+                    isLight ? "bg-slate-50 border-slate-200" : "bg-slate-900 border-slate-800"
+                )}>
+                    <Link href="/app/tools" className={cn("inline-flex items-center gap-2 text-sm mb-4 transition-colors", isLight ? "text-slate-500 hover:text-slate-900" : "text-slate-400 hover:text-white")}>
                         <ArrowLeft className="w-4 h-4" /> Back to Tools
                     </Link>
                     <div className="flex items-center gap-3">
@@ -88,24 +97,29 @@ export default function ToolPage() {
                             <config.icon className="w-5 h-5" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-white">{config.name}</h1>
-                            <p className="text-sm text-slate-400">{config.description}</p>
+                            <h1 className={cn("text-xl font-bold", isLight ? "text-slate-900" : "text-white")}>{config.name}</h1>
+                            <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>{config.description}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Scrollable Form Area */}
-                <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+                <div className={cn("flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar", isLight ? "bg-white" : "bg-slate-900")}>
                     {config.inputs.map((input) => (
                         <div key={input.id} className="space-y-2">
-                            <label className="text-sm font-medium text-slate-300">
+                            <label className={cn("text-sm font-bold uppercase tracking-wide", isLight ? "text-slate-500" : "text-slate-400")}>
                                 {input.label}
                             </label>
 
                             {input.type === "select" ? (
                                 <div className="relative">
                                     <select
-                                        className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all appearance-none"
+                                        className={cn(
+                                            "w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all appearance-none outline-none font-medium",
+                                            isLight
+                                                ? "bg-slate-50 border-slate-200 text-slate-900 focus:bg-white"
+                                                : "bg-slate-800 border-slate-700 text-slate-200 focus:bg-slate-900"
+                                        )}
                                         onChange={(e) => handleInputChange(input.id, e.target.value)}
                                         value={formData[input.id] || ""}
                                     >
@@ -115,12 +129,17 @@ export default function ToolPage() {
                                         ))}
                                     </select>
                                     <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                                        <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        <svg className={cn("w-4 h-4", isLight ? "text-slate-400" : "text-slate-500")} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </div>
                                 </div>
                             ) : input.type === "textarea" ? (
                                 <textarea
-                                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all min-h-[120px] resize-y"
+                                    className={cn(
+                                        "w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all min-h-[120px] resize-y outline-none font-medium",
+                                        isLight
+                                            ? "bg-slate-50 border-slate-200 text-slate-900 focus:bg-white placeholder:text-slate-400"
+                                            : "bg-slate-800 border-slate-700 text-slate-200 focus:bg-slate-900 placeholder:text-slate-500"
+                                    )}
                                     placeholder={input.placeholder}
                                     onChange={(e) => handleInputChange(input.id, e.target.value)}
                                     value={formData[input.id] || ""}
@@ -128,7 +147,12 @@ export default function ToolPage() {
                             ) : (
                                 <input
                                     type="text"
-                                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all"
+                                    className={cn(
+                                        "w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all outline-none font-medium",
+                                        isLight
+                                            ? "bg-slate-50 border-slate-200 text-slate-900 focus:bg-white placeholder:text-slate-400"
+                                            : "bg-slate-800 border-slate-700 text-slate-200 focus:bg-slate-900 placeholder:text-slate-500"
+                                    )}
                                     placeholder={input.placeholder}
                                     onChange={(e) => handleInputChange(input.id, e.target.value)}
                                     value={formData[input.id] || ""}
@@ -139,11 +163,17 @@ export default function ToolPage() {
                 </div>
 
                 {/* Footer Action */}
-                <div className="p-6 border-t border-slate-800 bg-slate-900/50">
+                <div className={cn(
+                    "p-6 border-t transition-colors",
+                    isLight ? "bg-slate-50 border-slate-200" : "bg-slate-900 border-slate-800"
+                )}>
                     <Button
                         onClick={handleGenerate}
                         disabled={isGenerating}
-                        className="w-full h-12 text-lg font-semibold bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-lg shadow-violet-500/25 rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                        className={cn(
+                            "w-full h-12 text-lg font-bold rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg",
+                            "bg-violet-600 hover:bg-violet-700 text-white shadow-violet-500/25"
+                        )}
                     >
                         {isGenerating ? (
                             <>
@@ -163,43 +193,49 @@ export default function ToolPage() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 className={cn(
-                    "flex-1 flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-2xl relative transition-all",
+                    "flex-1 flex flex-col h-full rounded-2xl overflow-hidden shadow-2xl relative transition-all border",
+                    isLight
+                        ? "bg-white border-slate-200"
+                        : "bg-slate-950 border-slate-800",
                     mobileView === 'input' ? "hidden md:flex" : "flex"
                 )}
             >
                 {/* Mobile: Back to Input Button */}
-                <div className="md:hidden p-2 bg-slate-50 border-b border-slate-200 flex justify-start">
-                    <Button variant="ghost" size="sm" onClick={() => setMobileView('input')} className="text-slate-500">
+                <div className={cn("md:hidden p-2 border-b flex justify-start", isLight ? "bg-slate-50 border-slate-200" : "bg-slate-900 border-slate-800")}>
+                    <Button variant="ghost" size="sm" onClick={() => setMobileView('input')} className={isLight ? "text-slate-500" : "text-slate-400"}>
                         <ArrowLeft className="w-4 h-4 mr-2" /> Edit Inputs
                     </Button>
                 </div>
                 {/* Output Header */}
-                <div className="h-14 border-b border-slate-100 flex items-center justify-between px-6 bg-white">
-                    <h2 className="font-semibold text-slate-700 flex items-center gap-2">
+                <div className={cn(
+                    "h-14 border-b flex items-center justify-between px-6 transition-colors",
+                    isLight ? "bg-white border-slate-100" : "bg-slate-950 border-slate-800"
+                )}>
+                    <h2 className={cn("font-semibold flex items-center gap-2", isLight ? "text-slate-700" : "text-slate-200")}>
                         <Sparkles className="w-4 h-4 text-violet-500" />
                         AI Output
                     </h2>
                     <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" title="Copy">
+                        <Button variant="ghost" size="icon" className={cn("h-8 w-8 hover:bg-slate-100 dark:hover:bg-slate-800", isLight ? "text-slate-400 hover:text-slate-600" : "text-slate-500 hover:text-white")} title="Copy">
                             <Copy className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" title="Share">
+                        <Button variant="ghost" size="icon" className={cn("h-8 w-8 hover:bg-slate-100 dark:hover:bg-slate-800", isLight ? "text-slate-400 hover:text-slate-600" : "text-slate-500 hover:text-white")} title="Share">
                             <Share2 className="w-4 h-4" />
                         </Button>
-                        <div className="w-px h-4 bg-slate-200 mx-2" />
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-green-600" title="Good">
+                        <div className={cn("w-px h-4 mx-2", isLight ? "bg-slate-200" : "bg-white/10")} />
+                        <Button variant="ghost" size="icon" className={cn("h-8 w-8 hover:bg-slate-100 dark:hover:bg-slate-800", isLight ? "text-slate-400 hover:text-green-600" : "text-slate-500 hover:text-green-400")} title="Good">
                             <ThumbsUp className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-500" title="Bad">
+                        <Button variant="ghost" size="icon" className={cn("h-8 w-8 hover:bg-slate-100 dark:hover:bg-slate-800", isLight ? "text-slate-400 hover:text-red-500" : "text-slate-500 hover:text-red-400")} title="Bad">
                             <ThumbsDown className="w-4 h-4" />
                         </Button>
                     </div>
                 </div>
 
                 {/* Content Area */}
-                <div className="flex-1 overflow-y-auto p-8 custom-scrollbar bg-white">
+                <div className={cn("flex-1 overflow-y-auto p-8 custom-scrollbar", isLight ? "bg-white" : "bg-slate-950")}>
                     {output ? (
-                        <div className="prose prose-slate max-w-none prose-lg">
+                        <div className={cn("prose max-w-none prose-lg", isLight ? "prose-slate" : "prose-invert text-slate-100")}>
                             {/* Simple formatting for demo */}
                             {output.split('\n').map((line, i) => (
                                 <p key={i} className="mb-4">{line}</p>
@@ -209,12 +245,12 @@ export default function ToolPage() {
                             )}
                         </div>
                     ) : (
-                        <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                            <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center mb-4">
-                                <Wand2 className="w-8 h-8 text-slate-300" />
+                        <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                            <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors", isLight ? "bg-slate-50 border border-slate-100" : "bg-white/5 border border-white/5")}>
+                                <Wand2 className={cn("w-8 h-8", isLight ? "text-slate-300" : "text-slate-600")} />
                             </div>
-                            <p className="text-lg font-medium">Ready to create!</p>
-                            <p className="text-sm">Fill in the form to generate content.</p>
+                            <p className={cn("text-lg font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Ready to create!</p>
+                            <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>Fill in the form on the left to generate content.</p>
                         </div>
                     )}
                 </div>
