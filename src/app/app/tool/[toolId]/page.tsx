@@ -238,12 +238,11 @@ export default function ToolPage() {
                 <div className={cn("flex-1 overflow-y-auto p-8 custom-scrollbar", isLight ? "bg-white" : "bg-slate-950")}>
                     {output ? (
                         <>
-                            <ReactMarkdown
-                                remarkPlugins={[remarkGfm]}
-                                className={cn("prose max-w-none prose-lg", isLight ? "prose-slate" : "prose-invert text-slate-100")}
-                            >
-                                {output}
-                            </ReactMarkdown>
+                            <div className={cn("prose max-w-none prose-lg", isLight ? "prose-slate" : "prose-invert text-slate-100")}>
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {output}
+                                </ReactMarkdown>
+                            </div>
                             {isGenerating && (
                                 <span className="inline-block w-2 h-4 bg-violet-500 animate-pulse ml-1 opacity-70">|</span>
                             )}
