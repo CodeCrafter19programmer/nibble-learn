@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2 } from "lucide-react"
+import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2, FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
@@ -47,7 +47,20 @@ const tools = [
     { id: "assignment-ideas", name: "Assignment Ideas", category: "planning", icon: Lightbulb, color: "bg-yellow-500", desc: "Get creative assignment ideas for any topic.", new: false, plus: false },
     { id: "performance-task", name: "Performance Task Designer", category: "assessment", icon: ClipboardList, color: "bg-cyan-600", desc: "Design authentic performance assessments.", new: false, plus: false },
     { id: "self-assessment", name: "Self-Assessment Tool", category: "assessment", icon: UserCheck, color: "bg-green-500", desc: "Create student self-reflection and self-assessment tools.", new: false, plus: false },
+    { id: "self-assessment", name: "Self-Assessment Tool", category: "assessment", icon: UserCheck, color: "bg-green-500", desc: "Create student self-reflection and self-assessment tools.", new: false, plus: false },
     { id: "peer-review", name: "Peer Review Guidelines", category: "assessment", icon: Users2, color: "bg-fuchsia-600", desc: "Generate guidelines for students to give peer feedback.", new: false, plus: false },
+    { id: "iep-generator", name: "IEP Generator", category: "support", icon: FileMinus, color: "bg-orange-600", desc: "Generate a draft of an IEP customized to a student's needs.", new: false, plus: true },
+    { id: "bip-generator", name: "BIP Generator", category: "support", icon: AlertTriangle, color: "bg-red-600", desc: "Create a Behavior Intervention Plan (BIP) with strategies.", new: false, plus: true },
+    { id: "behavior-intervention-suggestions", name: "Behavior Intervention", category: "support", icon: Lightbulb, color: "bg-yellow-600", desc: "Get strategies for managing specific behaviors.", new: false, plus: false },
+    { id: "social-story", name: "Social Story Creator", category: "support", icon: BookOpenCheck, color: "bg-blue-400", desc: "Generate social stories to help students understand situations.", new: false, plus: false },
+    { id: "exemplar-non-exemplar", name: "Exemplar & Non-Exemplar", category: "support", icon: XCircle, color: "bg-green-600", desc: "Create clear examples and non-examples for teaching concepts.", new: false, plus: false },
+    { id: "intervention-strategies", name: "Intervention Strategies", category: "support", icon: Target, color: "bg-purple-600", desc: "Get targeted intervention ideas for struggling students.", new: false, plus: false },
+    { id: "gifted-extension", name: "Gifted Education Extension", category: "support", icon: Trophy, color: "bg-amber-500", desc: "Create extension activities for advanced learners.", new: false, plus: true },
+    { id: "professional-email", name: "Professional Email", category: "communication", icon: Mail, color: "bg-indigo-600", desc: "Generate a professional email for parents, colleagues, or admin.", new: false, plus: false },
+    { id: "family-newsletter", name: "Family Newsletter", category: "communication", icon: Newspaper, color: "bg-teal-500", desc: "Create a newsletter to update families on class activities.", new: false, plus: false },
+    { id: "letter-of-recommendation", name: "Letter of Recommendation", category: "communication", icon: Scroll, color: "bg-slate-600", desc: "Generate a strong letter of recommendation for a student.", new: false, plus: true },
+    { id: "positive-phone-call", name: "Positive Phone Call", category: "communication", icon: Phone, color: "bg-green-500", desc: "Get talking points for positive calls home to parents.", new: false, plus: false },
+    { id: "parent-teacher-conference", name: "Conference Script", category: "communication", icon: MessageSquarePlus, color: "bg-blue-500", desc: "Prepare a script and talking points for conferences.", new: false, plus: false },
 ]
 
 export default function TeacherToolsPage() {

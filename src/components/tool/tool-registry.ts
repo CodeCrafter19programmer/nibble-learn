@@ -4,7 +4,8 @@ import {
     AlignLeft, Search, Quote, Lightbulb, BookOpen, Check, List,
     RotateCcw, Sparkles, Wand2, Scale, Link,
     Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle, CalendarDays, Grid, Heart,
-    ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, ClipboardList, UserCheck, Users2
+    ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, ClipboardList, UserCheck, Users2,
+    FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus
 } from "lucide-react"
 
 export const TOOLS_CONFIG: Record<string, ToolConfig> = {
@@ -619,6 +620,155 @@ export const TOOLS_CONFIG: Record<string, ToolConfig> = {
             { id: "type", label: "Assignment Type", type: "text", placeholder: "e.g., Persuasive Essay, Poster, Presentation" },
             { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
             { id: "focus", label: "Focus Areas for Feedback", type: "textarea", placeholder: "e.g., Clarity, specific evidence, eye contact..." }
+        ]
+    },
+
+    "iep-generator": {
+        id: "iep-generator",
+        name: "IEP Generator",
+        description: "Generate a draft of an IEP customized to a student's needs.",
+        icon: FileMinus,
+        color: "bg-orange-600",
+        inputs: [
+            { id: "grade", label: "Student Age/Grade", type: "text", placeholder: "e.g., 3rd Grade, Age 9" },
+            { id: "disability", label: "Disability Category", type: "select", options: ["Specific Learning Disability", "Autism", "OHI", "Emotional Disturbance", "Speech/Language", "Other"] },
+            { id: "performance", label: "Current Performance Levels", type: "textarea", placeholder: "Describe current academic and functional performance..." },
+            { id: "needs", label: "Areas of Need", type: "textarea", placeholder: "List specific areas where the student needs support..." }
+        ]
+    },
+    "bip-generator": {
+        id: "bip-generator",
+        name: "BIP Generator",
+        description: "Create a Behavior Intervention Plan (BIP) with strategies.",
+        icon: AlertTriangle,
+        color: "bg-red-600",
+        inputs: [
+            { id: "grade", label: "Student Age/Grade", type: "text", placeholder: "e.g., 5th Grade" },
+            { id: "behavior", label: "Behavior of Concern", type: "textarea", placeholder: "Describe the behavior..." },
+            { id: "function", label: "Function of Behavior", type: "select", options: ["Access Attention", "Access Tangible", "Escape/Avoidance", "Sensory"] },
+            { id: "data", label: "Data on Behavior (Optional)", type: "textarea", placeholder: "Frequency, duration, intensity..." }
+        ]
+    },
+    "behavior-intervention-suggestions": {
+        id: "behavior-intervention-suggestions",
+        name: "Behavior Intervention Suggestions",
+        description: "Get strategies for managing specific behaviors.",
+        icon: Lightbulb,
+        color: "bg-yellow-600",
+        inputs: [
+            { id: "behavior", label: "Behavior Description", type: "textarea", placeholder: "e.g., Calling out, refusal to work, aggression..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "context", label: "Context (When it occurs)", type: "text", placeholder: "e.g., During transitions, difficult tasks..." }
+        ]
+    },
+    "social-story": {
+        id: "social-story",
+        name: "Social Story Creator",
+        description: "Generate social stories to help students understand situations.",
+        icon: BookOpenCheck,
+        color: "bg-blue-400",
+        inputs: [
+            { id: "age", label: "Student Age", type: "text", placeholder: "e.g., 6 years old" },
+            { id: "situation", label: "Social Situation/Skill", type: "textarea", placeholder: "e.g., Asking to play, Losing a game, Fire drill" },
+            { id: "behavior", label: "Desired Behavior", type: "textarea", placeholder: "What should the student do?" }
+        ]
+    },
+    "exemplar-non-exemplar": {
+        id: "exemplar-non-exemplar",
+        name: "Exemplar & Non-Exemplar",
+        description: "Create clear examples and non-examples for teaching concepts.",
+        icon: XCircle,
+        color: "bg-green-600",
+        inputs: [
+            { id: "concept", label: "Concept or Skill", type: "text", placeholder: "e.g., Living vs. Non-living, Thesis Statement" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "count", label: "Number of Each", type: "select", options: ["3 Pairs", "5 Pairs", "8 Pairs"] }
+        ]
+    },
+    "intervention-strategies": {
+        id: "intervention-strategies",
+        name: "Intervention Strategies",
+        description: "Get targeted intervention ideas for struggling students.",
+        icon: Target,
+        color: "bg-purple-600",
+        inputs: [
+            { id: "gap", label: "Skill Gap/Challenge", type: "textarea", placeholder: "e.g., Difficulty decoding multi-syllabic words..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "subject", label: "Subject Area", type: "text", placeholder: "e.g., Reading, Math" }
+        ]
+    },
+    "gifted-extension": {
+        id: "gifted-extension",
+        name: "Gifted Education Extension",
+        description: "Create extension activities for advanced learners.",
+        icon: Trophy,
+        color: "bg-amber-500",
+        inputs: [
+            { id: "topic", label: "Topic/Standard", type: "text", placeholder: "e.g., The Solar System" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "interest", label: "Student Interest Areas (Optional)", type: "text", placeholder: "e.g., Robotics, Art" }
+        ]
+    },
+    // Communication Tools
+    "professional-email": {
+        id: "professional-email",
+        name: "Professional Email",
+        description: "Generate a professional email for parents, colleagues, or admin.",
+        icon: Mail,
+        color: "bg-indigo-600",
+        inputs: [
+            { id: "purpose", label: "Email Purpose/Recipient", type: "select", options: ["Parent Communication", "Admin Request", "Colleague Collaboration", "Community Partner"] },
+            { id: "points", label: "Key Points to Include", type: "textarea", placeholder: "What needs to be communicated?" },
+            { id: "tone", label: "Tone", type: "select", options: ["Professional", "Friendly", "Formal", "Urgent", "Empathetic"] }
+        ]
+    },
+    "family-newsletter": {
+        id: "family-newsletter",
+        name: "Family Newsletter",
+        description: "Create a newsletter to update families on class activities.",
+        icon: Newspaper,
+        color: "bg-teal-500",
+        inputs: [
+            { id: "grade", label: "Grade Level/Class", type: "text", placeholder: "e.g., 2nd Grade, Mr. Smith's Class" },
+            { id: "topics", label: "Topics/Highlights", type: "textarea", placeholder: "What did you do this week?" },
+            { id: "period", label: "Newsletter Period", type: "select", options: ["Weekly", "Monthly", "Quarterly"] },
+            { id: "events", label: "Upcoming Events (Optional)", type: "text", placeholder: "e.g., Field trip next Friday..." }
+        ]
+    },
+    "letter-of-recommendation": {
+        id: "letter-of-recommendation",
+        name: "Letter of Recommendation",
+        description: "Generate a strong letter of recommendation for a student.",
+        icon: Scroll,
+        color: "bg-slate-600",
+        inputs: [
+            { id: "student", label: "Student Name", type: "text", placeholder: "Student's Name" },
+            { id: "context", label: "Context (College, Job, etc.)", type: "text", placeholder: "e.g., College Application, Summer Program" },
+            { id: "strengths", label: "Student Strengths", type: "textarea", placeholder: "e.g., Leadership, work ethic..." },
+            { id: "achievements", label: "Specific Achievements (Optional)", type: "textarea", placeholder: "e.g., Won science fair, captain of debate team..." }
+        ]
+    },
+    "positive-phone-call": {
+        id: "positive-phone-call",
+        name: "Positive Phone Call Script",
+        description: "Get talking points for positive calls home to parents.",
+        icon: Phone,
+        color: "bg-green-500",
+        inputs: [
+            { id: "strengths", label: "Student Strengths/Successes", type: "textarea", placeholder: "What positive thing happened?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] }
+        ]
+    },
+    "parent-teacher-conference": {
+        id: "parent-teacher-conference",
+        name: "Conference Script",
+        description: "Prepare a script and talking points for parent-teacher conferences.",
+        icon: MessageSquarePlus,
+        color: "bg-blue-500",
+        inputs: [
+            { id: "topics", label: "Topics to Discuss", type: "textarea", placeholder: "e.g., Grades, Behavior, Social Skills..." },
+            { id: "strengths", label: "Student Strengths", type: "textarea", placeholder: "Positive attributes..." },
+            { id: "concerns", label: "Areas of Concern", type: "textarea", placeholder: "Areas needing improvement..." }
         ]
     },
 
