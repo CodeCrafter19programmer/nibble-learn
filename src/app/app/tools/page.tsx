@@ -16,18 +16,16 @@ const categories = [
 ]
 
 const tools = [
-    { id: 1, name: "Lesson Plan Generator", category: "planning", icon: FileText, color: "bg-blue-500", desc: "Generate 5E, Madeline Hunter, or custom lesson plans.", new: false, plus: false },
-    { id: 2, name: "Rubric Generator", category: "assessment", icon: CheckCircle, color: "bg-emerald-500", desc: "Create standards-aligned rubrics in table format.", new: false, plus: false },
-    { id: 3, name: "Report Card Comments", category: "communication", icon: MessageSquare, color: "bg-purple-500", desc: "Write professional comments based on student traits.", new: false, plus: true },
-    { id: 4, name: "IEP Draft Generator", category: "support", icon: Users, color: "bg-orange-500", desc: "Draft IEP goals, accommodations, and present levels.", new: false, plus: true },
-    { id: 5, name: "Text Leveler", category: "support", icon: Zap, color: "bg-amber-500", desc: "Adapt text reading levels for different students.", new: false, plus: false },
-    { id: 6, name: "Presentation Generator", category: "planning", icon: Presentation, color: "bg-pink-500", desc: "Create an outline and content for slide decks.", new: true, plus: true },
-    { id: 7, name: "YouTube Question Generator", category: "assessment", icon: Globe, color: "bg-red-500", desc: "Get questions from any educational video URL.", new: false, plus: false },
-    { id: 8, name: "Email Responder", category: "communication", icon: MessageSquare, color: "bg-indigo-500", desc: "Draft professional responses to parent emails.", new: false, plus: false },
-    { id: 9, name: "Worksheet Generator", category: "assessment", icon: Layout, color: "bg-teal-500", desc: "Create matching, multiple choice, or cloze worksheets.", new: true, plus: false },
-    { id: 10, name: "Unit Plan Generator", category: "planning", icon: Calendar, color: "bg-cyan-500", desc: "Plan out a 4-week unit with objectives and activities.", new: false, plus: true },
-    { id: 11, name: "Writing Feedback", category: "assessment", icon: PenTool, color: "bg-violet-500", desc: "Give instant feedback on student essays.", new: false, plus: false },
-    { id: 12, name: "Class Newsletter", category: "communication", icon: Sparkles, color: "bg-fuchsia-500", desc: "Write engaging weekly updates for families.", new: false, plus: false },
+    { id: "lesson-plan", name: "Lesson Plan Generator", category: "planning", icon: FileText, color: "bg-blue-500", desc: "Generate a lesson plan for a topic or objective you're teaching.", new: false, plus: false },
+    { id: "unit-plan", name: "Unit Plan Generator", category: "planning", icon: Calendar, color: "bg-purple-500", desc: "Create a multi-lesson unit plan on any topic.", new: false, plus: true },
+    { id: "5e-model-science", name: "5E Model Science Lesson", category: "planning", icon: Zap, color: "bg-emerald-500", desc: "Design a science lesson using the 5E instructional model.", new: false, plus: false },
+    { id: "presentation-generator", name: "Presentation Generator", category: "planning", icon: Presentation, color: "bg-orange-500", desc: "Generate exportable slides based on any topic.", new: true, plus: true },
+    { id: "lesson-hook", name: "Lesson Hook Generator", category: "planning", icon: Sparkles, color: "bg-yellow-500", desc: "Create an engaging hook to start your lesson.", new: false, plus: false },
+    { id: "standards-unpacker", name: "Standards Unpacker", category: "planning", icon: Search, color: "bg-indigo-500", desc: "Break down standards into student-friendly language.", new: false, plus: false },
+    { id: "accommodation-suggestions", name: "Accommodation Suggestions", category: "planning", icon: Users, color: "bg-teal-500", desc: "Get ideas for accommodating students with diverse needs.", new: false, plus: false },
+    { id: "assignment-scaffolder", name: "Assignment Scaffolder", category: "planning", icon: Layout, color: "bg-cyan-500", desc: "Break down complex assignments into manageable steps.", new: false, plus: false },
+    { id: "text-leveler", name: "Text Leveler", category: "planning", icon: PenTool, color: "bg-rose-500", desc: "Rewrite any text at different reading levels.", new: false, plus: false },
+    { id: "vocabulary-scaffolder", name: "Vocabulary Scaffolder", category: "planning", icon: Globe, color: "bg-fuchsia-500", desc: "Create tiered vocabulary lists with definitions.", new: false, plus: false },
 ]
 
 export default function TeacherToolsPage() {
@@ -44,7 +42,7 @@ export default function TeacherToolsPage() {
     })
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 pb-20">
             <div className={cn("flex flex-col md:flex-row justify-between items-end gap-6 border-b pb-8", isLight ? "border-slate-200" : "border-slate-800")}>
                 <div>
                     <h1 className={cn("text-3xl font-bold mb-2", isLight ? "text-slate-900" : "text-white")}>Teacher Tools</h1>
@@ -55,7 +53,7 @@ export default function TeacherToolsPage() {
                         "flex items-center gap-2 px-4 py-2 rounded-lg transition-colors border",
                         isLight
                             ? "bg-white text-slate-700 hover:bg-slate-50 border-slate-200 shadow-sm"
-                            : "bg-slate-800 text-slate-300 hover:bg-slate-700 border-slate-700"
+                            : "bg-white/5 text-slate-300 hover:bg-white/10 border-white/10"
                     )}>
                         <Filter className="w-4 h-4" />
                         <span className="text-sm font-medium">Filters</span>
@@ -65,10 +63,10 @@ export default function TeacherToolsPage() {
 
             {/* Controls */}
             <div className={cn(
-                "flex flex-col md:flex-row gap-4 items-center justify-between sticky top-16 z-30 py-4 backdrop-blur-xl -mx-6 px-6 md:mx-0 md:px-0 transition-all",
+                "flex flex-col md:flex-row gap-4 items-center justify-between sticky top-16 z-30 py-4 backdrop-blur-xl -mx-6 px-6 md:mx-0 md:px-0 transition-all rounded-xl",
                 isLight
-                    ? "bg-slate-50/90 border-b border-transparent"
-                    : "bg-slate-950/80"
+                    ? "bg-slate-50/80 border border-slate-200/50"
+                    : "bg-slate-950/80 border border-white/5"
             )}>
                 <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
                     {categories.map((cat) => (
@@ -76,14 +74,14 @@ export default function TeacherToolsPage() {
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
                             className={cn(
-                                "px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap",
+                                "px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap border",
                                 activeCategory === cat.id
                                     ? isLight
-                                        ? "bg-violet-600 text-white shadow-md shadow-violet-200"
-                                        : "bg-violet-600 text-white shadow-lg shadow-violet-500/25"
+                                        ? "bg-violet-600 text-white shadow-md shadow-violet-200 border-violet-600"
+                                        : "bg-violet-600 text-white shadow-lg shadow-violet-500/25 border-violet-500"
                                     : isLight
-                                        ? "bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 hover:text-violet-700"
-                                        : "bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white"
+                                        ? "bg-white border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-violet-700"
+                                        : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10 hover:text-white"
                             )}
                         >
                             {cat.label}
@@ -102,7 +100,7 @@ export default function TeacherToolsPage() {
                             "w-full pl-10 pr-4 py-2 rounded-xl focus:outline-none focus:ring-2 transition-all",
                             isLight
                                 ? "bg-white border border-slate-300 text-black placeholder:text-slate-500 focus:ring-violet-500"
-                                : "bg-slate-800 border border-slate-700 text-white placeholder:text-slate-500 focus:ring-violet-500/50 focus:bg-slate-900"
+                                : "bg-black/20 border border-white/10 text-white placeholder:text-slate-500 focus:ring-violet-500/50 focus:bg-black/40"
                         )}
                     />
                 </div>
@@ -117,16 +115,17 @@ export default function TeacherToolsPage() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.03 }}
                         className={cn(
-                            "group relative rounded-2xl p-5 hover:-translate-y-1 transition-all duration-200",
+                            "group relative rounded-2xl p-5 hover:-translate-y-1 transition-all duration-200 cursor-pointer block",
                             isLight
                                 ? "bg-white border-2 border-slate-200 shadow-md hover:border-violet-300 hover:shadow-lg"
-                                : "bg-slate-900 border border-slate-800 hover:border-slate-700"
+                                : "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
                         )}
+                        onClick={() => window.location.href = `/app/tool/${tool.id}`}
                     >
                         {/* Top Row */}
                         <div className="flex justify-between items-start mb-4">
                             <div className={cn(
-                                "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg",
+                                "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110",
                                 tool.color
                             )}>
                                 <tool.icon className="w-6 h-6" />
@@ -137,7 +136,7 @@ export default function TeacherToolsPage() {
                         </div>
 
                         {/* Content */}
-                        <h3 className={cn("text-lg font-bold mb-2 transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-slate-100 group-hover:text-violet-400")}>
+                        <h3 className={cn("text-lg font-bold mb-2 transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-violet-300")}>
                             {tool.name}
                         </h3>
                         <p className={cn("text-sm leading-relaxed mb-8", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>

@@ -5,7 +5,6 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import {
     Sparkles,
-    ArrowRight,
     Clock,
     ChevronRight,
     TrendingUp,
@@ -21,19 +20,19 @@ import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
 const recentTools = [
-    { id: 1, name: "Lesson Plan Generator", icon: FileText, color: "bg-blue-500", time: "2 hours ago" },
-    { id: 2, name: "Rubric Maker", icon: CheckCircle, color: "bg-emerald-500", time: "Yesterday" },
-    { id: 3, name: "Parent Email Writer", icon: MessageSquare, color: "bg-purple-500", time: "2 days ago" },
-    { id: 4, name: "Text Leveler", icon: Zap, color: "bg-amber-500", time: "3 days ago" },
+    { id: "lesson-plan", name: "Lesson Plan Generator", icon: FileText, color: "bg-blue-500", time: "2 hours ago" },
+    { id: "unit-plan", name: "Unit Plan Generator", icon: CheckCircle, color: "bg-purple-500", time: "Yesterday" },
+    { id: "text-leveler", name: "Text Leveler", icon: Zap, color: "bg-rose-500", time: "2 days ago" },
+    { id: "presentation-generator", name: "Presentation Generator", icon: Presentation, color: "bg-orange-500", time: "3 days ago" },
 ]
 
 const popularTools = [
-    { name: "Lesson Plan Generator", icon: FileText, color: "bg-blue-500", desc: "Create detailed 5E lesson plans instantly." },
-    { name: "Presentation Generator", icon: Presentation, color: "bg-orange-500", desc: "Generate slide decks for any topic." },
-    { name: "YoutTube Video Question Generator", icon: Globe, color: "bg-red-500", desc: "Get questions from any YouTube video URL." },
-    { name: "Math Spiral Review", icon: Zap, color: "bg-teal-500", desc: "Create spiral review problem sets." },
-    { name: "IEP Generator", icon: Users, color: "bg-indigo-500", desc: "Draft IEP goals and accommodations." },
-    { name: "Writing Feedback", icon: MessageSquare, color: "bg-pink-500", desc: "Give instant feedback on student writing." },
+    { id: "lesson-plan", name: "Lesson Plan Generator", icon: FileText, color: "bg-blue-500", desc: "Generate 5E, Madeline Hunter, or custom lesson plans." },
+    { id: "5e-model-science", name: "5E Model Science Lesson", icon: Zap, color: "bg-emerald-500", desc: "Design a science lesson using the 5E instructional model." },
+    { id: "accommodation-suggestions", name: "Accommodation Suggestions", icon: Users, color: "bg-teal-500", desc: "Get ideas for accommodating students with diverse needs." },
+    { id: "vocabulary-scaffolder", name: "Vocabulary Scaffolder", icon: Globe, color: "bg-fuchsia-500", desc: "Create tiered vocabulary lists with student-friendly definitions." },
+    { id: "lesson-hook", name: "Lesson Hook Generator", icon: Sparkles, color: "bg-yellow-500", desc: "Create an engaging hook to start your lesson and grab student attention." },
+    { id: "standards-unpacker", name: "Standards Unpacker", icon: FileText, color: "bg-indigo-500", desc: "Break down standards into student-friendly language." },
 ]
 
 const categories = [
@@ -59,7 +58,7 @@ export default function TeacherDashboard() {
             >
                 <div>
                     <h1 className={cn("text-3xl md:text-4xl font-bold mb-2", isLight ? "text-slate-900" : "text-white")}>
-                        {greeting}, Jane!
+                        {greeting}, Jane! <span className="inline-block animate-bounce">👋</span>
                     </h1>
                     <p className={cn("text-lg", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>
                         What would you like to create for your students today?
@@ -67,7 +66,7 @@ export default function TeacherDashboard() {
                 </div>
 
                 <div className="flex gap-3">
-                    <div className={cn("rounded-2xl p-4 flex items-center gap-3 border", isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-800/50 border-slate-700")}>
+                    <div className={cn("rounded-2xl p-4 flex items-center gap-3 border transition-colors", isLight ? "bg-white border-slate-200 shadow-sm" : "bg-white/5 border-white/10")}>
                         <div className="w-10 h-10 rounded-full bg-violet-500/10 flex items-center justify-center text-violet-500">
                             <Sparkles className="w-5 h-5" />
                         </div>
@@ -76,7 +75,7 @@ export default function TeacherDashboard() {
                             <p className={cn("text-xl font-bold", isLight ? "text-slate-900" : "text-white")}>12.5 hrs</p>
                         </div>
                     </div>
-                    <div className={cn("rounded-2xl p-4 flex items-center gap-3 border", isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-800/50 border-slate-700")}>
+                    <div className={cn("rounded-2xl p-4 flex items-center gap-3 border transition-colors", isLight ? "bg-white border-slate-200 shadow-sm" : "bg-white/5 border-white/10")}>
                         <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500">
                             <Zap className="w-5 h-5" />
                         </div>
@@ -99,7 +98,7 @@ export default function TeacherDashboard() {
                         <Clock className="w-5 h-5 text-slate-500" />
                         Jump Back In
                     </h2>
-                    <Link href="/app/history" className={cn("text-sm transition-colors", isLight ? "text-violet-600 hover:text-violet-800 font-medium" : "text-violet-400 hover:text-violet-300")}>
+                    <Link href="/app/history" className={cn("text-sm transition-colors", isLight ? "text-violet-600 hover:text-violet-800 font-medium" : "text-violet-400 hover:text-white")}>
                         View History
                     </Link>
                 </div>
@@ -110,19 +109,19 @@ export default function TeacherDashboard() {
                             key={tool.id}
                             href={`/app/tool/${tool.id}`}
                             className={cn(
-                                "group p-4 rounded-xl border transition-all duration-200",
+                                "group p-4 rounded-xl border transition-all duration-200 block",
                                 isLight
                                     ? "bg-white border-slate-200 hover:border-violet-300 hover:shadow-md"
-                                    : "bg-slate-800/50 border-slate-700/50 hover:border-violet-500/30 hover:bg-slate-800"
+                                    : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
                             )}
                         >
                             <div className="flex items-start justify-between mb-3">
                                 <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-lg", tool.color)}>
                                     <tool.icon className="w-5 h-5" />
                                 </div>
-                                <span className="text-xs text-slate-500">{tool.time}</span>
+                                <span className={cn("text-xs", isLight ? "text-slate-500" : "text-slate-400")}>{tool.time}</span>
                             </div>
-                            <h3 className={cn("font-semibold transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-slate-200 group-hover:text-white")}>{tool.name}</h3>
+                            <h3 className={cn("font-semibold transition-colors truncate", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-white")}>{tool.name}</h3>
                         </Link>
                     ))}
                 </div>
@@ -145,26 +144,26 @@ export default function TeacherDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {popularTools.map((tool, i) => (
+                    {popularTools.map((tool) => (
                         <Link
-                            key={i}
-                            href="/app/tools"
+                            key={tool.id}
+                            href={`/app/tool/${tool.id}`}
                             className={cn(
-                                "group relative p-5 rounded-2xl border transition-all hover:-translate-y-1 hover:shadow-xl",
+                                "group relative p-5 rounded-2xl border transition-all hover:-translate-y-1 block",
                                 isLight
-                                    ? "bg-white border-slate-200 shadow-sm hover:border-violet-200"
-                                    : "bg-slate-900 border-slate-800 hover:border-slate-700"
+                                    ? "bg-white border-slate-200 shadow-sm hover:border-violet-300 hover:shadow-lg"
+                                    : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
                             )}
                         >
                             <div className="flex items-start gap-4">
-                                <div className={cn("w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center text-white shadow-lg", tool.color)}>
+                                <div className={cn("w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110", tool.color)}>
                                     <tool.icon className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h3 className={cn("text-lg font-bold transition-colors mb-1", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-slate-100 group-hover:text-violet-400")}>
+                                    <h3 className={cn("text-lg font-bold transition-colors mb-1", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-violet-300")}>
                                         {tool.name}
                                     </h3>
-                                    <p className={cn("text-sm line-clamp-2", isLight ? "text-slate-600 font-medium" : "text-slate-500")}>
+                                    <p className={cn("text-sm line-clamp-2 leading-relaxed", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>
                                         {tool.desc}
                                     </p>
                                 </div>
@@ -191,7 +190,7 @@ export default function TeacherDashboard() {
                                 "group relative overflow-hidden rounded-2xl aspect-[4/3] flex flex-col items-center justify-center p-6 border transition-all",
                                 isLight
                                     ? "bg-white border-slate-200 shadow-sm hover:border-violet-300 hover:shadow-md"
-                                    : "bg-slate-800 border-slate-700 hover:border-slate-600"
+                                    : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20"
                             )}
                         >
                             <div className={cn(
@@ -200,8 +199,8 @@ export default function TeacherDashboard() {
                             )}>
                                 <cat.icon className="w-6 h-6" />
                             </div>
-                            <h3 className={cn("font-bold", isLight ? "text-slate-900" : "text-slate-200")}>{cat.name}</h3>
-                            <p className="text-xs text-slate-500 mt-1">{cat.count} tools</p>
+                            <h3 className={cn("font-bold transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-violet-300")}>{cat.name}</h3>
+                            <p className={cn("text-xs mt-1", isLight ? "text-slate-500" : "text-slate-400")}>{cat.count} tools</p>
                         </Link>
                     ))}
                 </div>
