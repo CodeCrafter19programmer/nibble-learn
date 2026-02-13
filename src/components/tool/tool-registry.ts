@@ -2,7 +2,8 @@ import { ToolConfig } from "./types"
 import {
     FileText, CheckCircle, MessageSquare, Zap, Users, Globe, PenTool,
     AlignLeft, Search, Quote, Lightbulb, BookOpen, Check, List,
-    RotateCcw, Sparkles, Wand2, Scale, Link
+    RotateCcw, Sparkles, Wand2, Scale, Link,
+    Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle, CalendarDays, Grid, Heart
 } from "lucide-react"
 
 export const TOOLS_CONFIG: Record<string, ToolConfig> = {
@@ -334,6 +335,137 @@ export const TOOLS_CONFIG: Record<string, ToolConfig> = {
             { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
             { id: "count", label: "Number of Words", type: "select", options: ["10 Words", "15 Words", "20 Words"] },
             { id: "tier", label: "Tier Level", type: "select", options: ["Tier 1 (Basic)", "Tier 2 (High Frequency/Cross-Curricular)", "Tier 3 (Domain Specific)", "Mixed"] }
+        ]
+    },
+
+    "make-it-relevant": {
+        id: "make-it-relevant",
+        name: "Make It Relevant",
+        description: "Adapt content to connect with student interests and backgrounds.",
+        icon: Target,
+        color: "bg-red-500",
+        inputs: [
+            { id: "topic", label: "Content/Topic", type: "textarea", placeholder: "e.g., Quadratic Equations, The Great Depression" },
+            { id: "interests", label: "Student Interests", type: "text", placeholder: "e.g., Video Games, Basketball, Anime, Pop Music" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "background", label: "Cultural Background (Optional)", type: "text", placeholder: "e.g., Urban setting, specific cultural group..." }
+        ]
+    },
+    "math-story-problem": {
+        id: "math-story-problem",
+        name: "Math Story Problem Generator",
+        description: "Create word problems for any math concept with real-world context.",
+        icon: Calculator,
+        color: "bg-blue-600",
+        inputs: [
+            { id: "concept", label: "Math Concept", type: "text", placeholder: "e.g., Fractions, Pythagorean Theorem" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "6th Grade", "7th Grade", "8th Grade", "High School"] },
+            { id: "count", label: "Number of Problems", type: "select", options: ["5 Problems", "10 Problems", "15 Problems"] },
+            { id: "difficulty", label: "Difficulty", type: "select", options: ["Easy", "Medium", "Hard"] },
+            { id: "context", label: "Real-World Context (Optional)", type: "text", placeholder: "e.g., Cooking, Space Travel, Shopping" }
+        ]
+    },
+    "math-spiral-review": {
+        id: "math-spiral-review",
+        name: "Math Spiral Review",
+        description: "Generate practice problems that review multiple concepts.",
+        icon: RotateCw,
+        color: "bg-indigo-500",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["1st Grade", "2nd Grade", "3rd Grade", "4th Grade", "5th Grade", "6th Grade", "7th Grade", "8th Grade", "High School"] },
+            { id: "concepts", label: "Math Concepts to Include", type: "textarea", placeholder: "e.g., Multiplication, Division, Fractions, Geometry" },
+            { id: "count", label: "Number of Problems per Concept", type: "select", options: ["2", "3", "4", "5"] }
+        ]
+    },
+    "project-outline": {
+        id: "project-outline",
+        name: "Project Outline Generator",
+        description: "Create a structured outline and timeline for student projects.",
+        icon: ListTodo,
+        color: "bg-orange-600",
+        inputs: [
+            { id: "topic", label: "Project Topic", type: "text", placeholder: "e.g., Renewable Energy Solutions" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "type", label: "Project Type", type: "select", options: ["Research Paper", "Presentation", "Creative Project", "Science Experiment", "Debate"] },
+            { id: "duration", label: "Project Duration", type: "select", options: ["1 Week", "2 Weeks", "3 Weeks", "4 Weeks", "Semester"] }
+        ]
+    },
+    "choice-board": {
+        id: "choice-board",
+        name: "Choice Board Generator",
+        description: "Create a choice board with differentiated activity options.",
+        icon: LayoutGrid,
+        color: "bg-pink-500",
+        inputs: [
+            { id: "objective", label: "Learning Objective", type: "textarea", placeholder: "e.g., Students will understand the causes of WWI" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "size", label: "Board Size", type: "select", options: ["3x3 (9 options)", "4x4 (16 options)"] },
+            { id: "activities", label: "Activity Types to Include", type: "textarea", placeholder: "e.g., Writing, Drawing, Digital, Performance..." }
+        ]
+    },
+    "dok-questions": {
+        id: "dok-questions",
+        name: "DOK Questions Generator",
+        description: "Generate questions at different Depth of Knowledge (DOK) levels.",
+        icon: Layers,
+        color: "bg-purple-600",
+        inputs: [
+            { id: "topic", label: "Topic or Text", type: "textarea", placeholder: "Enter topic or paste text..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "levels", label: "DOK Levels Needed", type: "select", options: ["Level 1 (Recall)", "Level 2 (Skill/Concept)", "Level 3 (Strategic Thinking)", "Level 4 (Extended Thinking)", "All Levels"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["3", "5", "8", "10"] }
+        ]
+    },
+    "discussion-questions": {
+        id: "discussion-questions",
+        name: "Discussion Questions",
+        description: "Create thought-provoking discussion questions for class.",
+        icon: MessageCircle,
+        color: "bg-teal-600",
+        inputs: [
+            { id: "topic", label: "Discussion Topic or Text", type: "textarea", placeholder: "Enter topic or paste text..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "type", label: "Question Type", type: "select", options: ["Open-ended", "Socratic Seminar", "Debate", "Analysis", "Personal Connection"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["3", "5", "8", "10"] }
+        ]
+    },
+    "class-syllabus": {
+        id: "class-syllabus",
+        name: "Class Syllabus Generator",
+        description: "Generate a comprehensive course syllabus.",
+        icon: BookOpen,
+        color: "bg-slate-700",
+        inputs: [
+            { id: "course", label: "Course Name", type: "text", placeholder: "e.g., AP U.S. History" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Middle School", "High School", "College"] },
+            { id: "grading", label: "Grading Policy", type: "textarea", placeholder: "e.g., 40% Tests, 30% Projects, 20% Homework, 10% Participation" },
+            { id: "policies", label: "School/Class Policies", type: "textarea", placeholder: "e.g., Late work, cell phones, attendance..." }
+        ]
+    },
+    "weekly-agenda": {
+        id: "weekly-agenda",
+        name: "Weekly Agenda Generator",
+        description: "Create a structured weekly class agenda.",
+        icon: CalendarDays,
+        color: "bg-green-600",
+        inputs: [
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "subject", label: "Subject", type: "text", placeholder: "e.g., Algebra 1" },
+            { id: "topics", label: "Topics for the Week", type: "textarea", placeholder: "What are you covering this week?" },
+            { id: "events", label: "Special Events/Notes", type: "text", placeholder: "e.g., Assembly on Friday, Quiz on Wednesday" }
+        ]
+    },
+    "learning-stations": {
+        id: "learning-stations",
+        name: "Learning Station Activities",
+        description: "Design activities for rotation learning stations/centers.",
+        icon: Grid,
+        color: "bg-yellow-600",
+        inputs: [
+            { id: "objective", label: "Learning Objective", type: "textarea", placeholder: "What should students learn?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "count", label: "Number of Stations", type: "select", options: ["3 Stations", "4 Stations", "5 Stations", "6 Stations"] },
+            { id: "materials", label: "Available Materials (Optional)", type: "textarea", placeholder: "e.g., Tablets, whiteboards, manipulatives, art supplies..." }
         ]
     },
 

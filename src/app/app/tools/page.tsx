@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar } from "lucide-react"
+import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
@@ -26,6 +26,16 @@ const tools = [
     { id: "assignment-scaffolder", name: "Assignment Scaffolder", category: "planning", icon: Layout, color: "bg-cyan-500", desc: "Break down complex assignments into manageable steps.", new: false, plus: false },
     { id: "text-leveler", name: "Text Leveler", category: "planning", icon: PenTool, color: "bg-rose-500", desc: "Rewrite any text at different reading levels.", new: false, plus: false },
     { id: "vocabulary-scaffolder", name: "Vocabulary Scaffolder", category: "planning", icon: Globe, color: "bg-fuchsia-500", desc: "Create tiered vocabulary lists with definitions.", new: false, plus: false },
+    { id: "make-it-relevant", name: "Make It Relevant", category: "planning", icon: Target, color: "bg-red-500", desc: "Adapt content to connect with student interests and backgrounds.", new: false, plus: false },
+    { id: "math-story-problem", name: "Math Story Problem", category: "planning", icon: Calculator, color: "bg-blue-600", desc: "Create word problems for any math concept with real-world context.", new: false, plus: false },
+    { id: "math-spiral-review", name: "Math Spiral Review", category: "planning", icon: RotateCw, color: "bg-indigo-500", desc: "Generate practice problems that review multiple concepts.", new: false, plus: true },
+    { id: "project-outline", name: "Project Outline Generator", category: "planning", icon: ListTodo, color: "bg-orange-600", desc: "Create a structured outline and timeline for student projects.", new: true, plus: false },
+    { id: "choice-board", name: "Choice Board Generator", category: "planning", icon: LayoutGrid, color: "bg-pink-500", desc: "Create a choice board with differentiated activity options.", new: false, plus: true },
+    { id: "dok-questions", name: "DOK Questions Generator", category: "planning", icon: Layers, color: "bg-purple-600", desc: "Generate questions at different Depth of Knowledge (DOK) levels.", new: false, plus: false },
+    { id: "discussion-questions", name: "Discussion Questions", category: "planning", icon: MessageCircleIcon, color: "bg-teal-600", desc: "Create thought-provoking discussion questions for class.", new: false, plus: false },
+    { id: "class-syllabus", name: "Class Syllabus Generator", category: "planning", icon: FileText, color: "bg-slate-700", desc: "Generate a comprehensive course syllabus.", new: false, plus: false },
+    { id: "weekly-agenda", name: "Weekly Agenda Generator", category: "planning", icon: CalendarDays, color: "bg-green-600", desc: "Create a structured weekly class agenda.", new: false, plus: false },
+    { id: "learning-stations", name: "Learning Station Activities", category: "planning", icon: Grid, color: "bg-yellow-600", desc: "Design activities for rotation learning stations/centers.", new: false, plus: false },
 ]
 
 export default function TeacherToolsPage() {
