@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2, FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus, Minimize2, RefreshCw, Languages, SpellCheck, Music, Smile, Snowflake, Gift, Youtube, Bell, DoorOpen, FlaskConical, GitCompare, BarChart2, AlertCircle, ArrowUp, Bot, Wrench, Files, FileSpreadsheet } from "lucide-react"
+import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2, FileMinus, AlertTriangle, BookOpenCheck, XCircle, Trophy, Mail, Newspaper, Scroll, Phone, MessageSquarePlus, Minimize2, RefreshCw, Languages, SpellCheck, Music, Smile, Snowflake, Gift, Youtube, Bell, DoorOpen, FlaskConical, GitCompare, BarChart2, AlertCircle, ArrowUp, Bot, Wrench, Files, FileSpreadsheet, Scale } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
