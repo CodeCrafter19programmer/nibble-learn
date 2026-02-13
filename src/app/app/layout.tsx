@@ -21,7 +21,7 @@ export default function TeacherAppLayout({
     return (
         <div className={cn(
             "min-h-screen font-sans transition-colors duration-300",
-            isLight ? "bg-slate-50 text-slate-900" : "bg-slate-950 text-slate-100"
+            isLight ? "bg-background text-slate-900" : "bg-slate-950 text-slate-100"
         )}>
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">
@@ -60,7 +60,7 @@ export default function TeacherAppLayout({
                                 "w-full pl-10 pr-4 py-2 rounded-full text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 transition-all",
                                 isLight
                                     ? "bg-slate-100 border border-slate-200 text-black focus:ring-violet-500/50 focus:bg-white"
-                                    : "bg-slate-800/50 border border-slate-700/50 text-slate-200 focus:ring-violet-500/50 focus:bg-slate-800"
+                                    : "bg-white/10 border border-white/10 text-slate-200 focus:ring-violet-500/50 focus:bg-white/20"
                             )}
                         />
                         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
@@ -68,7 +68,7 @@ export default function TeacherAppLayout({
                                 "hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold rounded border",
                                 isLight
                                     ? "text-slate-500 bg-slate-100 border-slate-200"
-                                    : "text-slate-500 bg-slate-800 border-slate-700"
+                                    : "text-slate-400 bg-white/5 border-white/10"
                             )}>⌘K</kbd>
                         </div>
                     </div>

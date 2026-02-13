@@ -11,7 +11,7 @@ import { CTASection } from "@/components/sections/CTASection"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background">
       <Header />
       <Hero />
       <AmplifySection />

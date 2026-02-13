@@ -20,7 +20,7 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
         <div className={cn(
             "min-h-screen font-sans antialiased transition-colors duration-500",
             isLight
-                ? "bg-slate-50 text-slate-900 selection:bg-blue-200"
+                ? "bg-background text-slate-900 selection:bg-blue-200"
                 : "bg-gradient-to-br from-blue-700 via-blue-800 to-slate-900 text-white selection:bg-teal-500/30"
         )}>
             {/* Desktop Sidebar */}
