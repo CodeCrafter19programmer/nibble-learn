@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart } from "lucide-react"
+import { Search, Star, Filter, Sparkles, FileText, CheckCircle, MessageSquare, Users, Globe, Zap, Presentation, PenTool, Layout, Calendar, Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle as MessageCircleIcon, CalendarDays, Grid, Heart, ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, Lightbulb, ClipboardList, UserCheck, Users2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
@@ -36,6 +36,18 @@ const tools = [
     { id: "class-syllabus", name: "Class Syllabus Generator", category: "planning", icon: FileText, color: "bg-slate-700", desc: "Generate a comprehensive course syllabus.", new: false, plus: false },
     { id: "weekly-agenda", name: "Weekly Agenda Generator", category: "planning", icon: CalendarDays, color: "bg-green-600", desc: "Create a structured weekly class agenda.", new: false, plus: false },
     { id: "learning-stations", name: "Learning Station Activities", category: "planning", icon: Grid, color: "bg-yellow-600", desc: "Design activities for rotation learning stations/centers.", new: false, plus: false },
+    { id: "real-world-scenarios", name: "Real-World Scenarios", category: "planning", icon: Globe, color: "bg-emerald-600", desc: "Create authentic, real-world scenarios for learning.", new: false, plus: false },
+    { id: "multiple-choice-quiz", name: "Multiple Choice Quiz", category: "assessment", icon: ListChecks, color: "bg-blue-500", desc: "Create a multiple choice assessment based on any topic.", new: false, plus: true },
+    { id: "rubric-generator", name: "Rubric Generator", category: "assessment", icon: Table, color: "bg-purple-500", desc: "Have AI write a rubric for an assignment in a table format.", new: false, plus: false },
+    { id: "report-card-comments", name: "Report Card Comments", category: "communication", icon: ShieldCheck, color: "bg-orange-500", desc: "Generate report card comments with student's strengths and growth areas.", new: false, plus: true },
+    { id: "writing-feedback", name: "Writing Feedback", category: "assessment", icon: PenSquare, color: "bg-pink-500", desc: "Give areas of strength & areas for growth on student work.", new: false, plus: false },
+    { id: "text-dependent-questions", name: "Text-Dependent Questions", category: "assessment", icon: FileQuestion, color: "bg-teal-500", desc: "Create questions tied directly to a reading passage.", new: false, plus: false },
+    { id: "exit-ticket", name: "Exit Ticket Generator", category: "assessment", icon: Ticket, color: "bg-red-500", desc: "Create quick formative assessments to check understanding.", new: false, plus: true },
+    { id: "clear-directions", name: "Clear Directions", category: "support", icon: ArrowRight, color: "bg-indigo-500", desc: "Rewrite instructions to be clearer for students.", new: false, plus: false },
+    { id: "assignment-ideas", name: "Assignment Ideas", category: "planning", icon: Lightbulb, color: "bg-yellow-500", desc: "Get creative assignment ideas for any topic.", new: false, plus: false },
+    { id: "performance-task", name: "Performance Task Designer", category: "assessment", icon: ClipboardList, color: "bg-cyan-600", desc: "Design authentic performance assessments.", new: false, plus: false },
+    { id: "self-assessment", name: "Self-Assessment Tool", category: "assessment", icon: UserCheck, color: "bg-green-500", desc: "Create student self-reflection and self-assessment tools.", new: false, plus: false },
+    { id: "peer-review", name: "Peer Review Guidelines", category: "assessment", icon: Users2, color: "bg-fuchsia-600", desc: "Generate guidelines for students to give peer feedback.", new: false, plus: false },
 ]
 
 export default function TeacherToolsPage() {

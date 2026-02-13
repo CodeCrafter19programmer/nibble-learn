@@ -3,7 +3,8 @@ import {
     FileText, CheckCircle, MessageSquare, Zap, Users, Globe, PenTool,
     AlignLeft, Search, Quote, Lightbulb, BookOpen, Check, List,
     RotateCcw, Sparkles, Wand2, Scale, Link,
-    Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle, CalendarDays, Grid, Heart
+    Target, Calculator, RotateCw, ListTodo, LayoutGrid, Layers, MessageCircle, CalendarDays, Grid, Heart,
+    ListChecks, Table, ShieldCheck, PenSquare, FileQuestion, Ticket, ArrowRight, ClipboardList, UserCheck, Users2
 } from "lucide-react"
 
 export const TOOLS_CONFIG: Record<string, ToolConfig> = {
@@ -466,6 +467,158 @@ export const TOOLS_CONFIG: Record<string, ToolConfig> = {
             { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
             { id: "count", label: "Number of Stations", type: "select", options: ["3 Stations", "4 Stations", "5 Stations", "6 Stations"] },
             { id: "materials", label: "Available Materials (Optional)", type: "textarea", placeholder: "e.g., Tablets, whiteboards, manipulatives, art supplies..." }
+        ]
+    },
+
+    "real-world-scenarios": {
+        id: "real-world-scenarios",
+        name: "Real-World Scenarios",
+        description: "Create authentic, real-world scenarios for learning.",
+        icon: Globe,
+        color: "bg-emerald-600",
+        inputs: [
+            { id: "concept", label: "Academic Concept", type: "text", placeholder: "e.g., Ratios, Photosynthesis, Haiku" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "career", label: "Career/Field Connection (Optional)", type: "text", placeholder: "e.g., Architecture, Medicine, Journalism" }
+        ]
+    },
+    // Assessment Tools
+    "multiple-choice-quiz": {
+        id: "multiple-choice-quiz",
+        name: "Multiple Choice Quiz Generator",
+        description: "Create a multiple choice assessment, quiz, or test based on any topic.",
+        icon: ListChecks,
+        color: "bg-blue-500",
+        inputs: [
+            { id: "topic", label: "Topic or Standard", type: "textarea", placeholder: "e.g., The Solar System, CCSS.MATH.CONTENT.7.RP.A.1" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["5 Questions", "10 Questions", "15 Questions", "20 Questions"] },
+            { id: "difficulty", label: "Difficulty Level", type: "select", options: ["Easy", "Medium", "Hard", "Mixed"] },
+            { id: "dok", label: "DOK Level (Optional)", type: "select", options: ["Level 1", "Level 2", "Level 3", "Mixed"] }
+        ]
+    },
+    "rubric-generator": {
+        id: "rubric-generator",
+        name: "Rubric Generator",
+        description: "Have AI write a rubric for an assignment in a table format.",
+        icon: Table,
+        color: "bg-purple-500",
+        inputs: [
+            { id: "description", label: "Assignment Description", type: "textarea", placeholder: "e.g., Write a persuasive essay about recycling..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "criteria", label: "Number of Criteria", type: "select", options: ["3 Criteria", "4 Criteria", "5 Criteria", "6 Criteria"] },
+            { id: "scale", label: "Performance Levels", type: "select", options: ["3-Level Scale", "4-Level Scale", "5-Level Scale"] }
+        ]
+    },
+    "report-card-comments": {
+        id: "report-card-comments",
+        name: "Report Card Comments",
+        description: "Generate report card comments with student's strengths and areas for growth.",
+        icon: ShieldCheck,
+        color: "bg-orange-500",
+        inputs: [
+            { id: "subject", label: "Subject Area", type: "text", placeholder: "e.g., Mathematics, Reading, Conduct" },
+            { id: "strengths", label: "Student Strengths", type: "textarea", placeholder: "e.g., Participates well, improved visuals, kind to others..." },
+            { id: "growth", label: "Areas for Growth", type: "textarea", placeholder: "e.g., Turning in homework, focus during lessons..." },
+            { id: "tone", label: "Tone", type: "select", options: ["Positive", "Encouraging", "Constructive", "Professional"] }
+        ]
+    },
+    "writing-feedback": {
+        id: "writing-feedback",
+        name: "Writing Feedback",
+        description: "Give areas of strength & areas for growth on student work based on criteria.",
+        icon: PenSquare,
+        color: "bg-pink-500",
+        inputs: [
+            { id: "text", label: "Student Writing", type: "textarea", placeholder: "Paste student work here..." },
+            { id: "rubric", label: "Assignment Criteria/Rubric", type: "textarea", placeholder: "What were the requirements?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School", "College"] },
+            { id: "focus", label: "Focus Areas", type: "text", placeholder: "e.g., Grammar, Organization, Evidence" }
+        ]
+    },
+    "text-dependent-questions": {
+        id: "text-dependent-questions",
+        name: "Text-Dependent Questions",
+        description: "Create questions tied directly to a reading passage.",
+        icon: FileQuestion,
+        color: "bg-teal-500",
+        inputs: [
+            { id: "text", label: "Text/Passage", type: "textarea", placeholder: "Paste the reading passage here..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "count", label: "Number of Questions", type: "select", options: ["3", "5", "8", "10"] },
+            { id: "types", label: "Question Types", type: "text", placeholder: "e.g., Literal, Inferential, Evaluative" }
+        ]
+    },
+    "exit-ticket": {
+        id: "exit-ticket",
+        name: "Exit Ticket Generator",
+        description: "Create quick formative assessments to check understanding.",
+        icon: Ticket,
+        color: "bg-red-500",
+        inputs: [
+            { id: "topic", label: "Lesson Topic", type: "text", placeholder: "e.g., The Water Cycle" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Exit Ticket Type", type: "select", options: ["Questions", "Reflection", "Application", "Summary"] }
+        ]
+    },
+    "clear-directions": {
+        id: "clear-directions",
+        name: "Clear Directions",
+        description: "Rewrite instructions to be clearer for students.",
+        icon: ArrowRight,
+        color: "bg-indigo-500",
+        inputs: [
+            { id: "directions", label: "Original Directions", type: "textarea", placeholder: "Paste prompt or instructions here..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "simplify", label: "Simplify For (Optional)", type: "select", options: ["General Student", "ELL/ESL", "Special Education", "Younger Students"] }
+        ]
+    },
+    "assignment-ideas": {
+        id: "assignment-ideas",
+        name: "Assignment Ideas Generator",
+        description: "Get creative assignment ideas for any topic.",
+        icon: Lightbulb,
+        color: "bg-yellow-500",
+        inputs: [
+            { id: "topic", label: "Topic or Standard", type: "text", placeholder: "e.g., Ancient Rome, Fractions" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "type", label: "Assignment Type", type: "select", options: ["Individual", "Group Project", "Creative", "Research", "Presentation"] }
+        ]
+    },
+    "performance-task": {
+        id: "performance-task",
+        name: "Performance Task Designer",
+        description: "Design authentic performance assessments.",
+        icon: ClipboardList,
+        color: "bg-cyan-600",
+        inputs: [
+            { id: "target", label: "Standard or Learning Target", type: "textarea", placeholder: "e.g., Students can analyze data..." },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "context", label: "Real-World Connection", type: "text", placeholder: "e.g., Environmental Scientist, City Planner" }
+        ]
+    },
+    "self-assessment": {
+        id: "self-assessment",
+        name: "Self-Assessment Tool",
+        description: "Create student self-reflection and self-assessment tools.",
+        icon: UserCheck,
+        color: "bg-green-500",
+        inputs: [
+            { id: "objective", label: "Learning Objective", type: "textarea", placeholder: "What should students reflect on?" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "format", label: "Assessment Format", type: "select", options: ["Checklist", "Rating Scale", "Reflection Questions", "Goal Setting"] }
+        ]
+    },
+    "peer-review": {
+        id: "peer-review",
+        name: "Peer Review Guidelines",
+        description: "Generate guidelines for students to give peer feedback.",
+        icon: Users2,
+        color: "bg-fuchsia-600",
+        inputs: [
+            { id: "type", label: "Assignment Type", type: "text", placeholder: "e.g., Persuasive Essay, Poster, Presentation" },
+            { id: "grade", label: "Grade Level", type: "select", options: ["Elementary", "Middle School", "High School"] },
+            { id: "focus", label: "Focus Areas for Feedback", type: "textarea", placeholder: "e.g., Clarity, specific evidence, eye contact..." }
         ]
     },
 
