@@ -87,8 +87,8 @@ export default function PublicToolPage() {
         <div className="min-h-screen bg-background flex flex-col">
             <Header />
 
-            <main className="flex-1 container mx-auto px-4 py-8 md:py-12">
-                <div className="h-[calc(100vh-12rem)] min-h-[600px] flex flex-col md:flex-row gap-6 overflow-hidden pb-4">
+            <main className="flex-1 container mx-auto px-4 pt-24 pb-12">
+                <div className="h-[calc(100vh-9rem)] min-h-[600px] flex flex-col md:flex-row gap-6 overflow-hidden pb-4">
 
                     {/* LEFT PANE: Input Form */}
                     <motion.div
