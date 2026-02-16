@@ -50,7 +50,7 @@ export default function ToolsPage() {
                                 key={tool.id}
                             >
                                 <Link
-                                    href={`/app/tool/${tool.id}`}
+                                    href={`/tools/${tool.id}`}
                                     className="group relative rounded-2xl p-5 hover:-translate-y-1 transition-all duration-200 cursor-pointer block bg-white border-2 border-gray-100 shadow-sm hover:border-violet-300 hover:shadow-lg h-full"
                                 >
                                     {/* Top Row */}
