@@ -180,67 +180,77 @@ export default function TeacherToolsPage() {
             {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {filteredTools.map((tool, index) => (
-                    <motion.div
+                    <Link
                         key={tool.id}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.03 }}
-                        className={cn(
-                            "group relative rounded-2xl p-5 hover:-translate-y-1 transition-all duration-200 cursor-pointer block",
-                            isLight
-                                ? "bg-white border-2 border-slate-200 shadow-md hover:border-violet-300 hover:shadow-lg"
-                                : "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
-                        )}
-                        onClick={() => window.location.href = `/app/tool/${tool.id}`}
+                        href={`/app/tool/${tool.id}`}
+                        className="block"
                     >
-                        {/* Top Row */}
-                        <div className="flex justify-between items-start mb-4">
-                            <div className={cn(
-                                "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110",
-                                tool.color
-                            )}>
-                                <tool.icon className="w-6 h-6" />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: index * 0.03 }}
+                            className={cn(
+                                "group relative rounded-2xl p-5 hover:-translate-y-1 transition-all duration-200 h-full",
+                                isLight
+                                    ? "bg-white border-2 border-slate-200 shadow-md hover:border-violet-300 hover:shadow-lg"
+                                    : "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
+                            )}
+                        >
+                            {/* Top Row */}
+                            <div className="flex justify-between items-start mb-4">
+                                <div className={cn(
+                                    "w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110",
+                                    tool.color
+                                )}>
+                                    <tool.icon className="w-6 h-6" />
+                                </div>
+                                <button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        // Handle favorite toggle
+                                    }}
+                                    className={cn("transition-colors", isLight ? "text-slate-400 hover:text-amber-500" : "text-slate-600 hover:text-amber-400")}
+                                >
+                                    <Star className="w-5 h-5" />
+                                </button>
                             </div>
-                            <button className={cn("transition-colors", isLight ? "text-slate-400 hover:text-amber-500" : "text-slate-600 hover:text-amber-400")}>
-                                <Star className="w-5 h-5" />
-                            </button>
-                        </div>
 
-                        {/* Content */}
-                        <h3 className={cn("text-lg font-bold mb-2 transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-violet-300")}>
-                            {tool.name}
-                        </h3>
-                        <p className={cn("text-sm leading-relaxed mb-8", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>
-                            {tool.desc}
-                        </p>
+                            {/* Content */}
+                            <h3 className={cn("text-lg font-bold mb-2 transition-colors", isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-violet-300")}>
+                                {tool.name}
+                            </h3>
+                            <p className={cn("text-sm leading-relaxed mb-8", isLight ? "text-slate-600 font-medium" : "text-slate-400")}>
+                                {tool.desc}
+                            </p>
 
-                        {/* Badges */}
-                        <div className="absolute bottom-5 left-5 flex gap-2">
-                            {tool.new && (
-                                <span className={cn(
-                                    "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border",
-                                    isLight
-                                        ? "bg-emerald-50 text-emerald-600 border-emerald-200"
-                                        : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                                )}>
-                                    New
-                                </span>
-                            )}
-                            {tool.plus && (
-                                <span className={cn(
-                                    "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border flex items-center gap-1",
-                                    isLight
-                                        ? "bg-amber-50 text-amber-600 border-amber-200"
-                                        : "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                                )}>
-                                    <Sparkles className="w-3 h-3" /> Plus
-                                </span>
-                            )}
-                        </div>
+                            {/* Badges */}
+                            <div className="absolute bottom-5 left-5 flex gap-2">
+                                {tool.new && (
+                                    <span className={cn(
+                                        "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border",
+                                        isLight
+                                            ? "bg-emerald-50 text-emerald-600 border-emerald-200"
+                                            : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                    )}>
+                                        New
+                                    </span>
+                                )}
+                                {tool.plus && (
+                                    <span className={cn(
+                                        "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border flex items-center gap-1",
+                                        isLight
+                                            ? "bg-amber-50 text-amber-600 border-amber-200"
+                                            : "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                    )}>
+                                        <Sparkles className="w-3 h-3" /> Plus
+                                    </span>
+                                )}
+                            </div>
 
-                        {/* Hover Effect Border */}
-                        <div className={cn("absolute inset-0 border-2 border-transparent rounded-2xl pointer-events-none transition-all", isLight ? "group-hover:border-violet-500/10" : "group-hover:border-violet-500/10")} />
-                    </motion.div>
+                            {/* Hover Effect Border */}
+                            <div className={cn("absolute inset-0 border-2 border-transparent rounded-2xl pointer-events-none transition-all", isLight ? "group-hover:border-violet-500/10" : "group-hover:border-violet-500/10")} />
+                        </motion.div>
+                    </Link>
                 ))}
             </div>
         </div>

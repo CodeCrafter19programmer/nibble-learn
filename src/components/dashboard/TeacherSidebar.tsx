@@ -100,7 +100,7 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
                 </button>
 
                 <Link
-                    href="/app/help"
+                    href="/app/settings/help"
                     className="flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-slate-600 hover:bg-white hover:text-slate-900 dark:text-slate-400 dark:hover:text-white dark:hover:bg-white/5"
                 >
                     <HelpCircle className="w-4 h-4" />
