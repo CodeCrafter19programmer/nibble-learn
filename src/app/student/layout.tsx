@@ -7,44 +7,28 @@ import { StudentSidebar } from "@/components/student/StudentSidebar"
 import { AnimatePresence, motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { StudentThemeProvider, useStudentTheme } from "@/components/student/StudentThemeContext"
 import { Logo } from "@/components/logo"
 
 function StudentLayoutContent({ children }: { children: React.ReactNode }) {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
-    const { theme, toggleTheme } = useStudentTheme()
     const pathname = usePathname()
-    const isLight = theme === 'light'
 
     return (
-        <div className={cn(
-            "min-h-screen font-sans antialiased transition-colors duration-500",
-            isLight
-                ? "bg-background text-slate-900 selection:bg-blue-200"
-                : "bg-gradient-to-br from-blue-700 via-blue-800 to-slate-900 text-white selection:bg-teal-500/30"
-        )}>
+        <div className="min-h-screen font-sans antialiased transition-colors duration-500 bg-background text-slate-900 selection:bg-blue-200 dark:bg-gradient-to-br dark:from-blue-700 dark:via-blue-800 dark:to-slate-900 dark:text-white dark:selection:bg-teal-500/30">
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">
-                <StudentSidebar theme={theme} onToggleTheme={toggleTheme} />
+                <StudentSidebar />
             </div>
 
             {/* Mobile Header */}
-            <div className={cn(
-                "md:hidden fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 border-b backdrop-blur-md transition-colors",
-                isLight
-                    ? "bg-white/80 border-slate-200 text-slate-900"
-                    : "bg-blue-900/80 border-white/10 text-white"
-            )}>
+            <div className="md:hidden fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 border-b backdrop-blur-md transition-colors bg-white/80 border-slate-200 text-slate-900 dark:bg-blue-900/80 dark:border-white/10 dark:text-white">
                 <Link href="/" className="flex items-center gap-2">
                     <Logo className="w-8 h-8 bg-blue-500 rounded-lg" />
                     <span className="font-bold text-lg">NibbleStudent</span>
                 </Link>
                 <button
                     onClick={() => setIsMobileOpen(true)}
-                    className={cn(
-                        "p-2 rounded-lg transition-colors",
-                        isLight ? "hover:bg-slate-100 text-black" : "hover:bg-white/10 text-white"
-                    )}
+                    className="p-2 rounded-lg transition-colors hover:bg-slate-100 text-black dark:hover:bg-white/10 dark:text-white"
                 >
                     <Menu className="w-6 h-6" />
                 </button>
@@ -77,8 +61,6 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
                                 </button>
                                 <StudentSidebar
                                     onCheckClicks={() => setIsMobileOpen(false)}
-                                    theme={theme}
-                                    onToggleTheme={toggleTheme}
                                 />
                             </div>
                         </motion.div>
@@ -90,14 +72,8 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
             <main className="md:pl-64 pt-16 md:pt-0 min-h-screen transition-all duration-300">
                 {/* Decorative background shapes - Reduced opacity in light mode */}
                 <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-                    <div className={cn(
-                        "absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-screen transition-opacity duration-500",
-                        isLight ? "bg-blue-300/30 opacity-50" : "bg-blue-500/20 opacity-100"
-                    )} />
-                    <div className={cn(
-                        "absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-screen transition-opacity duration-500",
-                        isLight ? "bg-purple-300/30 opacity-50" : "bg-purple-500/20 opacity-100"
-                    )} />
+                    <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-screen transition-opacity duration-500 bg-blue-300/30 opacity-50 dark:bg-blue-500/20 dark:opacity-100" />
+                    <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-screen transition-opacity duration-500 bg-purple-300/30 opacity-50 dark:bg-purple-500/20 dark:opacity-100" />
                 </div>
 
                 <div className="relative z-10 p-4 md:p-8 max-w-7xl mx-auto">
@@ -109,9 +85,6 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
 }
 
 export default function StudentLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <StudentThemeProvider>
-            <StudentLayoutContent>{children}</StudentLayoutContent>
-        </StudentThemeProvider>
-    )
+    // StudentThemeProvider is removed as it's redundant with the root ThemeProvider
+    return <StudentLayoutContent>{children}</StudentLayoutContent>
 }
