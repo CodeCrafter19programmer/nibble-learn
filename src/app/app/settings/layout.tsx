@@ -7,6 +7,7 @@ import { User, CreditCard, Bell, Link as LinkIcon, HelpCircle } from "lucide-rea
 
 const teacherItems = [
     { label: "Account & Profile", href: "/app/settings/account", icon: User },
+    { label: "Security", href: "/app/settings/security", icon: Shield },
     { label: "Billing & Plans", href: "/app/settings/billing", icon: CreditCard },
     { label: "Notifications", href: "/app/settings/notifications", icon: Bell },
     { label: "Integrations", href: "/app/settings/integrations", icon: LinkIcon },

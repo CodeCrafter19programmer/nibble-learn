@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NibbleLearn
+
+NibbleLearn is an AI-powered platform designed for schools, teachers, and students. It provides a suite of tools to support learning, creativity, and administrative tasks in an educational environment.
+
+## Tech Stack
+
+-   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+-   **Language**: TypeScript
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **UI Components**:
+    -   [Lucide React](https://lucide.dev/) (Icons)
+    -   [Framer Motion](https://www.framer.com/motion/) (Animations)
+    -   [Class Variance Authority (CVA)](https://cva.style/) & `clsx` (Utility composition)
+-   **Fonts**: Inter and Outfit (via `next/font`)
+
+## Project Structure
+
+The project follows a standard Next.js App Router structure:
+
+-   `src/app`: Contains all application routes.
+    -   `(auth)`: Authentication routes (Login, Signup - currently using mock authentication).
+    -   `app`: Main authenticated application area (Dashboard, Tools).
+    -   `school`: School administration interface.
+    -   `student`: Student interface.
+    -   `components`: Reusable UI components organized by features (layout, sections, ui).
 
 ## Getting Started
 
-First, run the development server:
+1.  **Install dependencies**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2.  **Run the development server**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    ```bash
+    npm run dev
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3.  **Open the application**:
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## Authentication
 
-To learn more about Next.js, take a look at the following resources:
+Currently, the authentication flow is simulated for demonstration purposes.
+-   **Teacher Login**: Redirects to `/app/dashboard`
+-   **Student Login**: Redirects to `/student/dashboard`
+-   **School Login**: Redirects to `/school/dashboard`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is optimized for deployment on [Vercel](https://vercel.com/), the creators of Next.js.

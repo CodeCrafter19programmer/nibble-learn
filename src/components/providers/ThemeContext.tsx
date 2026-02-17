@@ -18,13 +18,32 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Optional: Load from local storage
     useEffect(() => {
         const saved = localStorage.getItem('nibble-theme') as Theme
-        if (saved) setThemeState(saved)
+        if (saved) {
+            setThemeState(saved)
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Default to system preference if no saved theme
+            setThemeState('dark')
+            document.documentElement.classList.add('dark')
+        }
     }, [])
 
     const toggleTheme = () => {
         setThemeState(prev => {
             const newTheme = prev === 'dark' ? 'light' : 'dark'
             localStorage.setItem('nibble-theme', newTheme)
+
+            // Update document class
+            if (newTheme === 'dark') {
+                document.documentElement.classList.add('dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
+
             return newTheme
         })
     }
