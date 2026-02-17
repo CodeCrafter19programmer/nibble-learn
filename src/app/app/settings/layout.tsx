@@ -10,7 +10,6 @@ const teacherItems = [
     { label: "Security", href: "/app/settings/security", icon: Shield },
     { label: "Billing & Plans", href: "/app/settings/billing", icon: CreditCard },
     { label: "Notifications", href: "/app/settings/notifications", icon: Bell },
-    { label: "Integrations", href: "/app/settings/integrations", icon: LinkIcon },
     { label: "Help Center", href: "/app/settings/help", icon: HelpCircle },
 ]
 

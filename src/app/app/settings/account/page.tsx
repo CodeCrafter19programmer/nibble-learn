@@ -65,19 +65,6 @@ export default function TeacherAccountPage() {
                                 <Input defaultValue="sarah@school.edu" disabled className="pl-10 bg-slate-50 dark:bg-slate-950/50 border-slate-200 dark:border-slate-800 text-slate-500" />
                             </div>
                         </div>
-
-                        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
-                                    <Shield className="w-5 h-5 text-green-500" />
-                                </div>
-                                <div>
-                                    <h4 className="font-medium text-slate-900 dark:text-white">Two-Factor Authentication</h4>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400">Add an extra layer of security to your account.</p>
-                                </div>
-                            </div>
-                            <Button variant="outline" className="border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white">Enable</Button>
-                        </div>
                     </SettingsCardContent>
                 </SettingsCard>
             </SettingsSection>
