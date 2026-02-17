@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Sparkles, Send, Copy, RotateCcw, ThumbsUp, ThumbsDown } from "lucide-react"
+import { ArrowLeft, Sparkles, Copy, RotateCcw, ThumbsUp, ThumbsDown, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useStudentTheme } from "@/components/student/StudentThemeContext"
-import { toolsData, ToolConfig } from "../tool-data" // Assume relative path is correct
+import { toolsData, ToolConfig } from "../tool-data"
+
+type ViewStatus = 'input' | 'loading' | 'result'
 
 export default function ToolPage() {
     const params = useParams()
@@ -17,24 +19,23 @@ export default function ToolPage() {
     // State
     const [tool, setTool] = useState<ToolConfig | null>(null)
     const [formData, setFormData] = useState<Record<string, any>>({})
-    const [isLoading, setIsLoading] = useState(false)
     const [result, setResult] = useState<string | null>(null)
-    const [mobileView, setMobileView] = useState<'input' | 'output'>('input') // Actually used as general viewMode now
+    const [viewStatus, setViewStatus] = useState<ViewStatus>('input')
+    const [loadingMessage, setLoadingMessage] = useState("Preparing magic...")
 
-    // Auto-switch to output view when generating starts
-    useEffect(() => {
-        if (isLoading) {
-            setMobileView('output')
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-    }, [isLoading])
+    const loadingMessages = [
+        "Thinking...",
+        "Connecting ideas...",
+        "Formulating response...",
+        "Adding a pinch of creativity...",
+        "Almost there..."
+    ]
 
     useEffect(() => {
         if (params.toolId && typeof params.toolId === 'string') {
             const toolConfig = toolsData[params.toolId]
             if (toolConfig) {
                 setTool(toolConfig)
-                // Initialize form defaults
                 const initialData: Record<string, any> = {}
                 toolConfig.inputs.forEach(input => {
                     if (input.defaultValue) {
@@ -42,12 +43,21 @@ export default function ToolPage() {
                     }
                 })
                 setFormData(initialData)
-            } else {
-                // Handle 404 or redirect
-                // router.push('/student/tools')
             }
         }
-    }, [params.toolId, router])
+    }, [params.toolId])
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout
+        if (viewStatus === 'loading') {
+            let i = 0
+            interval = setInterval(() => {
+                setLoadingMessage(loadingMessages[i % loadingMessages.length])
+                i++
+            }, 800)
+        }
+        return () => clearInterval(interval)
+    }, [viewStatus])
 
     const handleInputChange = (id: string, value: any) => {
         setFormData(prev => ({ ...prev, [id]: value }))
@@ -55,283 +65,304 @@ export default function ToolPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        setIsLoading(true)
+        setViewStatus('loading')
         setResult(null)
 
-        // Mock API Call - different behavior based on tool type if needed
+        // Mock API Call
         setTimeout(() => {
             const mockResponse = generateMockResponse(tool?.id || "0", formData)
             setResult(mockResponse)
-            setIsLoading(false)
-        }, 1500)
+            setViewStatus('result')
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+        }, 2500)
     }
 
     if (!tool) return <div className="p-10 text-center opacity-50">Loading tool...</div>
 
     return (
-        <div className="max-w-4xl mx-auto pb-20">
+        <div className="max-w-3xl mx-auto pb-20 min-h-[80vh]">
             {/* Header Navigation */}
             <div className="mb-6">
                 <button
-                    onClick={() => router.back()}
+                    onClick={() => {
+                        if (viewStatus !== 'input') {
+                            setViewStatus('input')
+                        } else {
+                            router.back()
+                        }
+                    }}
                     className={cn(
-                        "flex items-center gap-2 text-sm font-medium transition-colors px-3 py-2 rounded-lg",
+                        "flex items-center gap-2 text-sm font-medium transition-colors px-3 py-2 rounded-lg group",
                         isLight ? "text-slate-600 hover:bg-slate-100 hover:text-slate-900" : "text-slate-400 hover:bg-white/10 hover:text-white"
                     )}
                 >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Tools
+                    <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                    {viewStatus === 'input' ? 'Back to Tools' : 'Edit Inputs'}
                 </button>
             </div>
 
-            <div className="relative max-w-3xl mx-auto">
-
-                {/* Input Section - Glass Card */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={cn(
-                        "p-6 md:p-8 rounded-[24px] backdrop-blur-xl border transition-all duration-500 ease-in-out",
-                        isLight
-                            ? "bg-white/70 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
-                            : "bg-white/[0.05] border-white/[0.1] shadow-[0_8px_32px_rgba(0,0,0,0.35)]",
-                        mobileView === 'output' ? "opacity-0 h-0 overflow-hidden py-0 my-0 border-0 pointer-events-none" : "opacity-100 h-auto"
-                    )}
-                >
-                    {/* Tool Header */}
-                    <div className="flex items-start gap-4 mb-8">
-                        <div className={cn(
-                            "w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 backdrop-blur-md shadow-inner",
+            <AnimatePresence mode="wait">
+                {viewStatus === 'input' && (
+                    <motion.div
+                        key="input"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className={cn(
+                            "p-6 md:p-8 rounded-[24px] backdrop-blur-xl border transition-all",
                             isLight
-                                ? "bg-blue-500/10 text-blue-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
-                                : "bg-white/10 text-blue-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
-                        )}>
-                            <tool.icon className="w-7 h-7" />
+                                ? "bg-white/70 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+                                : "bg-white/[0.05] border-white/[0.1] shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
+                        )}
+                    >
+                        {/* Tool Header */}
+                        <div className="flex items-start gap-4 mb-8">
+                            <div className={cn(
+                                "w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 backdrop-blur-md shadow-inner",
+                                isLight
+                                    ? "bg-blue-500/10 text-blue-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]"
+                                    : "bg-white/10 text-blue-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]"
+                            )}>
+                                <tool.icon className="w-7 h-7" />
+                            </div>
+                            <div>
+                                <h1 className={cn("text-2xl font-bold mb-1", isLight ? "text-[#0F172A]" : "text-white")}>
+                                    {tool.studentFriendlyName || tool.name}
+                                </h1>
+                                <p className={cn("text-sm leading-relaxed", isLight ? "text-slate-500" : "text-slate-400")}>
+                                    {tool.description}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className={cn("text-2xl font-bold mb-1", isLight ? "text-[#0F172A]" : "text-white")}>
-                                {tool.studentFriendlyName || tool.name}
-                            </h1>
-                            <p className={cn("text-sm leading-relaxed", isLight ? "text-slate-500" : "text-slate-400")}>
-                                {tool.description}
-                            </p>
-                        </div>
-                    </div>
 
-                    {/* Form */}
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {tool.inputs.map((input) => (
-                            <div key={input.id} className="space-y-2">
-                                <label className={cn("text-sm font-semibold ml-1", isLight ? "text-slate-700" : "text-slate-300")}>
-                                    {input.label}
-                                </label>
+                        {/* Form */}
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {tool.inputs.map((input) => (
+                                <div key={input.id} className="space-y-2">
+                                    <label className={cn("text-sm font-semibold ml-1", isLight ? "text-slate-700" : "text-slate-300")}>
+                                        {input.label}
+                                    </label>
 
-                                {input.type === 'text' && (
-                                    <input
-                                        type="text"
-                                        required={input.required}
-                                        placeholder={input.placeholder}
-                                        value={formData[input.id] || ''}
-                                        onChange={(e) => handleInputChange(input.id, e.target.value)}
-                                        className={cn(
-                                            "w-full px-4 py-3 rounded-xl outline-none transition-all",
-                                            isLight
-                                                ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800 placeholder:text-slate-400"
-                                                : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white placeholder:text-slate-500"
-                                        )}
-                                    />
-                                )}
-
-                                {input.type === 'textarea' && (
-                                    <textarea
-                                        required={input.required}
-                                        placeholder={input.placeholder}
-                                        rows={5}
-                                        value={formData[input.id] || ''}
-                                        onChange={(e) => handleInputChange(input.id, e.target.value)}
-                                        className={cn(
-                                            "w-full px-4 py-3 rounded-xl outline-none transition-all resize-none",
-                                            isLight
-                                                ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800 placeholder:text-slate-400"
-                                                : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white placeholder:text-slate-500"
-                                        )}
-                                    />
-                                )}
-
-                                {input.type === 'dropdown' && input.options && (
-                                    <div className="relative">
-                                        <select
-                                            value={formData[input.id] || input.defaultValue || ''}
+                                    {input.type === 'text' && (
+                                        <input
+                                            type="text"
+                                            required={input.required}
+                                            placeholder={input.placeholder}
+                                            value={formData[input.id] || ''}
                                             onChange={(e) => handleInputChange(input.id, e.target.value)}
                                             className={cn(
-                                                "w-full px-4 py-3 rounded-xl outline-none transition-all appearance-none cursor-pointer",
+                                                "w-full px-4 py-3 rounded-xl outline-none transition-all",
                                                 isLight
-                                                    ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800"
-                                                    : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white"
+                                                    ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800 placeholder:text-slate-400"
+                                                    : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white placeholder:text-slate-500"
                                             )}
-                                        >
-                                            {input.options.map(opt => (
-                                                <option key={opt} value={opt} className={isLight ? "text-slate-900" : "bg-slate-900 text-white"}>{opt}</option>
-                                            ))}
-                                        </select>
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
-                                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                )}
+                                        />
+                                    )}
 
-                                {/* Checkboxes - simple implementation for now */}
-                                {input.type === 'checkbox' && input.options && (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        {input.options.map(opt => (
-                                            <label key={opt} className={cn(
-                                                "flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all",
+                                    {input.type === 'textarea' && (
+                                        <textarea
+                                            required={input.required}
+                                            placeholder={input.placeholder}
+                                            rows={5}
+                                            value={formData[input.id] || ''}
+                                            onChange={(e) => handleInputChange(input.id, e.target.value)}
+                                            className={cn(
+                                                "w-full px-4 py-3 rounded-xl outline-none transition-all resize-none",
                                                 isLight
-                                                    ? "bg-white/50 border-slate-200 hover:border-blue-300"
-                                                    : "bg-white/5 border-white/10 hover:bg-white/10"
-                                            )}>
-                                                <input
-                                                    type="checkbox"
-                                                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                />
-                                                <span className={cn("text-sm", isLight ? "text-slate-700" : "text-slate-300")}>{opt}</span>
-                                            </label>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                                                    ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800 placeholder:text-slate-400"
+                                                    : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white placeholder:text-slate-500"
+                                            )}
+                                        />
+                                    )}
 
-                        <button
-                            type="submit"
-                            disabled={isLoading}
-                            className={cn(
-                                "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]",
-                                isLoading ? "opacity-70 cursor-not-allowed" : "hover:shadow-blue-500/25 hover:-translate-y-0.5",
-                                isLight
-                                    ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
-                                    : "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
-                            )}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    Magic is happening...
-                                </>
-                            ) : (
-                                <>
+                                    {input.type === 'dropdown' && input.options && (
+                                        <div className="relative">
+                                            <select
+                                                value={formData[input.id] || input.defaultValue || ''}
+                                                onChange={(e) => handleInputChange(input.id, e.target.value)}
+                                                className={cn(
+                                                    "w-full px-4 py-3 rounded-xl outline-none transition-all appearance-none cursor-pointer",
+                                                    isLight
+                                                        ? "bg-white/50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 text-slate-800"
+                                                        : "bg-white/5 border border-white/10 focus:border-blue-500/50 focus:bg-white/10 text-white"
+                                                )}
+                                            >
+                                                {input.options.map(opt => (
+                                                    <option key={opt} value={opt} className={isLight ? "text-slate-900" : "bg-slate-900 text-white"}>{opt}</option>
+                                                ))}
+                                            </select>
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
+                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {input.type === 'checkbox' && input.options && (
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            {input.options.map(opt => (
+                                                <label key={opt} className={cn(
+                                                    "flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all",
+                                                    isLight
+                                                        ? "bg-white/50 border-slate-200 hover:border-blue-300"
+                                                        : "bg-white/5 border-white/10 hover:bg-white/10"
+                                                )}>
+                                                    <input
+                                                        type="checkbox"
+                                                        className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                                    />
+                                                    <span className={cn("text-sm", isLight ? "text-slate-700" : "text-slate-300")}>{opt}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+
+                            <div className="pt-4">
+                                <button
+                                    type="submit"
+                                    className={cn(
+                                        "w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-[0.98]",
+                                        "hover:shadow-blue-500/25 hover:-translate-y-0.5",
+                                        isLight
+                                            ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white"
+                                            : "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
+                                    )}
+                                >
                                     <Sparkles className="w-5 h-5 fill-white/20" />
                                     Generate Magic
-                                </>
-                            )}
-                        </button>
-                    </form>
-                </motion.div>
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
+                )}
 
-                {/* Output Section */}
-                <div className="relative">
-                    <AnimatePresence>
-                        {/* Back to Input Button */}
-                        <div className={cn("mb-6 flex justify-start", mobileView === 'input' ? 'hidden' : 'block')}>
+                {viewStatus === 'loading' && (
+                    <motion.div
+                        key="loading"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                        className="flex flex-col items-center justify-center min-h-[400px] text-center"
+                    >
+                        <div className="relative mb-8">
+                            {/* Animated Background Blob */}
+                            <div className="absolute inset-0 bg-blue-500/30 blur-3xl animate-pulse rounded-full" />
+
+                            {/* Modern Spinner */}
+                            <div className="relative w-24 h-24">
+                                <svg className="animate-spin w-full h-full text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Sparkles className="w-8 h-8 text-blue-500 animate-pulse" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 className={cn("text-2xl font-bold mb-3 animate-pulse", isLight ? "text-slate-800" : "text-white")}>
+                            {loadingMessage}
+                        </h3>
+                        <p className={cn("opacity-70 max-w-xs", isLight ? "text-slate-500" : "text-slate-400")}>
+                            Raina is working her magic specifically for you!
+                        </p>
+                    </motion.div>
+                )}
+
+                {viewStatus === 'result' && result && (
+                    <motion.div
+                        key="result"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.5, type: "spring", bounce: 0.3 }}
+                        className={cn(
+                            "p-6 md:p-8 rounded-[24px] backdrop-blur-xl border flex flex-col transition-all min-h-[500px]",
+                            isLight
+                                ? "bg-white/80 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ring-1 ring-blue-100"
+                                : "bg-[#0F172A]/80 border-white/10 shadow-2xl"
+                        )}
+                    >
+                        <div className="flex items-center justify-between mb-8 pb-6 border-b border-dashed border-slate-200 dark:border-white/10">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+                                    <Sparkles className="w-5 h-5 fill-current" />
+                                </div>
+                                <div>
+                                    <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>
+                                        Here is your magic!
+                                    </h3>
+                                    <p className={cn("text-xs", isLight ? "text-slate-500" : "text-slate-400")}>
+                                        Generated just now
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex bg-slate-100 dark:bg-white/5 rounded-lg p-1">
+                                <button
+                                    className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-blue-500"
+                                    title="Copy to clipboard"
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(result)
+                                        // Could add a toast here
+                                    }}
+                                >
+                                    <Copy className="w-4 h-4" />
+                                </button>
+                                <button className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-green-500">
+                                    <ThumbsUp className="w-4 h-4" />
+                                </button>
+                                <button className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-red-500">
+                                    <ThumbsDown className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className={cn(
+                            "prose prose-sm md:prose-base max-w-none flex-1 overflow-y-auto custom-scrollbar p-2 rounded-xl mb-6",
+                            isLight ? "prose-slate" : "prose-invert"
+                        )}>
+                            {/* Simple text rendering preserved from original */}
+                            {result.split('\n').map((line, i) => (
+                                <p key={i} className={cn("mb-3", line.startsWith('#') && "font-bold text-xl mt-4", line.startsWith('•') && "pl-4")}>
+                                    {line}
+                                </p>
+                            ))}
+                        </div>
+
+                        <div className="mt-auto pt-6 border-t border-slate-100 dark:border-white/5 flex gap-3">
                             <button
-                                onClick={() => setMobileView('input')}
+                                onClick={() => setViewStatus('input')}
                                 className={cn(
-                                    "flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl border shadow-sm transition-all hover:-translate-y-0.5 active:translate-y-0",
+                                    "flex-1 py-3 rounded-xl font-medium border transition-colors",
                                     isLight
-                                        ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:shadow-md"
-                                        : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:border-slate-600 hover:shadow-lg hover:shadow-black/20"
+                                        ? "border-slate-200 text-slate-700 hover:bg-slate-50"
+                                        : "border-white/10 text-slate-300 hover:bg-white/5"
                                 )}
                             >
-                                <ArrowLeft className="w-4 h-4" /> Edit Inputs
+                                Edit Inputs
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setViewStatus('input')
+                                    setFormData({}) // Optionally clear data
+                                }}
+                                className={cn(
+                                    "flex-1 py-3 rounded-xl font-bold transition-colors text-white",
+                                    "bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20"
+                                )}
+                            >
+                                Start New
                             </button>
                         </div>
-
-                        {result && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                className={cn(
-                                    "sticky top-6 p-6 md:p-8 rounded-[24px] backdrop-blur-xl border min-h-[400px] flex flex-col transition-all",
-                                    isLight
-                                        ? "bg-white/80 border-white/60 shadow-[0_8px_30px_rgba(0,0,0,0.06)] ring-1 ring-blue-100"
-                                        : "bg-[#0F172A]/80 border-white/10 shadow-2xl",
-                                    mobileView === 'input' ? "hidden" : "flex"
-                                )}
-                            >
-                                <div className="flex items-center justify-between mb-6 pb-4 border-b border-dashed border-slate-200 dark:border-white/10">
-                                    <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>
-                                        Results
-                                    </h3>
-                                    <div className="flex bg-slate-100 dark:bg-white/5 rounded-lg p-1">
-                                        <button className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-blue-500">
-                                            <Copy className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-green-500">
-                                            <ThumbsUp className="w-4 h-4" />
-                                        </button>
-                                        <button className="p-2 hover:bg-white dark:hover:bg-white/10 rounded-md transition-all text-slate-500 hover:text-red-500">
-                                            <ThumbsDown className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className={cn(
-                                    "prose prose-sm md:prose-base max-w-none flex-1 overflow-y-auto custom-scrollbar p-2 rounded-xl",
-                                    isLight ? "prose-slate" : "prose-invert"
-                                )}>
-                                    {result.split('\n').map((line, i) => (
-                                        <p key={i} className="mb-2">{line}</p>
-                                    ))}
-                                </div>
-
-                                <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex justify-end">
-                                    <button
-                                        onClick={() => setIsLoading(true)}
-                                        className={cn("text-sm font-medium flex items-center gap-2 px-4 py-2 rounded-lg transition-colors", isLight ? "text-slate-500 hover:bg-slate-100" : "text-slate-400 hover:bg-white/5")}
-                                    >
-                                        <RotateCcw className="w-4 h-4" />
-                                        Try Again
-                                    </button>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    {!result && !isLoading && (
-                        <div className={cn(
-                            "h-full rounded-[24px] border-2 border-dashed flex flex-col items-center justify-center p-12 text-center opacity-60 min-h-[400px]",
-                            isLight ? "border-slate-300 bg-slate-50/50" : "border-white/10 bg-white/5",
-                            mobileView === 'input' ? "hidden" : "flex"
-                        )}>
-                            <div className="w-16 h-16 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center mb-4">
-                                <Sparkles className="w-8 h-8 text-slate-400" />
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">Ready to Create?</h3>
-                            <p className="max-w-xs mx-auto text-sm">Fill out the form on the left and watch the magic happen here!</p>
-                        </div>
-                    )}
-
-                    {isLoading && (
-                        <div className={cn(
-                            "h-full rounded-[24px] border border-transparent flex flex-col items-center justify-center p-12 text-center min-h-[400px]",
-                            isLight ? "bg-white/40" : "bg-white/5",
-                            mobileView === 'input' ? "hidden" : "flex"
-                        )}>
-                            <div className="relative">
-                                <div className="w-20 h-20 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin" />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <Sparkles className="w-6 h-6 text-blue-500 animate-pulse" />
-                                </div>
-                            </div>
-                            <h3 className="mt-8 text-xl font-bold animate-pulse">Generating...</h3>
-                            <p className="mt-2 text-sm opacity-70">Raina is thinking...</p>
-                        </div>
-                    )}
-                </div>
-            </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }
