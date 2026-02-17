@@ -31,9 +31,9 @@ export function SettingsSidebar({ items, variant = "default" }: SettingsSidebarP
 
                 if (variant === "glass") {
                     containerStyles = isActive
-                        ? "bg-white/20 text-white shadow-lg shadow-black/5"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
-                    iconStyles = isActive ? "text-white" : "text-white/60 group-hover:text-white"
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 dark:bg-white/20 dark:text-white dark:shadow-black/5"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/50 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10"
+                    iconStyles = isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600 dark:text-white/60 dark:group-hover:text-white"
                 } else if (variant === "slate") {
                     containerStyles = isActive
                         ? "bg-violet-600 text-white shadow-md shadow-violet-900/20"
