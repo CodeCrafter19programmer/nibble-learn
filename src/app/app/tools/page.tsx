@@ -95,7 +95,7 @@ const tools = [
     { id: "learning-objective", name: "Learning Objective Writer", category: "planning", icon: Target, color: "bg-fuchsia-600", desc: "Write clear, measurable learning objectives.", new: false, plus: false },
     { id: "differentiation-stations", name: "Differentiation Stations", category: "planning", icon: Grid, color: "bg-purple-500", desc: "Create differentiated station/center activities.", new: false, plus: false },
     { id: "student-grouping", name: "Student Grouping", category: "planning", icon: Users, color: "bg-cyan-600", desc: "Get suggestions for grouping students.", new: false, plus: false },
-    { id: "raina-coach", name: "Raina - AI Coach", category: "productivity", icon: Bot, color: "bg-violet-600", desc: "Chat with Raina, your AI instructional coach.", new: true, plus: true },
+    { id: "jarvis-coach", name: "Jarvis - AI Coach", category: "productivity", icon: Bot, color: "bg-violet-600", desc: "Chat with Jarvis, your AI instructional coach.", new: true, plus: true },
     { id: "custom-tool", name: "Custom Tool Creator", category: "productivity", icon: Wrench, color: "bg-slate-800", desc: "Build your own custom AI tools.", new: true, plus: true },
     { id: "batch-feedback", name: "Batch Feedback Writer", category: "assessment", icon: Files, color: "bg-indigo-600", desc: "Provide AI-generated feedback in batches.", new: true, plus: true },
 ]

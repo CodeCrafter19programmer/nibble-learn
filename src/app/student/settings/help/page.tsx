@@ -42,9 +42,9 @@ export default function StudentHelpPage() {
                             <MessageCircle className={cn("w-5 h-5", isLight ? "text-teal-600" : "text-teal-300")} />
                         </div>
                         <div>
-                            <h3 className={cn("font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Ask Raina</h3>
+                            <h3 className={cn("font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Ask Jarvis</h3>
                             <p className={cn("text-sm mb-4", isLight ? "text-slate-500" : "text-white/60")}>Our AI tutor can help you figure out how to use tools.</p>
-                            <Button variant="outline" className={isLight ? "" : "border-white/20 text-white hover:bg-white/10"}>Chat with Raina</Button>
+                            <Button variant="outline" className={isLight ? "" : "border-white/20 text-white hover:bg-white/10"}>Chat with Jarvis</Button>
                         </div>
                     </SettingsCardContent>
                 </SettingsCard>

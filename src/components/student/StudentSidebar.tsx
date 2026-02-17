@@ -28,7 +28,7 @@ interface StudentSidebarProps {
 const navItems = [
     { href: "/student/dashboard", icon: Home, label: "Home" },
     { href: "/student/tools", icon: Wand2, label: "My Tools" },
-    { href: "/student/chat", icon: MessageCircle, label: "Raina Chat" },
+    { href: "/student/chat", icon: MessageCircle, label: "Jarvis Chat" },
     { href: "/student/favorites", icon: Star, label: "Favorites" },
 ]
 

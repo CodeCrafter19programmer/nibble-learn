@@ -45,7 +45,7 @@ const plans: PricingPlan[] = [
             { text: "Access to 40+ student tools", included: true },
             { text: "Lesson planning tools", included: true },
             { text: "Quiz & worksheet generators", included: true },
-            { text: "Basic Raina AI assistant", included: true },
+            { text: "Basic Jarvis AI assistant", included: true },
             { text: "Student Rooms for AI literacy", included: true },
             { text: "Unlimited AI generations", included: false },
             { text: "Full output history", included: false },
@@ -73,7 +73,7 @@ const plans: PricingPlan[] = [
             { text: "1-click exports to Microsoft Word, PPT", included: true },
             { text: "NibbleLearn Labs (early access)", included: true, highlight: true },
             { text: "Unlimited AI Slides generation", included: true },
-            { text: "Continue threads with Raina", included: true },
+            { text: "Continue threads with Jarvis", included: true },
             { text: "Priority email support", included: true },
             { text: "Advanced moderation (Enterprise)", included: false },
         ]

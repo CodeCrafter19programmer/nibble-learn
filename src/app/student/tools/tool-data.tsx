@@ -909,12 +909,12 @@ export const toolsData: Record<string, ToolConfig> = {
         ]
     },
 
-    // 33. AI Tutor (Raina)
+    // 33. AI Tutor (Jarvis)
     "33": {
         id: "33",
         name: "AI Tutor",
-        studentFriendlyName: "Ask Raina for help",
-        description: "Ask Raina questions about anything you're learning",
+        studentFriendlyName: "Ask Jarvis for help",
+        description: "Ask Jarvis questions about anything you're learning",
         icon: MessageCircle,
         color: "bg-purple-600",
         inputs: [
@@ -922,7 +922,7 @@ export const toolsData: Record<string, ToolConfig> = {
                 id: "question",
                 type: "textarea",
                 label: "What is your question?",
-                placeholder: "Ask Raina anything...",
+                placeholder: "Ask Jarvis anything...",
                 required: true
             }
         ]

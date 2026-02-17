@@ -269,7 +269,7 @@ export default function ToolPage() {
                             {loadingMessage}
                         </h3>
                         <p className={cn("opacity-70 max-w-xs", isLight ? "text-slate-500" : "text-slate-400")}>
-                            Raina is working her magic specifically for you!
+                            Jarvis is working her magic specifically for you!
                         </p>
                     </motion.div>
                 )}

@@ -30,7 +30,7 @@ const navItems = [
     { href: "/app/dashboard", icon: Home, label: "Dashboard" },
     { href: "/app/tools", icon: Wand2, label: "Teacher Tools" },
     { href: "/app/collections", icon: FolderHeart, label: "My Collections" },
-    { href: "/app/chat", icon: MessageSquare, label: "Raina Chat" },
+    { href: "/app/chat", icon: MessageSquare, label: "Jarvis Chat" },
     { href: "/app/rooms", icon: Users, label: "Student Rooms" },
     { href: "/app/history", icon: History, label: "Output History" },
     { href: "/app/favorites", icon: Star, label: "Favorites" },

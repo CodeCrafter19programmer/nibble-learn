@@ -3,5 +3,5 @@
 import { StudentPlaceholder } from "@/components/student/StudentPlaceholder"
 
 export default function StudentChatPage() {
-    return <StudentPlaceholder title="Raina Chat" />
+    return <StudentPlaceholder title="Jarvis Chat" />
 }

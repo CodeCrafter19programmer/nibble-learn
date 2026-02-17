@@ -18,7 +18,7 @@ const initialMessages: Message[] = [
     {
         id: "1",
         role: "assistant",
-        content: "Hi Jane! I'm Raina, your AI instructional coach. How can I support your teaching today?",
+        content: "Hi Jane! I'm Jarvis, your AI instructional coach. How can I support your teaching today?",
         timestamp: new Date()
     }
 ]
@@ -102,7 +102,7 @@ export default function ChatPage() {
                             <Bot className="w-6 h-6" />
                         </div>
                         <div>
-                            <h2 className={cn("font-bold text-lg leading-tight", isLight ? "text-slate-900" : "text-white")}>Raina</h2>
+                            <h2 className={cn("font-bold text-lg leading-tight", isLight ? "text-slate-900" : "text-white")}>Jarvis</h2>
                             <p className={cn("text-xs flex items-center gap-1", isLight ? "text-slate-500" : "text-slate-400")}>
                                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                                 AI Instructional Coach
@@ -183,7 +183,7 @@ export default function ChatPage() {
                                         handleSend()
                                     }
                                 }}
-                                placeholder="Message Raina..."
+                                placeholder="Message Jarvis..."
                                 className={cn(
                                     "w-full rounded-2xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500/50 resize-none max-h-32 min-h-[50px] custom-scrollbar",
                                     isLight
@@ -211,7 +211,7 @@ export default function ChatPage() {
                     </div>
                     <div className="max-w-3xl mx-auto text-center mt-2">
                         <p className={cn("text-[10px]", isLight ? "text-slate-400" : "text-slate-600")}>
-                            Raina is an AI assistant and may produce inaccurate information.
+                            Jarvis is an AI assistant and may produce inaccurate information.
                         </p>
                     </div>
                 </div>

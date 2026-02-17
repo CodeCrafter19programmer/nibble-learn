@@ -1156,14 +1156,14 @@ export const TOOLS_CONFIG: Record<string, ToolConfig> = {
             { id: "size", label: "Class Size", type: "text", placeholder: "e.g., 25 students" }
         ]
     },
-    "raina-coach": {
-        id: "raina-coach",
-        name: "Raina - AI Instructional Coach",
-        description: "Chat with Raina, your AI instructional coach.",
+    "jarvis-coach": {
+        id: "jarvis-coach",
+        name: "Jarvis - AI Instructional Coach",
+        description: "Chat with Jarvis, your AI instructional coach.",
         icon: Bot,
         color: "bg-violet-600",
         inputs: [
-            { id: "question", label: "Ask Raina", type: "textarea", placeholder: "Ask for advice, resources, or coaching..." }
+            { id: "question", label: "Ask Jarvis", type: "textarea", placeholder: "Ask for advice, resources, or coaching..." }
         ]
     },
     "custom-tool": {
