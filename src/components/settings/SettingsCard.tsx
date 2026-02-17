@@ -20,9 +20,9 @@ export function SettingsCard({
     ...props
 }: SettingsCardProps) {
     const variants = {
-        default: "bg-white border border-slate-200 shadow-sm",
+        default: "bg-white border border-slate-200 shadow-sm dark:bg-slate-950 dark:border-slate-800",
         glass: "bg-white/10 backdrop-blur-md border border-white/20 shadow-xl",
-        slate: "bg-slate-900 border border-slate-800 shadow-sm"
+        slate: "bg-white border border-slate-200 shadow-sm dark:bg-slate-950 dark:border-slate-800"
     }
 
     return (
@@ -45,7 +45,7 @@ export function SettingsCardHeader({ children, className, variant = "default" }:
     return (
         <div className={cn(
             "px-6 py-4 border-b",
-            variant === "glass" ? "border-white/10" : variant === "slate" ? "border-slate-800" : "border-slate-100",
+            variant === "glass" ? "border-white/10" : "border-slate-100 dark:border-slate-800",
             className
         )}>
             {children}
@@ -65,7 +65,7 @@ export function SettingsCardFooter({ children, className, variant = "default" }:
     return (
         <div className={cn(
             "px-6 py-4 bg-opacity-50",
-            variant === "glass" ? "bg-black/20" : variant === "slate" ? "bg-slate-950/50" : "bg-slate-50",
+            variant === "glass" ? "bg-black/20" : "bg-slate-50 dark:bg-slate-950/50",
             className
         )}>
             {children}

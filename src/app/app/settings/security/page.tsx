@@ -76,8 +76,8 @@ export default function SecurityPage() {
     return (
         <div className="space-y-8">
             <div>
-                <h1 className="text-3xl font-bold mb-2">Security</h1>
-                <p className="text-slate-400">Manage your password and account security settings.</p>
+                <h1 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">Security</h1>
+                <p className="text-slate-500 dark:text-slate-400">Manage your password and account security settings.</p>
             </div>
 
             <SettingsSection title="Change Password" variant="slate">
@@ -103,14 +103,14 @@ export default function SecurityPage() {
                                         onChange={handleChange}
                                         placeholder="Enter your current password"
                                         className={cn(
-                                            "bg-slate-950 border-slate-800 text-white pr-10",
+                                            "bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white pr-10 placeholder:text-slate-400",
                                             errors.old_password && "border-red-500 focus-visible:ring-red-500"
                                         )}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowOldPassword(!showOldPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                                     >
                                         {showOldPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                     </button>
@@ -133,14 +133,14 @@ export default function SecurityPage() {
                                             onChange={handleChange}
                                             placeholder="Create a new password"
                                             className={cn(
-                                                "bg-slate-950 border-slate-800 text-white pr-10",
+                                                "bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white pr-10 placeholder:text-slate-400",
                                                 errors.new_password && "border-red-500 focus-visible:ring-red-500"
                                             )}
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowNewPassword(!showNewPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                                         >
                                             {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                         </button>
@@ -148,7 +148,7 @@ export default function SecurityPage() {
                                     {errors.new_password && (
                                         <p className="mt-1.5 text-sm text-red-500">{errors.new_password}</p>
                                     )}
-                                    <p className="mt-1.5 text-xs text-slate-400">
+                                    <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
                                         Must be at least 8 characters.
                                     </p>
                                 </div>
@@ -165,14 +165,14 @@ export default function SecurityPage() {
                                             onChange={handleChange}
                                             placeholder="Confirm your new password"
                                             className={cn(
-                                                "bg-slate-950 border-slate-800 text-white pr-10",
+                                                "bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white pr-10 placeholder:text-slate-400",
                                                 errors.new_password_confirm && "border-red-500 focus-visible:ring-red-500"
                                             )}
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-300"
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                                         >
                                             {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                         </button>
@@ -187,7 +187,7 @@ export default function SecurityPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="bg-violet-600 hover:bg-violet-500"
+                                className="bg-violet-600 hover:bg-violet-500 text-white"
                             >
                                 {isLoading ? (
                                     <>

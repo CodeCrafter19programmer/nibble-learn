@@ -37,14 +37,14 @@ export function SettingsSidebar({ items, variant = "default" }: SettingsSidebarP
                 } else if (variant === "slate") {
                     containerStyles = isActive
                         ? "bg-violet-600 text-white shadow-md shadow-violet-900/20"
-                        : "text-slate-400 hover:text-white hover:bg-slate-800"
-                    iconStyles = isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300"
+                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                    iconStyles = isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
                 } else {
                     // Default (Light)
                     containerStyles = isActive
-                        ? "bg-violet-50 text-violet-700 font-semibold"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                    iconStyles = isActive ? "text-violet-600" : "text-slate-400 group-hover:text-slate-600"
+                        ? "bg-violet-50 text-violet-700 font-semibold dark:bg-violet-900/20 dark:text-violet-300"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-white/5"
+                    iconStyles = isActive ? "text-violet-600 dark:text-violet-400" : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
                 }
 
                 return (

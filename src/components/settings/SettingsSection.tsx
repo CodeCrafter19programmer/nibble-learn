@@ -16,21 +16,19 @@ export function SettingsSection({
     className,
     variant = "default"
 }: SettingsSectionProps) {
-    const isDark = variant === "glass" || variant === "slate"
-
     return (
         <section className={cn("space-y-6 mb-10", className)}>
             <div className="space-y-1">
                 <h2 className={cn(
-                    "text-lg font-bold",
-                    isDark ? "text-white" : "text-slate-900"
+                    "text-lg font-bold text-slate-900 dark:text-white",
+                    variant === "glass" && "text-white"
                 )}>
                     {title}
                 </h2>
                 {description && (
                     <p className={cn(
-                        "text-sm",
-                        isDark ? "text-white/60" : "text-slate-500"
+                        "text-sm text-slate-500 dark:text-slate-400",
+                        variant === "glass" && "text-white/60"
                     )}>
                         {description}
                     </p>
