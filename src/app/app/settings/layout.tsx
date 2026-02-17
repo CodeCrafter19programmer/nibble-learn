@@ -3,7 +3,7 @@
 import React from "react"
 import { SettingsLayout } from "@/components/settings/SettingsLayout"
 import { SettingsSidebar } from "@/components/settings/SettingsSidebar"
-import { User, CreditCard, Bell, Link as LinkIcon, HelpCircle, Shield } from "lucide-react"
+import { User, CreditCard, Bell, HelpCircle, Shield } from "lucide-react"
 
 const teacherItems = [
     { label: "Account & Profile", href: "/app/settings/account", icon: User },
