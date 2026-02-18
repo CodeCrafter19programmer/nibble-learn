@@ -3,7 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Clock, FileText, CheckCircle, Zap, ArrowRight, Sparkles, MoreHorizontal } from "lucide-react"
+import { Clock, FileText, CheckCircle, Zap, ArrowRight, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 
@@ -89,9 +89,6 @@ export default function HistoryPage() {
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <button className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}>
                                                 <ArrowRight className="w-4 h-4" />
-                                            </button>
-                                            <button className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}>
-                                                <MoreHorizontal className="w-4 h-4" />
                                             </button>
                                         </div>
                                     </td>
