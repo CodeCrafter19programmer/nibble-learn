@@ -51,9 +51,11 @@ export default function TeacherAppLayout({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Button size="sm" className="hidden sm:flex shadow-lg border-0 rounded-full text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-violet-500/10 dark:shadow-violet-500/25">
-                        <span className="mr-1">✨</span> Upgrade to Plus
-                    </Button>
+                    <Link href="/pricing">
+                        <Button size="sm" className="hidden sm:flex shadow-lg border-0 rounded-full text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-violet-500/10 dark:shadow-violet-500/25">
+                            <span className="mr-1">✨</span> Upgrade to Plus
+                        </Button>
+                    </Link>
 
                     <button className="relative p-2 transition-colors text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
                         <Bell className="w-5 h-5" />
