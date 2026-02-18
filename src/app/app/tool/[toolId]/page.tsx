@@ -102,10 +102,13 @@ export default function ToolPage() {
             <div className="mb-6">
                 <button
                     onClick={() => {
-                        if (viewStatus !== 'input') {
+                        const historyId = searchParams.get('historyId')
+                        if (historyId) {
+                            router.push('/app/history')
+                        } else if (viewStatus !== 'input') {
                             setViewStatus('input')
                         } else {
-                            router.back()
+                            router.push('/app/tools')
                         }
                     }}
                     className={cn(
@@ -114,7 +117,7 @@ export default function ToolPage() {
                     )}
                 >
                     <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                    {viewStatus === 'input' ? 'Back to Tools' : 'Edit Inputs'}
+                    {searchParams.get('historyId') ? 'Back to History' : (viewStatus === 'input' ? 'Back to Tools' : 'Edit Inputs')}
                 </button>
             </div>
 
