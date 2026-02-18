@@ -243,7 +243,7 @@ export function Header({ theme = "violet" }: HeaderProps) {
                     </Link>
                     <Link
                         href="/login"
-                        className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-lg text-slate-600 hover:bg-slate-100", currentTheme.textHover)}
+                        className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-lg !text-slate-600 hover:bg-slate-100 bg-transparent", currentTheme.textHover)}
                     >
                         Login
                     </Link>
