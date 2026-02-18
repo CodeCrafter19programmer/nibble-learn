@@ -25,7 +25,7 @@ import {
     Rocket
 } from "lucide-react"
 import { Logo } from "@/components/logo"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface NavItem {
@@ -235,15 +235,24 @@ export function Header({ theme = "violet" }: HeaderProps) {
 
                 {/* Desktop CTAs */}
                 <div className="hidden lg:flex items-center gap-3">
-                    <Button variant="outline" size="sm" asChild className={cn("hidden xl:flex rounded-lg", currentTheme.ctaOutline)}>
-                        <Link href="/quote-request">Book a Demo</Link>
-                    </Button>
-                    <Button variant="ghost" size="sm" asChild className="rounded-lg">
-                        <Link href="/login">Login</Link>
-                    </Button>
-                    <Button variant="default" size="sm" asChild className={cn("rounded-lg", theme === 'blue' ? "bg-blue-600 hover:bg-blue-700" : theme === 'amber' ? "bg-amber-500 hover:bg-amber-600" : "")}>
-                        <Link href="/signup">Sign up free</Link>
-                    </Button>
+                    <Link
+                        href="/quote-request"
+                        className={cn(buttonVariants({ variant: "outline", size: "sm" }), "hidden xl:flex rounded-lg", currentTheme.ctaOutline)}
+                    >
+                        Book a Demo
+                    </Link>
+                    <Link
+                        href="/login"
+                        className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "rounded-lg text-slate-600 hover:bg-slate-100", currentTheme.textHover)}
+                    >
+                        Login
+                    </Link>
+                    <Link
+                        href="/signup"
+                        className={cn(buttonVariants({ variant: "default", size: "sm" }), "rounded-lg", theme === 'blue' ? "bg-blue-600 hover:bg-blue-700" : theme === 'amber' ? "bg-amber-500 hover:bg-amber-600" : "")}
+                    >
+                        Sign up free
+                    </Link>
                 </div>
 
                 {/* Mobile Toggle */}
