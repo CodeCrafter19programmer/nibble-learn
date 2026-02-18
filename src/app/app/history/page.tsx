@@ -1,25 +1,16 @@
 "use client"
 
 import React from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Clock, FileText, CheckCircle, Zap, ArrowRight, Sparkles } from "lucide-react"
+import { Clock, FileText, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
-
-const historyItems = [
-    { id: 1, tool: "Lesson Plan Generator", title: "Photosynthesis Grade 5", date: "2 hours ago", type: "Planning" },
-    { id: 2, tool: "Math Story Problem", title: "Fractions & Pizza", date: "5 hours ago", type: "Math" },
-    { id: 3, tool: "Rubric Generator", title: "History Essay Rubric", date: "Yesterday", type: "Assessment" },
-    { id: 4, tool: "Writing Feedback", title: "Sarah's Essay Review", date: "Yesterday", type: "Feedback" },
-    { id: 5, tool: "5E Model Science Lesson", title: "Water Cycle Unit", date: "2 days ago", type: "Science" },
-    { id: 6, tool: "Email Writer", title: "Parent Conference Request", date: "3 days ago", type: "Communication" },
-    { id: 7, tool: "Quiz Generator", title: "Geography Capes Quiz", date: "Last Week", type: "Assessment" },
-    { id: 8, tool: "Class Syllabus", title: "Fall 2024 Geometry", date: "Last Week", type: "Planning" },
-]
+import { historyItems } from "@/lib/data/history-data"
 
 export default function HistoryPage() {
     const { theme } = useTheme()
+    const router = useRouter()
     const isLight = theme === 'light'
 
     return (
@@ -50,6 +41,7 @@ export default function HistoryPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.05 }}
+                                    onClick={() => router.push(`/app/tool/${item.toolId}?historyId=${item.id}`)}
                                     className={cn(
                                         "group transition-colors cursor-pointer",
                                         isLight ? "hover:bg-slate-50" : "hover:bg-white/5"
@@ -87,7 +79,13 @@ export default function HistoryPage() {
                                     </td>
                                     <td className="p-4 pr-6 text-right">
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    router.push(`/app/tool/${item.toolId}?historyId=${item.id}`)
+                                                }}
+                                                className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}
+                                            >
                                                 <ArrowRight className="w-4 h-4" />
                                             </button>
                                         </div>
