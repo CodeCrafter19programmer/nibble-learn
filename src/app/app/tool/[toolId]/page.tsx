@@ -327,8 +327,10 @@ export default function ToolPage() {
                                 onClick={() => setViewStatus('input')}
                                 variant="outline"
                                 className={cn(
-                                    "flex-1 h-12 text-base font-medium border-2 hover:bg-slate-100",
-                                    isLight ? "border-slate-200 text-slate-700" : "border-slate-700 text-slate-300 hover:bg-slate-800"
+                                    "flex-1 h-12 text-base font-medium border-2 transition-colors",
+                                    isLight
+                                        ? "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                                        : "bg-transparent border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white"
                                 )}
                             >
                                 Edit Inputs
