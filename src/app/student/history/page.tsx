@@ -65,7 +65,7 @@ export default function StudentHistoryPage() {
                                             </div>
                                         </td>
                                         <td className={cn("p-4 text-sm", isLight ? "text-slate-600" : "text-slate-400")}>
-                                            {item.tool}
+                                            {item.toolName}
                                         </td>
                                         <td className={cn("p-4 text-sm whitespace-nowrap", isLight ? "text-slate-500" : "text-slate-400")}>
                                             <div className="flex items-center gap-2">
