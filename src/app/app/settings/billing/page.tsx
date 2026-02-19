@@ -7,7 +7,27 @@ import { Check, X, Sparkles, Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 
-const plans = [
+interface PlanFeature {
+    text: string;
+    included: boolean;
+    highlight?: boolean;
+}
+
+interface Plan {
+    id: string;
+    name: string;
+    description: string;
+    monthlyPrice: number;
+    annualPrice: number;
+    annualBilled: number;
+    badge: string;
+    theme: string;
+    cta: string;
+    popular?: boolean;
+    features: PlanFeature[];
+}
+
+const plans: Plan[] = [
     {
         id: "free",
         name: "Free",
