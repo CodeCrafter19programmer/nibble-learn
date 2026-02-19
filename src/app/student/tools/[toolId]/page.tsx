@@ -103,11 +103,11 @@ function ToolPageContent() {
                     onClick={() => {
                         const historyId = searchParams.get('historyId')
                         if (historyId) {
-                            router.push('/app/student/history')
+                            router.push('/student/history')
                         } else if (viewStatus !== 'input') {
                             setViewStatus('input')
                         } else {
-                            router.push('/app/student/tools')
+                            router.push('/student/tools')
                         }
                     }}
                     className={cn(

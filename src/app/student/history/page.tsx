@@ -42,7 +42,7 @@ export default function StudentHistoryPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.05 }}
-                                    onClick={() => router.push(`/app/student/tools/${item.toolId}?historyId=${item.id}`)}
+                                    onClick={() => router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)}
                                     className={cn(
                                         "group transition-colors cursor-pointer",
                                         isLight ? "hover:bg-slate-50" : "hover:bg-white/5"
@@ -83,7 +83,7 @@ export default function StudentHistoryPage() {
                                             <button
                                                 onClick={(e) => {
                                                     e.stopPropagation()
-                                                    router.push(`/app/student/tools/${item.toolId}?historyId=${item.id}`)
+                                                    router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)
                                                 }}
                                                 className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}
                                             >
