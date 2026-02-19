@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
@@ -40,6 +40,30 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
     const pathname = usePathname()
     const { theme, toggleTheme } = useTheme()
     const isPlusUser = true // Simulated Plus status for demonstration
+    const [userProfile, setUserProfile] = useState({ initials: "JS", name: "Jane Smith" })
+
+    useEffect(() => {
+        const handleProfileUpdate = () => {
+            const saved = localStorage.getItem("userProfile")
+            if (saved) {
+                try {
+                    const profile = JSON.parse(saved)
+                    const name = profile.displayName || `${profile.firstName} ${profile.lastName}`.trim()
+                    const initials = (profile.firstName?.[0] || "") + (profile.lastName?.[0] || "")
+                    setUserProfile({ initials: initials.toUpperCase() || "JS", name: name || "Jane Smith" })
+                } catch (e) { }
+            }
+        }
+        handleProfileUpdate()
+
+        window.addEventListener('storage', handleProfileUpdate)
+        window.addEventListener('profileUpdated', handleProfileUpdate)
+
+        return () => {
+            window.removeEventListener('storage', handleProfileUpdate)
+            window.removeEventListener('profileUpdated', handleProfileUpdate)
+        }
+    }, [])
 
     return (
         <aside className="w-64 h-full flex flex-col backdrop-blur-xl border-r transition-colors duration-300 bg-violet-50/90 border-violet-200 text-slate-800 dark:bg-slate-900/95 dark:border-white/10 dark:text-white">
@@ -118,10 +142,10 @@ export function TeacherSidebar({ onMobileClose }: SidebarProps) {
                 {/* User Card */}
                 <div className="rounded-xl p-3 flex items-center gap-3 mt-2 transition-colors bg-white border border-violet-100 shadow-sm dark:bg-white/5 dark:border-transparent dark:shadow-none">
                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
-                        JS
+                        {userProfile.initials}
                     </div>
                     <div className="flex-1 overflow-hidden">
-                        <h4 className="text-sm font-bold truncate transition-colors cursor-pointer text-black hover:text-violet-700 dark:text-white dark:hover:text-violet-300">Jane Smith</h4>
+                        <h4 className="text-sm font-bold truncate transition-colors cursor-pointer text-black hover:text-violet-700 dark:text-white dark:hover:text-violet-300">{userProfile.name}</h4>
                         <p className="text-xs truncate text-slate-600 dark:text-slate-400">{isPlusUser ? "Plus Plan" : "Free Plan"}</p>
                     </div>
                     <Link href="/app/settings" className="transition-colors text-slate-400 hover:text-violet-700 dark:text-slate-500 dark:hover:text-white">

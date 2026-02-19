@@ -43,6 +43,15 @@ export default function SignupPage() {
 
         setIsLoading(true)
         await new Promise(resolve => setTimeout(resolve, 1500))
+
+        // Save to localStorage
+        localStorage.setItem("userProfile", JSON.stringify({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            displayName: `${formData.firstName} ${formData.lastName}`
+        }))
+
         setIsLoading(false)
         window.location.href = role === 'student' ? '/student/dashboard' : role === 'teacher' ? '/app/dashboard' : '/school/dashboard'
     }

@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import {
@@ -44,6 +44,19 @@ const categories = [
 export default function TeacherDashboard() {
     const time = new Date().getHours()
     const greeting = time < 12 ? "Good morning" : time < 18 ? "Good afternoon" : "Good evening"
+    const [firstName, setFirstName] = useState("Jane")
+
+    useEffect(() => {
+        const saved = localStorage.getItem("userProfile")
+        if (saved) {
+            try {
+                const profile = JSON.parse(saved)
+                if (profile.firstName) {
+                    setFirstName(profile.firstName)
+                }
+            } catch (e) { }
+        }
+    }, [])
 
     return (
         <div className="space-y-10 pb-20">
@@ -55,7 +68,7 @@ export default function TeacherDashboard() {
             >
                 <div>
                     <h1 className="text-3xl md:text-4xl font-bold mb-2 text-slate-900 dark:text-white">
-                        {greeting}, Jane! <span className="inline-block animate-bounce">👋</span>
+                        {greeting}, {firstName}! <span className="inline-block animate-bounce">👋</span>
                     </h1>
                     <p className="text-lg text-slate-600 font-medium dark:text-slate-400">
                         What would you like to create for your students today?
