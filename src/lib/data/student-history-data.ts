@@ -1,4 +1,14 @@
-import { StudentHistoryItem } from "@/types/student"
+export interface StudentHistoryItem {
+    id: number
+    toolId: string
+    userId: string
+    title: string
+    type: string
+    date: string
+    toolName: string
+    formData: any
+    output: string
+}
 
 export const studentHistoryItems: StudentHistoryItem[] = [
     {
