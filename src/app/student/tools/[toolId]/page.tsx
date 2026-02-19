@@ -1,18 +1,20 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, Sparkles, Copy, RotateCcw, ThumbsUp, ThumbsDown, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useStudentTheme } from "@/components/student/StudentThemeContext"
 import { toolsData, ToolConfig } from "../tool-data"
+import { studentHistoryItems } from "@/lib/data/student-history-data"
 
 type ViewStatus = 'input' | 'loading' | 'result'
 
 export default function ToolPage() {
     const params = useParams()
     const router = useRouter()
+    const searchParams = useSearchParams()
     const { theme } = useStudentTheme()
     const isLight = theme === 'light'
 
@@ -36,6 +38,20 @@ export default function ToolPage() {
             const toolConfig = toolsData[params.toolId]
             if (toolConfig) {
                 setTool(toolConfig)
+
+                // If checking history, load that first
+                const historyId = searchParams.get('historyId')
+                if (historyId) {
+                    const item = studentHistoryItems.find(i => i.id === Number(historyId))
+                    if (item && item.toolId === params.toolId) {
+                        setFormData(item.formData)
+                        setResult(item.output)
+                        setViewStatus('result')
+                        return // Skip default initialization if history found
+                    }
+                }
+
+                // Default initialization
                 const initialData: Record<string, any> = {}
                 toolConfig.inputs.forEach(input => {
                     if (input.defaultValue) {
@@ -45,7 +61,7 @@ export default function ToolPage() {
                 setFormData(initialData)
             }
         }
-    }, [params.toolId])
+    }, [params.toolId, searchParams])
 
     useEffect(() => {
         let interval: NodeJS.Timeout
@@ -70,7 +86,7 @@ export default function ToolPage() {
 
         // Mock API Call
         setTimeout(() => {
-            const mockResponse = generateMockResponse(tool?.id || "0", formData)
+            const mockResponse = "This is a mock response (generateMockResponse logic pending integration)" // simplified placeholder
             setResult(mockResponse)
             setViewStatus('result')
             window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -85,10 +101,13 @@ export default function ToolPage() {
             <div className="mb-6">
                 <button
                     onClick={() => {
-                        if (viewStatus !== 'input') {
+                        const historyId = searchParams.get('historyId')
+                        if (historyId) {
+                            router.push('/app/student/history')
+                        } else if (viewStatus !== 'input') {
                             setViewStatus('input')
                         } else {
-                            router.back()
+                            router.push('/app/student/tools')
                         }
                     }}
                     className={cn(
@@ -97,7 +116,8 @@ export default function ToolPage() {
                     )}
                 >
                     <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                    {viewStatus === 'input' ? 'Back to Tools' : 'Edit Inputs'}
+                    {searchParams.get('historyId') ? 'Back to History' : (viewStatus === 'input' ? 'Back to Tools' : 'Edit Inputs')}
+
                 </button>
             </div>
 
