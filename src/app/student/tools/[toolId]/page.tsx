@@ -11,7 +11,7 @@ import { studentHistoryItems } from "@/lib/data/student-history-data"
 
 type ViewStatus = 'input' | 'loading' | 'result'
 
-export default function ToolPage() {
+function ToolPageContent() {
     const params = useParams()
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -384,6 +384,14 @@ export default function ToolPage() {
                 )}
             </AnimatePresence>
         </div>
+    )
+}
+
+export default function ToolPage() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center min-h-[50vh] text-slate-400">Loading magic...</div>}>
+            <ToolPageContent />
+        </Suspense>
     )
 }
 
