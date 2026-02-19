@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { Eye, EyeOff, Loader2, CheckCircle2, Mail, ShieldAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,7 +14,8 @@ type SecurityStep = "email" | "verify" | "update"
 export default function SecurityPage() {
     const [step, setStep] = useState<SecurityStep>("email")
     const [email, setEmail] = useState("")
-    const [code, setCode] = useState("")
+    const [code, setCode] = useState<string[]>(Array(6).fill(""))
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([])
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
@@ -23,6 +24,36 @@ export default function SecurityPage() {
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const [errors, setErrors] = useState<Record<string, string>>({})
+
+    const handleCodeChange = (index: number, value: string) => {
+        if (!/^\d*$/.test(value)) return;
+
+        const newCode = [...code];
+        if (value.length > 1) {
+            const pastedDigits = value.slice(0, 6).split('');
+            for (let i = 0; i < pastedDigits.length; i++) {
+                if (index + i < 6) {
+                    newCode[index + i] = pastedDigits[i];
+                }
+            }
+            setCode(newCode);
+            const nextIndex = Math.min(index + pastedDigits.length, 5);
+            inputRefs.current[nextIndex]?.focus();
+        } else {
+            newCode[index] = value;
+            setCode(newCode);
+            setErrors({});
+            if (value && index < 5) {
+                inputRefs.current[index + 1]?.focus();
+            }
+        }
+    }
+
+    const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Backspace' && !code[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus();
+        }
+    }
 
     const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -39,8 +70,8 @@ export default function SecurityPage() {
 
     const handleVerifySubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        if (code.length < 5) {
-            setErrors({ code: "Please enter a valid code" })
+        if (code.join("").length < 6) {
+            setErrors({ code: "Please enter a valid 6-digit code" })
             return
         }
         setErrors({})
@@ -75,7 +106,7 @@ export default function SecurityPage() {
             setIsSuccess(false)
             setStep("email")
             setEmail("")
-            setCode("")
+            setCode(Array(6).fill(""))
         }, 3000)
     }
 
@@ -147,27 +178,27 @@ export default function SecurityPage() {
                                     </div>
                                 </div>
                                 <div>
-                                    <Label htmlFor="code">Enter Code</Label>
-                                    <div className="relative mt-2">
-                                        <Input
-                                            id="code"
-                                            name="code"
-                                            type="text"
-                                            required
-                                            value={code}
-                                            onChange={(e) => {
-                                                setCode(e.target.value)
-                                                setErrors({})
-                                            }}
-                                            placeholder="e.g. 123456"
-                                            className={cn(
-                                                "bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus-visible:ring-violet-500 text-center tracking-widest font-mono text-lg",
-                                                errors.code && "border-red-500 focus-visible:ring-red-500"
-                                            )}
-                                        />
+                                    <Label>Enter 6-Digit Code</Label>
+                                    <div className="flex gap-2 sm:gap-4 mt-2 justify-center">
+                                        {code.map((digit, index) => (
+                                            <Input
+                                                key={index}
+                                                ref={(el) => { inputRefs.current[index] = el; }}
+                                                type="text"
+                                                inputMode="numeric"
+                                                maxLength={6}
+                                                value={digit}
+                                                onChange={(e) => handleCodeChange(index, e.target.value)}
+                                                onKeyDown={(e) => handleKeyDown(index, e)}
+                                                className={cn(
+                                                    "w-12 h-14 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus-visible:ring-violet-500",
+                                                    errors.code && "border-red-500 focus-visible:ring-red-500"
+                                                )}
+                                            />
+                                        ))}
                                     </div>
                                     {errors.code && (
-                                        <p className="mt-1.5 text-sm text-red-500">{errors.code}</p>
+                                        <p className="mt-2 text-sm text-red-500 text-center">{errors.code}</p>
                                     )}
                                 </div>
                             </SettingsCardContent>
