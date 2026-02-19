@@ -51,7 +51,7 @@ export default function TeacherAppLayout({
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <Link href="/pricing">
+                    <Link href="/app/settings/billing">
                         <Button size="sm" className="hidden sm:flex shadow-lg border-0 rounded-full text-white bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 shadow-violet-500/10 dark:shadow-violet-500/25">
                             <span className="mr-1">✨</span> Upgrade to Plus
                         </Button>

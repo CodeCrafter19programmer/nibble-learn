@@ -79,6 +79,7 @@ const plans: Plan[] = [
 
 export default function TeacherBillingPage() {
     const [billingPeriod, setBillingPeriod] = useState<"annual" | "monthly">("annual")
+    const creditsUsedPercentage = 85 // Represents current credits used
 
     return (
         <div className="space-y-12 pb-12">
@@ -100,10 +101,10 @@ export default function TeacherBillingPage() {
                     <div className="space-y-3">
                         <div className="flex justify-between items-end">
                             <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide">Credits Usage</span>
-                            <span className="text-sm font-bold text-violet-600 dark:text-violet-400">45% Used</span>
+                            <span className={cn("text-sm font-bold", creditsUsedPercentage >= 80 ? "text-red-500" : "text-violet-600 dark:text-violet-400")}>{creditsUsedPercentage}% Used</span>
                         </div>
                         <div className="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
-                            <div className="h-full bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full" style={{ width: "45%" }}></div>
+                            <div className={cn("h-full rounded-full", creditsUsedPercentage >= 80 ? "bg-red-500" : "bg-gradient-to-r from-violet-500 to-indigo-500")} style={{ width: `${creditsUsedPercentage}%` }}></div>
                         </div>
                     </div>
 
@@ -114,9 +115,11 @@ export default function TeacherBillingPage() {
                             <span className="font-semibold text-slate-900 dark:text-white">12 days</span>
                         </div>
                         <div className="flex gap-3 w-full md:w-auto">
-                            <Button variant="outline" className="flex-1 md:flex-none text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800 hover:bg-violet-50 dark:hover:bg-violet-900/30">
-                                <Sparkles className="w-4 h-4 mr-2" /> Top Up Credits
-                            </Button>
+                            {creditsUsedPercentage >= 80 && (
+                                <Button variant="outline" className="flex-1 md:flex-none text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-800 hover:bg-violet-50 dark:hover:bg-violet-900/30">
+                                    <Sparkles className="w-4 h-4 mr-2" /> Top Up Credits
+                                </Button>
+                            )}
                             <Button className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white shadow-md">
                                 Upgrade Plan
                             </Button>
