@@ -12,7 +12,8 @@ import {
     Settings,
     Sun,
     Moon,
-    Zap
+    Zap,
+    RotateCcw
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Logo } from "@/components/logo"
@@ -29,6 +30,7 @@ const navItems = [
     { href: "/student/dashboard", icon: Home, label: "Home" },
     { href: "/student/tools", icon: Wand2, label: "My Tools" },
     { href: "/student/chat", icon: MessageCircle, label: "Jarvis Chat" },
+    { href: "/student/history", icon: RotateCcw, label: "History" },
     { href: "/student/favorites", icon: Star, label: "Favorites" },
 ]
 
