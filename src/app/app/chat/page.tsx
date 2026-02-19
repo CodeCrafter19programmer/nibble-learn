@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, User, Bot, Sparkles, RefreshCw, Paperclip, MoreVertical, Trash2, Menu, Plus, MessageSquare, X } from "lucide-react"
+import { Send, User, Bot, Sparkles, RefreshCw, Paperclip, MoreVertical, Trash2, Menu, Plus, MessageSquare, X, MessageSquareText } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { Button } from "@/components/ui/button"
@@ -316,7 +316,10 @@ export default function ChatPage() {
                             className="md:hidden -ml-2 mr-1"
                             onClick={() => setShowMobileHistory(true)}
                         >
-                            <Menu className="w-5 h-5" />
+                            <div className="relative py-1 px-1">
+                                <MessageSquareText className="w-6 h-6" />
+                                <Sparkles className="w-3 h-3 absolute -top-1 -right-1 fill-amber-400 text-amber-500" />
+                            </div>
                         </Button>
 
                         <div className={cn("w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md shadow-violet-500/20", "bg-violet-600")}>
