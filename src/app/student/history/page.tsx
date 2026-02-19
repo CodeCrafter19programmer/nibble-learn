@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 // Use student theme context if available, otherwise fallback or replicate logic
 import { useStudentTheme } from "@/components/student/StudentThemeContext"
 import { studentHistoryItems } from "@/lib/data/student-history-data"
+import { toolsData } from "../tools/tool-data"
 
 export default function StudentHistoryPage() {
     const { theme } = useStudentTheme()
@@ -36,63 +37,68 @@ export default function StudentHistoryPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-                            {studentHistoryItems.map((item, i) => (
-                                <motion.tr
-                                    key={item.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.05 }}
-                                    onClick={() => router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)}
-                                    className={cn(
-                                        "group transition-colors cursor-pointer",
-                                        isLight ? "hover:bg-slate-50" : "hover:bg-white/5"
-                                    )}
-                                >
-                                    <td className="p-4 pl-6">
-                                        <div className="flex items-center gap-3">
-                                            <div className={cn(
-                                                "w-10 h-10 rounded-lg flex items-center justify-center",
-                                                isLight ? "bg-blue-50 text-blue-600" : "bg-blue-500/10 text-blue-400"
-                                            )}>
-                                                <FileText className="w-5 h-5" />
+                            {studentHistoryItems.map((item, i) => {
+                                const tool = toolsData[item.toolId]
+                                const Icon = tool?.icon || FileText
+
+                                return (
+                                    <motion.tr
+                                        key={item.id}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                        onClick={() => router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)}
+                                        className={cn(
+                                            "group transition-colors cursor-pointer",
+                                            isLight ? "hover:bg-slate-50" : "hover:bg-white/5"
+                                        )}
+                                    >
+                                        <td className="p-4 pl-6">
+                                            <div className="flex items-center gap-3">
+                                                <div className={cn(
+                                                    "w-10 h-10 rounded-lg flex items-center justify-center",
+                                                    isLight ? "bg-blue-50 text-blue-600" : "bg-blue-500/10 text-blue-400"
+                                                )}>
+                                                    <Icon className="w-5 h-5" />
+                                                </div>
+                                                <span className={cn("font-medium", isLight ? "text-slate-900" : "text-white")}>{item.title}</span>
                                             </div>
-                                            <span className={cn("font-medium", isLight ? "text-slate-900" : "text-white")}>{item.title}</span>
-                                        </div>
-                                    </td>
-                                    <td className={cn("p-4 text-sm", isLight ? "text-slate-600" : "text-slate-400")}>
-                                        {item.tool}
-                                    </td>
-                                    <td className={cn("p-4 text-sm whitespace-nowrap", isLight ? "text-slate-500" : "text-slate-400")}>
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-3.5 h-3.5" />
-                                            {item.date}
-                                        </div>
-                                    </td>
-                                    <td className="p-4">
-                                        <span className={cn(
-                                            "inline-flex px-2.5 py-1 rounded-full text-xs font-medium border",
-                                            isLight
-                                                ? "bg-slate-100 text-slate-600 border-slate-200"
-                                                : "bg-white/5 text-slate-300 border-white/10"
-                                        )}>
-                                            {item.type}
-                                        </span>
-                                    </td>
-                                    <td className="p-4 pr-6 text-right">
-                                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation()
-                                                    router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)
-                                                }}
-                                                className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}
-                                            >
-                                                <ArrowRight className="w-4 h-4" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </motion.tr>
-                            ))}
+                                        </td>
+                                        <td className={cn("p-4 text-sm", isLight ? "text-slate-600" : "text-slate-400")}>
+                                            {item.tool}
+                                        </td>
+                                        <td className={cn("p-4 text-sm whitespace-nowrap", isLight ? "text-slate-500" : "text-slate-400")}>
+                                            <div className="flex items-center gap-2">
+                                                <Clock className="w-3.5 h-3.5" />
+                                                {item.date}
+                                            </div>
+                                        </td>
+                                        <td className="p-4">
+                                            <span className={cn(
+                                                "inline-flex px-2.5 py-1 rounded-full text-xs font-medium border",
+                                                isLight
+                                                    ? "bg-slate-100 text-slate-600 border-slate-200"
+                                                    : "bg-white/5 text-slate-300 border-white/10"
+                                            )}>
+                                                {item.type}
+                                            </span>
+                                        </td>
+                                        <td className="p-4 pr-6 text-right">
+                                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)
+                                                    }}
+                                                    className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}
+                                                >
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </motion.tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
