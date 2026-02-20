@@ -114,17 +114,8 @@ export default function StudentToolsPage() {
         setIsMounted(true)
     }, [])
 
-    const SkeletonCard = () => (
-        <div className={cn(
-            "rounded-[20px] p-5 border h-[240px] animate-pulse",
-            isLight ? "bg-white/60 border-slate-200" : "bg-white/5 border-white/10"
-        )}>
-            <div className={cn("w-12 h-12 rounded-[14px] mb-4", isLight ? "bg-slate-200" : "bg-white/10")} />
-            <div className={cn("h-6 w-3/4 rounded mb-3", isLight ? "bg-slate-200" : "bg-white/10")} />
-            <div className={cn("h-4 w-full rounded mb-2", isLight ? "bg-slate-200/60" : "bg-white/5")} />
-            <div className={cn("h-4 w-2/3 rounded", isLight ? "bg-slate-200/60" : "bg-white/5")} />
-        </div>
-    )
+    // Skeletons removed for performance optimization directly aligned to teacher tools view
+
     const [isCategoryOpen, setIsCategoryOpen] = useState(false)
     const [isSearchFocused, setIsSearchFocused] = useState(false)
 
@@ -347,69 +338,60 @@ export default function StudentToolsPage() {
 
             {/* Tools Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <AnimatePresence mode="popLayout">
-                    {!isMounted && Array.from({ length: 8 }).map((_, i) => (
-                        <motion.div key={`skel-${i}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                            <SkeletonCard />
-                        </motion.div>
-                    ))}
-                    {isMounted && filteredTools.map((tool, index) => (
-                        <motion.div
-                            // layout // Removed for performance
-                            key={tool.id}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.2 }}
+                {filteredTools.map((tool, index) => (
+                    <motion.div
+                        key={tool.id}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: Math.min(index * 0.03, 0.5) }} // Cap delay for many items
+                        className={cn(
+                            "group relative rounded-[20px] p-5 border transition-all duration-200 cursor-pointer overflow-hidden",
+                            isLight
+                                ? "bg-white border-slate-200 shadow-sm hover:bg-blue-50/40 hover:border-blue-200 hover:-translate-y-[2px] hover:shadow-lg"
+                                : "bg-white/[0.05] border-white/[0.1] shadow-md hover:bg-white/[0.08] hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+                        )}
+                    >
+                        <Link href={`/student/tools/${tool.id}`} className="absolute inset-0 z-10" />
+                        {/* Hot Badge */}
+                        {tool.isHot && (
+                            <div className="absolute top-4 right-12 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-[10px] uppercase font-bold tracking-wider flex items-center gap-1">
+                                <Flame className="w-3 h-3 fill-current" /> Hot
+                            </div>
+                        )}
+
+                        {/* Favorite Button */}
+                        <button
+                            onClick={(e) => toggleFavorite(e, tool.id)}
                             className={cn(
-                                "group relative rounded-[20px] p-5 border transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xl",
-                                isLight
-                                    ? "bg-white/60 border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:bg-blue-50/40 hover:border-blue-200 hover:-translate-y-[4px] hover:shadow-[0_20px_40px_rgba(37,99,235,0.1)] ring-1 ring-slate-900/5"
-                                    : "bg-white/[0.08] border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)] hover:bg-white/[0.12] hover:-translate-y-1 hover:shadow-[0_12px_48px_rgba(30,78,216,0.35)]"
+                                "absolute top-4 right-4 p-1.5 rounded-lg transition-all",
+                                favorites.includes(tool.id)
+                                    ? "text-yellow-400 hover:text-yellow-500"
+                                    : (isLight ? "text-slate-300 hover:bg-slate-100 hover:text-slate-400" : "text-slate-600 hover:text-slate-400")
                             )}
                         >
-                            <Link href={`/student/tools/${tool.id}`} className="absolute inset-0 z-10" />
-                            {/* Hot Badge */}
-                            {tool.isHot && (
-                                <div className="absolute top-4 right-12 px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-[10px] uppercase font-bold tracking-wider flex items-center gap-1">
-                                    <Flame className="w-3 h-3 fill-current" /> Hot
-                                </div>
-                            )}
+                            <Star className={cn("w-5 h-5", favorites.includes(tool.id) ? "fill-current scale-110" : "")} />
+                        </button>
 
-                            {/* Favorite Button */}
-                            <button
-                                onClick={(e) => toggleFavorite(e, tool.id)}
-                                className={cn(
-                                    "absolute top-4 right-4 p-1.5 rounded-lg transition-all",
-                                    favorites.includes(tool.id)
-                                        ? "text-yellow-400 hover:text-yellow-500"
-                                        : (isLight ? "text-slate-300 hover:bg-slate-100 hover:text-slate-400" : "text-slate-600 hover:text-slate-400")
-                                )}
-                            >
-                                <Star className={cn("w-5 h-5", favorites.includes(tool.id) ? "fill-current scale-110" : "")} />
-                            </button>
-
-                            <div className="flex flex-col gap-4">
-                                <div className={cn(
-                                    "w-12 h-12 rounded-[14px] flex items-center justify-center backdrop-blur-md",
-                                    isLight
-                                        ? "bg-blue-500/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_16px_rgba(37,99,235,0.15)]"
-                                        : "bg-white/[0.15] shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_6px_16px_rgba(0,0,0,0.3)]"
-                                )}>
-                                    <tool.icon className={cn("w-6 h-6", isLight ? "text-[#2563EB]" : "text-blue-300")} />
-                                </div>
-                                <div className="space-y-1">
-                                    <h3 className={cn("font-bold text-lg leading-tight", isLight ? "text-[#0F172A]" : "text-white")}>
-                                        {tool.name}
-                                    </h3>
-                                    <p className={cn("text-xs leading-relaxed line-clamp-2 font-medium", isLight ? "text-[#334155]" : "text-slate-300")}>
-                                        {tool.desc}
-                                    </p>
-                                </div>
+                        <div className="flex flex-col gap-4">
+                            <div className={cn(
+                                "w-12 h-12 rounded-[14px] flex items-center justify-center",
+                                isLight
+                                    ? "bg-blue-50"
+                                    : "bg-white/[0.1] shadow-inner"
+                            )}>
+                                <tool.icon className={cn("w-6 h-6", isLight ? "text-[#2563EB]" : "text-blue-300")} />
                             </div>
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
+                            <div className="space-y-1">
+                                <h3 className={cn("font-bold text-lg leading-tight", isLight ? "text-[#0F172A]" : "text-white")}>
+                                    {tool.name}
+                                </h3>
+                                <p className={cn("text-xs leading-relaxed line-clamp-2 font-medium", isLight ? "text-[#334155]" : "text-slate-300")}>
+                                    {tool.desc}
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
             </div>
 
             {filteredTools.length === 0 && (
