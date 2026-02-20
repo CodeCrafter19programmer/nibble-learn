@@ -128,6 +128,21 @@ export default function TeacherBillingPage() {
                 </SettingsCardContent>
             </SettingsCard>
 
+            {/* Payment & Subscription Details */}
+            <SettingsCard variant="slate">
+                <SettingsCardContent className="p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="flex flex-col">
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Next Billing Date</span>
+                        <span className="text-xl font-bold text-slate-900 dark:text-white mt-1">May 21, 2026</span>
+                    </div>
+                    <div>
+                        <Button variant="outline" className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                            Manage Payment Method
+                        </Button>
+                    </div>
+                </SettingsCardContent>
+            </SettingsCard>
+
             {/* Pricing Cards Section */}
             <div>
                 <div className="flex justify-center mb-10">
