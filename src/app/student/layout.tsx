@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { StudentSidebar } from "@/components/student/StudentSidebar"
+import { StudentFavoritesProvider } from "@/components/student/StudentFavoritesContext"
 import { AnimatePresence, motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -86,5 +87,9 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
 
 export default function StudentLayout({ children }: { children: React.ReactNode }) {
     // StudentThemeProvider is removed as it's redundant with the root ThemeProvider
-    return <StudentLayoutContent>{children}</StudentLayoutContent>
+    return (
+        <StudentFavoritesProvider>
+            <StudentLayoutContent>{children}</StudentLayoutContent>
+        </StudentFavoritesProvider>
+    )
 }
