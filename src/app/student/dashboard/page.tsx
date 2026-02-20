@@ -13,31 +13,29 @@ import {
     MoreHorizontal
 } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-const recentWork = [
-    { id: 1, title: "The Solar System Essay", tool: "Essay Assistant", date: "2 hours ago" },
-    { id: 2, title: "Math Homework Helpers", tool: "Math Tutor", date: "Yesterday" },
-    { id: 3, title: "French Revolution Quiz", tool: "Practice Quiz", date: "2 days ago" },
-]
+import { studentHistoryItems } from "@/lib/data/student-history-data"
 
 const recommendedTools = [
     {
-        name: "Essay Assistant",
+        id: "1",
+        name: "Essay Outliner",
         icon: PenTool,
         color: "bg-pink-500",
         desc: "Help with structure and ideas"
     },
     {
-        name: "Math Tutor",
+        id: "2",
+        name: "Paragraph Generator",
         icon: Calculator,
         color: "bg-blue-500",
-        desc: "Step-by-step problem solving"
+        desc: "Step-by-step paragraphs"
     },
     {
-        name: "Reading Coach",
+        id: "3",
+        name: "Research Assistant",
         icon: BookOpen,
         color: "bg-emerald-500",
-        desc: "Understand complex texts"
+        desc: "Find and summarize facts"
     },
 ]
 
@@ -73,7 +71,7 @@ export default function StudentDashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="border rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden bg-gradient-to-r from-violet-600 to-indigo-600 border-indigo-200 shadow-xl shadow-indigo-200/50 dark:from-blue-900/40 dark:to-indigo-900/40 dark:border-blue-700/30"
+                className="border rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden bg-gradient-to-r from-violet-600 to-indigo-600 border-indigo-200 shadow-xl shadow-indigo-200/50 dark:shadow-none dark:from-blue-900/40 dark:to-indigo-900/40 dark:border-blue-700/30"
             >
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
@@ -90,7 +88,7 @@ export default function StudentDashboard() {
                             Today's focus: Understanding the solar system and planetary orbits. Use the Essay Assistant to draft your report.
                         </p>
                     </div>
-                    <button className="px-6 py-3 bg-white text-indigo-900 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-lg hover:shadow-indigo-500/20 active:scale-95 whitespace-nowrap">
+                    <button className="px-6 py-3 bg-white text-indigo-900 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-lg hover:shadow-indigo-500/20 active:scale-95 whitespace-nowrap dark:shadow-none">
                         Enter Room →
                     </button>
                 </div>
@@ -115,8 +113,8 @@ export default function StudentDashboard() {
                         {recommendedTools.map((tool, i) => (
                             <Link
                                 key={i}
-                                href={`/student/tool/preview`}
-                                className="group p-5 border rounded-2xl transition-all duration-300 hover:-translate-y-1 block bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 dark:bg-slate-900/50 dark:border-slate-800 dark:hover:bg-slate-800/80 dark:hover:border-blue-500/50 dark:hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)]"
+                                href={`/student/tools/${tool.id}`}
+                                className="group p-5 border rounded-2xl transition-all duration-300 hover:-translate-y-1 block bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 dark:bg-slate-900/50 dark:border-slate-800 dark:hover:bg-slate-800/80 dark:hover:border-blue-500/50 dark:shadow-none"
                             >
                                 <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110", tool.color)}>
                                     <tool.icon className="w-6 h-6 text-white" />
@@ -143,10 +141,11 @@ export default function StudentDashboard() {
                     </div>
 
                     <div className="border rounded-2xl overflow-hidden backdrop-blur-md bg-white border-slate-200 shadow-sm dark:bg-slate-900/50 dark:border-slate-800">
-                        {recentWork.map((work, i) => (
-                            <div
+                        {studentHistoryItems.slice(0, 3).map((work, i) => (
+                            <Link
+                                href={`/student/tools/${work.toolId}?historyId=${work.id}`}
                                 key={work.id}
-                                className="p-4 border-b last:border-0 transition-colors group cursor-pointer border-slate-100 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
+                                className="block p-4 border-b last:border-0 transition-colors group cursor-pointer border-slate-100 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
                             >
                                 <div className="flex items-start justify-between mb-1">
                                     <h4 className="font-bold transition-colors text-slate-900 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-300">{work.title}</h4>
@@ -154,14 +153,14 @@ export default function StudentDashboard() {
                                 </div>
                                 <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
                                     <span className="flex items-center gap-1 font-medium">
-                                        <Sparkles className="w-3 h-3" /> {work.tool}
+                                        <Sparkles className="w-3 h-3" /> {work.toolName}
                                     </span>
                                     <span>•</span>
                                     <span className="flex items-center gap-1">
                                         <Clock className="w-3 h-3" /> {work.date}
                                     </span>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                         <Link
                             href="/student/history"
