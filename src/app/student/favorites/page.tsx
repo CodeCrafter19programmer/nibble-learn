@@ -68,11 +68,11 @@ export default function StudentFavoritesPage() {
                                 <button
                                     onClick={(e) => handleToggleFavorite(e, tool.id)}
                                     className={cn(
-                                        "absolute top-4 right-4 p-1.5 rounded-lg transition-all z-20",
-                                        "text-yellow-400 hover:text-yellow-500"
+                                        "absolute top-4 right-4 p-1.5 rounded-lg transition-all active:scale-95 z-20",
+                                        "text-amber-400 hover:text-amber-500 bg-amber-400/10"
                                     )}
                                 >
-                                    <Star className="w-5 h-5 fill-current scale-110" />
+                                    <Star className="w-5 h-5 fill-current transition-transform hover:scale-110" />
                                 </button>
 
                                 <div className="flex flex-col gap-4">

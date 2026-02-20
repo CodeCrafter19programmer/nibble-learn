@@ -276,13 +276,13 @@ export default function StudentToolsPage() {
                         <button
                             onClick={(e) => handleToggleFavorite(e, tool.id)}
                             className={cn(
-                                "absolute top-4 right-4 p-1.5 rounded-lg transition-all",
+                                "absolute top-4 right-4 p-1.5 rounded-lg transition-all active:scale-95 z-20",
                                 isFavorite(tool.id)
-                                    ? "text-yellow-400 hover:text-yellow-500"
-                                    : (isLight ? "text-slate-300 hover:bg-slate-100 hover:text-slate-400" : "text-slate-600 hover:text-slate-400")
+                                    ? "text-amber-400 hover:text-amber-500 bg-amber-400/10"
+                                    : (isLight ? "text-slate-300 hover:text-amber-400 hover:bg-slate-100" : "text-slate-500 hover:text-amber-400 hover:bg-white/10")
                             )}
                         >
-                            <Star className={cn("w-5 h-5", isFavorite(tool.id) ? "fill-current scale-110" : "")} />
+                            <Star className={cn("w-5 h-5", isFavorite(tool.id) ? "fill-current scale-110" : "transition-transform hover:scale-110")} />
                         </button>
 
                         <div className="flex flex-col gap-4">
