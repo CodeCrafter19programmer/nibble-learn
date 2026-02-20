@@ -14,14 +14,14 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
 
     return (
-        <div className="min-h-screen font-sans antialiased transition-colors duration-500 bg-background text-slate-900 selection:bg-blue-200 dark:bg-gradient-to-br dark:from-blue-700 dark:via-blue-800 dark:to-slate-900 dark:text-white dark:selection:bg-teal-500/30">
+        <div className="min-h-screen font-sans antialiased transition-colors duration-500 bg-background text-slate-900 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-500/30">
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">
                 <StudentSidebar />
             </div>
 
             {/* Mobile Header */}
-            <div className="md:hidden fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 border-b backdrop-blur-md transition-colors bg-white/80 border-slate-200 text-slate-900 dark:bg-blue-900/80 dark:border-white/10 dark:text-white">
+            <div className="md:hidden fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 border-b backdrop-blur-md transition-colors bg-white/80 border-slate-200 text-slate-900 dark:bg-slate-900/80 dark:border-slate-800 dark:text-white">
                 <Link href="/" className="flex items-center gap-2">
                     <Logo className="w-8 h-8 bg-blue-500 rounded-lg" />
                     <span className="font-bold text-lg">NibbleStudent</span>
@@ -72,8 +72,8 @@ function StudentLayoutContent({ children }: { children: React.ReactNode }) {
             <main className="md:pl-64 pt-16 md:pt-0 min-h-screen transition-all duration-300">
                 {/* Decorative background shapes - Reduced opacity in light mode */}
                 <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-                    <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-screen transition-opacity duration-500 bg-blue-300/30 opacity-50 dark:bg-blue-500/20 dark:opacity-100" />
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-screen transition-opacity duration-500 bg-purple-300/30 opacity-50 dark:bg-purple-500/20 dark:opacity-100" />
+                    <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[120px] mix-blend-screen transition-opacity duration-500 bg-blue-300/30 opacity-50 dark:bg-blue-600/20 dark:opacity-100" />
+                    <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[100px] mix-blend-screen transition-opacity duration-500 bg-purple-300/30 opacity-50 dark:bg-indigo-600/20 dark:opacity-100" />
                 </div>
 
                 <div className="relative z-10 p-4 md:p-8 max-w-7xl mx-auto">

@@ -27,7 +27,7 @@ export default function StudentHistoryPage() {
             <div className={cn("rounded-2xl border overflow-hidden", isLight ? "bg-white border-slate-200 shadow-sm" : "bg-slate-900 border-slate-800")}>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className={cn("border-b", isLight ? "bg-slate-50 border-slate-100 text-slate-500" : "bg-white/5 border-white/5 text-slate-400")}>
+                        <thead className={cn("border-b", isLight ? "bg-slate-50 border-slate-100 text-slate-500" : "bg-slate-900 border-slate-800 text-slate-400")}>
                             <tr>
                                 <th className="p-4 font-medium text-xs uppercase tracking-wider pl-6">Title</th>
                                 <th className="p-4 font-medium text-xs uppercase tracking-wider">Tool Used</th>
@@ -36,7 +36,7 @@ export default function StudentHistoryPage() {
                                 <th className="p-4 font-medium text-xs uppercase tracking-wider text-right pr-6">Open</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                             {studentHistoryItems.map((item, i) => {
                                 const tool = toolsData[item.toolId]
                                 const Icon = tool?.icon || FileText
@@ -50,14 +50,14 @@ export default function StudentHistoryPage() {
                                         onClick={() => router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)}
                                         className={cn(
                                             "group transition-colors cursor-pointer",
-                                            isLight ? "hover:bg-slate-50" : "hover:bg-white/5"
+                                            isLight ? "hover:bg-slate-50" : "hover:bg-slate-800/50"
                                         )}
                                     >
                                         <td className="p-4 pl-6">
                                             <div className="flex items-center gap-3">
                                                 <div className={cn(
                                                     "w-10 h-10 rounded-lg flex items-center justify-center",
-                                                    isLight ? "bg-blue-50 text-blue-600" : "bg-blue-500/10 text-blue-400"
+                                                    isLight ? "bg-blue-50 text-blue-600" : "bg-slate-800 text-blue-400"
                                                 )}>
                                                     <Icon className="w-5 h-5" />
                                                 </div>
@@ -78,7 +78,7 @@ export default function StudentHistoryPage() {
                                                 "inline-flex px-2.5 py-1 rounded-full text-xs font-medium border",
                                                 isLight
                                                     ? "bg-slate-100 text-slate-600 border-slate-200"
-                                                    : "bg-white/5 text-slate-300 border-white/10"
+                                                    : "bg-slate-800 text-slate-300 border-slate-700"
                                             )}>
                                                 {item.type}
                                             </span>
@@ -90,7 +90,7 @@ export default function StudentHistoryPage() {
                                                         e.stopPropagation()
                                                         router.push(`/student/tools/${item.toolId}?historyId=${item.id}`)
                                                     }}
-                                                    className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-white/10 text-slate-400")}
+                                                    className={cn("p-2 rounded-lg transition-colors", isLight ? "hover:bg-slate-200 text-slate-500" : "hover:bg-slate-700 text-slate-300")}
                                                 >
                                                     <ArrowRight className="w-4 h-4" />
                                                 </button>

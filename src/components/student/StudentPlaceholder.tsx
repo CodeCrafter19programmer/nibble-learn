@@ -13,13 +13,13 @@ export function StudentPlaceholder({ title }: { title: string }) {
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-8 space-y-6 animate-in fade-in duration-500">
             <div className={cn(
                 "w-20 h-20 backdrop-blur-md border rounded-3xl flex items-center justify-center shadow-2xl transition-colors",
-                isLight ? "bg-white border-slate-200 shadow-slate-200" : "bg-white/10 border-white/20"
+                isLight ? "bg-white border-slate-200 shadow-slate-200" : "bg-slate-900/50 border-slate-800"
             )}>
-                <Construction className={cn("w-10 h-10", isLight ? "text-slate-500" : "text-white/70")} />
+                <Construction className={cn("w-10 h-10", isLight ? "text-slate-500" : "text-slate-400")} />
             </div>
             <div>
                 <h1 className={cn("text-3xl font-bold mb-2", isLight ? "text-black" : "text-white")}>{title}</h1>
-                <p className={cn("max-w-md mx-auto text-lg font-medium", isLight ? "text-slate-600" : "text-white/60")}>
+                <p className={cn("max-w-md mx-auto text-lg font-medium", isLight ? "text-slate-600" : "text-slate-400")}>
                     We're hard at work building this feature. <br />Check back soon for updates!
                 </p>
             </div>

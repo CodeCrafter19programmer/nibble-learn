@@ -174,7 +174,7 @@ export default function StudentToolsPage() {
                                 "w-full pl-14 pr-6 py-4 rounded-full text-base transition-all outline-none border-2",
                                 isLight
                                     ? "bg-white/80 backdrop-blur-xl border-slate-200 text-[#334155] placeholder:text-slate-400 shadow-[0_8px_30px_rgba(0,0,0,0.08)] focus:border-blue-500 focus:shadow-[0_12px_40px_rgba(37,99,235,0.15)]"
-                                    : "bg-white/[0.08] backdrop-blur-xl border-white/[0.15] text-white placeholder:text-slate-400 focus:bg-white/[0.12] focus:border-blue-400/50"
+                                    : "bg-slate-900/80 backdrop-blur-xl border-slate-800 text-white placeholder:text-slate-500 focus:bg-slate-800 focus:border-blue-500/50"
                             )}
                         />
                         {isSearchFocused && (
@@ -198,7 +198,7 @@ export default function StudentToolsPage() {
                                     "absolute top-full left-0 right-0 mt-2 rounded-2xl shadow-2xl border overflow-hidden backdrop-blur-2xl p-2",
                                     isLight
                                         ? "bg-white/95 border-slate-100 ring-1 ring-slate-200"
-                                        : "bg-[#0F172A]/95 border-white/10"
+                                        : "bg-slate-900/95 border-slate-800 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
                                 )}
                             >
                                 <div className="p-2">
@@ -211,7 +211,7 @@ export default function StudentToolsPage() {
                                                     "w-full flex items-center justify-between p-3 rounded-xl transition-colors group text-left",
                                                     isLight
                                                         ? "hover:bg-blue-50/80 text-slate-700 hover:text-blue-700"
-                                                        : "hover:bg-white/10 text-slate-300 hover:text-white"
+                                                        : "hover:bg-slate-800 text-slate-400 hover:text-white"
                                                 )}
                                                 onClick={() => {
                                                     setSearchQuery(tool.name)
@@ -252,7 +252,7 @@ export default function StudentToolsPage() {
                     "rounded-2xl p-6 relative overflow-hidden flex items-center justify-between backdrop-blur-xl",
                     isLight
                         ? "bg-white/60 border border-white/60 shadow-[0_10px_30px_rgba(15,23,42,0.08)]"
-                        : "bg-white/[0.08] border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
+                        : "bg-slate-900/50 border border-slate-800 shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
                 )}
             >
                 <div>
@@ -276,7 +276,7 @@ export default function StudentToolsPage() {
                             "flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all min-w-[160px] justify-between backdrop-blur-md",
                             isLight
                                 ? "bg-white/70 border border-slate-200/90 text-[#334155] hover:bg-white/90 shadow-sm"
-                                : "bg-white/[0.08] border border-white/[0.15] text-slate-200 hover:bg-white/[0.12]"
+                                : "bg-slate-900/80 border border-slate-800 text-slate-300 hover:bg-slate-800"
                         )}
                     >
                         <div className="flex items-center gap-2">
@@ -294,7 +294,7 @@ export default function StudentToolsPage() {
                                 exit={{ opacity: 0, y: 5 }}
                                 className={cn(
                                     "absolute top-full left-0 mt-2 w-56 rounded-xl shadow-xl border z-50 overflow-hidden py-1 backdrop-blur-xl",
-                                    isLight ? "bg-white/80 border-slate-100" : "bg-[#0A1A3A]/90 border-white/[0.15]"
+                                    isLight ? "bg-white/80 border-slate-100" : "bg-slate-900/90 border-slate-800 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
                                 )}
                             >
                                 {categories.map(cat => (
@@ -307,8 +307,8 @@ export default function StudentToolsPage() {
                                         className={cn(
                                             "w-full text-left px-4 py-2.5 text-sm font-medium transition-colors",
                                             activeCategory === cat.id
-                                                ? (isLight ? "bg-blue-50 text-[#2563EB]" : "bg-blue-900/40 text-blue-300")
-                                                : (isLight ? "text-[#334155] hover:bg-slate-50" : "text-slate-300 hover:bg-white/[0.08]")
+                                                ? (isLight ? "bg-blue-50 text-[#2563EB]" : "bg-slate-800 text-blue-400")
+                                                : (isLight ? "text-[#334155] hover:bg-slate-50" : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200")
                                         )}
                                     >
                                         {cat.label}
@@ -328,7 +328,7 @@ export default function StudentToolsPage() {
                             ? "border-yellow-400 bg-yellow-50/50 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-600/50"
                             : (isLight
                                 ? "bg-white/70 border-slate-200/90 text-[#334155] hover:bg-white/90 shadow-sm"
-                                : "bg-white/[0.08] border-white/[0.15] text-slate-200 hover:bg-white/[0.12]")
+                                : "bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800")
                     )}
                 >
                     <Star className={cn("w-4 h-4", showFavoritesOnly ? "fill-current" : "")} />
@@ -348,7 +348,7 @@ export default function StudentToolsPage() {
                             "group relative rounded-[20px] p-5 border transition-all duration-200 cursor-pointer overflow-hidden",
                             isLight
                                 ? "bg-white border-slate-200 shadow-sm hover:bg-blue-50/40 hover:border-blue-200 hover:-translate-y-[2px] hover:shadow-lg"
-                                : "bg-white/[0.05] border-white/[0.1] shadow-md hover:bg-white/[0.08] hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+                                : "bg-slate-900/50 border-slate-800 shadow-lg hover:bg-slate-800/80 hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_8px_32px_rgba(59,130,246,0.15)]"
                         )}
                     >
                         <Link href={`/student/tools/${tool.id}`} className="absolute inset-0 z-10" />
