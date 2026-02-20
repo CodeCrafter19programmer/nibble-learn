@@ -342,7 +342,7 @@ export default function StudentBillingPage() {
                                     </div>
                                 </div>
                                 <div className="flex gap-3">
-                                    <Button variant="outline" className={cn("font-semibold", isLight ? "border-slate-300 text-slate-700 hover:bg-slate-50" : "border-white/20 text-white hover:bg-white/10")}>Edit</Button>
+                                    <Button variant="outline" className={cn("font-semibold", isLight ? "border-slate-300 text-slate-700 hover:bg-slate-50" : "bg-transparent border-white/20 text-white hover:bg-white/10")}>Edit</Button>
                                 </div>
                             </SettingsCardContent>
                             <div className={cn("px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 border-t", isLight ? "bg-slate-50 border-slate-200" : "bg-black/20 border-white/5")}>
