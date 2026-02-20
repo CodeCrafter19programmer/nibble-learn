@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils"
 import { Logo } from "@/components/logo"
 import { TokenUsage } from "@/components/common/TokenUsage"
 import { useTheme } from "@/components/providers/ThemeContext"
+import { useStudentProfile } from "@/components/student/StudentProfileContext"
 
 interface StudentSidebarProps {
     onCheckClicks?: () => void
@@ -38,6 +39,7 @@ export function StudentSidebar({ onCheckClicks }: StudentSidebarProps) {
     const pathname = usePathname()
     // Use the hook internally if not provided (allowing override if needed, but standardizing on global)
     const { theme, toggleTheme } = useTheme()
+    const { profile } = useStudentProfile()
 
     // Check if we are in Student Light or Dark environment - now purely class based
     // But wait, the student theme context was identical to global.
@@ -132,11 +134,17 @@ export function StudentSidebar({ onCheckClicks }: StudentSidebarProps) {
 
                 {/* User Card */}
                 <div className="rounded-xl p-3 flex items-center gap-3 transition-colors bg-white border border-slate-300 shadow-sm dark:bg-slate-900 dark:border-slate-800">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold shadow-md">
-                        JS
-                    </div>
+                    {profile.avatar ? (
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-700">
+                            <img src={profile.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                        </div>
+                    ) : (
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold shadow-md uppercase">
+                            {profile.firstName.charAt(0)}{profile.lastName?.charAt(0)}
+                        </div>
+                    )}
                     <div className="flex-1 overflow-hidden">
-                        <h4 className="text-sm font-bold truncate text-black dark:text-white">John Student</h4>
+                        <h4 className="text-sm font-bold truncate text-black dark:text-white">{profile.displayName}</h4>
                         <p className="text-xs truncate font-medium text-slate-700 dark:text-slate-400">Grade 8 • Room 404</p>
                     </div>
                     <Link href="/student/settings" className="transition-colors text-slate-800 hover:text-blue-700 dark:text-slate-400 dark:hover:text-white">

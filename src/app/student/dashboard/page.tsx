@@ -13,6 +13,7 @@ import {
     MoreHorizontal
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useStudentProfile } from "@/components/student/StudentProfileContext"
 import { studentHistoryItems } from "@/lib/data/student-history-data"
 
 const recommendedTools = [
@@ -40,6 +41,7 @@ const recommendedTools = [
 ]
 
 export default function StudentDashboard() {
+    const { profile } = useStudentProfile()
     const time = new Date().getHours()
     const greeting = time < 12 ? "Good morning" : time < 18 ? "Good afternoon" : "Good evening"
 
@@ -53,7 +55,7 @@ export default function StudentDashboard() {
             >
                 <div>
                     <h1 className="text-4xl font-bold mb-2 text-black dark:text-white">
-                        {greeting}, John! <span className="inline-block animate-bounce">👋</span>
+                        {greeting}, {profile.firstName}! <span className="inline-block animate-bounce">👋</span>
                     </h1>
                     <p className="text-lg text-slate-700 font-medium dark:text-slate-400">
                         Ready to learn something new today?
