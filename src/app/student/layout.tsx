@@ -10,13 +10,20 @@ import { AnimatePresence, motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Logo } from "@/components/logo"
+import { useTheme } from "@/components/providers/ThemeContext"
 
 function StudentLayoutContent({ children }: { children: React.ReactNode }) {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
     const pathname = usePathname()
+    const { theme } = useTheme()
 
     return (
-        <div className="min-h-screen font-sans antialiased transition-colors duration-500 bg-background text-slate-900 selection:bg-blue-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-blue-500/30">
+        <div className={cn(
+            "min-h-screen font-sans antialiased transition-colors duration-500 selection:bg-blue-200",
+            theme === 'dark'
+                ? "dark bg-slate-950 text-slate-100 dark:selection:bg-blue-500/30"
+                : "bg-background text-slate-900"
+        )}>
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">
                 <StudentSidebar />

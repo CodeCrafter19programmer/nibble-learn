@@ -15,35 +15,21 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setThemeState] = useState<Theme>('light')
 
-    // Optional: Load from local storage
+    // Load saved theme preference from localStorage on mount
     useEffect(() => {
         const saved = localStorage.getItem('nibble-theme') as Theme
-        if (saved) {
+        if (saved === 'dark' || saved === 'light') {
             setThemeState(saved)
-            if (saved === 'dark') {
-                document.documentElement.classList.add('dark')
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // Default to system preference if no saved theme
-            setThemeState('dark')
-            document.documentElement.classList.add('dark')
         }
+        // NOTE: We intentionally do NOT touch document.documentElement here.
+        // Dark mode is scoped to individual dashboard layout wrappers (not <html>),
+        // so the public landing page is never affected by dashboard theme changes.
     }, [])
 
     const toggleTheme = () => {
         setThemeState(prev => {
             const newTheme = prev === 'dark' ? 'light' : 'dark'
             localStorage.setItem('nibble-theme', newTheme)
-
-            // Update document class
-            if (newTheme === 'dark') {
-                document.documentElement.classList.add('dark')
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
-
             return newTheme
         })
     }

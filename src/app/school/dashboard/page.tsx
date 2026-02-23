@@ -2,6 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import {
     Users,
     GraduationCap,
@@ -248,15 +249,18 @@ export default function SchoolDashboard() {
                     </div>
 
                     <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-                        <button className={cn(
-                            "w-full py-2.5 text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 group",
-                            isLight
-                                ? "text-blue-600 hover:bg-blue-50"
-                                : "text-blue-400 hover:bg-blue-500/10"
-                        )}>
+                        <Link
+                            href="/school/activity"
+                            className={cn(
+                                "w-full py-2.5 text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 group",
+                                isLight
+                                    ? "text-blue-600 hover:bg-blue-50"
+                                    : "text-blue-400 hover:bg-blue-500/10"
+                            )}
+                        >
                             View All Activity
                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                        </button>
+                        </Link>
                     </div>
                 </motion.div>
             </div>

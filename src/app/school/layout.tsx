@@ -24,7 +24,7 @@ export default function SchoolLayout({
     return (
         <div className={cn(
             "min-h-screen font-sans selection:bg-blue-500/30 transition-colors duration-300",
-            isLight ? "bg-[#F8FAFC] text-slate-900" : "bg-slate-950 text-slate-100" // Cream/White background
+            isLight ? "bg-[#F8FAFC] text-slate-900" : "dark bg-slate-950 text-slate-100"
         )}>
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">

@@ -7,6 +7,7 @@ import { TeacherSidebar } from "@/components/dashboard/TeacherSidebar"
 import { AnimatePresence, motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useTheme } from "@/components/providers/ThemeContext"
 
 export default function TeacherAppLayout({
     children,
@@ -14,9 +15,10 @@ export default function TeacherAppLayout({
     children: React.ReactNode
 }) {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
+    const { theme } = useTheme()
 
     return (
-        <div className="min-h-screen font-sans transition-colors duration-300 bg-background text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+        <div className={cn("min-h-screen font-sans transition-colors duration-300", theme === 'dark' ? "dark bg-slate-950 text-slate-100" : "bg-white text-slate-900")}>
             {/* Desktop Sidebar */}
             <div className="hidden md:block fixed inset-y-0 left-0 z-50">
                 <TeacherSidebar />
