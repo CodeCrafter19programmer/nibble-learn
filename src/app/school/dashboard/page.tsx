@@ -91,67 +91,122 @@ export default function SchoolDashboard() {
                         isLight ? "bg-white border-slate-100 shadow-sm" : "bg-slate-900 border-slate-800"
                     )}
                 >
-                    <div className="flex justify-between items-center mb-8 relative z-10">
+                    {/* Chart Header */}
+                    <div className="flex justify-between items-start mb-6">
                         <div>
-                            <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>Platform Usage Trends</h3>
-                            <p className={cn("text-xs font-medium", isLight ? "text-slate-500" : "text-slate-400")}>Student vs Teacher activity over time</p>
+                            <h3 className={cn("font-bold text-lg", isLight ? "text-slate-900" : "text-white")}>Credits Used Per Month</h3>
+                            <p className={cn("text-xs font-medium mt-0.5", isLight ? "text-slate-500" : "text-slate-400")}>Annual AI token usage across your school</p>
                         </div>
-                        <select className={cn(
-                            "text-xs font-medium p-1.5 rounded-lg border outline-none",
-                            isLight
-                                ? "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                                : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
-                        )}>
-                            <option>Last 30 Days</option>
-                            <option>Last 7 Days</option>
-                            <option>Last 90 Days</option>
-                        </select>
+                        <div className="flex items-center gap-4 text-xs font-medium">
+                            <div className="flex items-center gap-1.5">
+                                <div className="w-3 h-3 rounded-sm bg-blue-500" />
+                                <span className={isLight ? "text-slate-600" : "text-slate-400"}>Credits Used</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <div className="w-3 h-1 border-t-2 border-dashed border-red-400" />
+                                <span className={isLight ? "text-slate-600" : "text-slate-400"}>Plan Limit (60k)</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="h-48 flex items-end justify-between gap-2 relative z-10 pl-2">
-                        {/* Grid Lines */}
-                        <div className="absolute inset-0 flex flex-col justify-between -z-10 text-[10px] text-slate-400 font-medium">
-                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
-                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
-                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
-                            <div className="w-full border-b border-dashed border-slate-200 dark:border-slate-800" />
+                    {/* Chart Body */}
+                    <div className="flex gap-3">
+                        {/* Y-Axis Labels */}
+                        <div className="flex flex-col justify-between text-[10px] font-semibold text-right pb-6 shrink-0" style={{ height: "180px" }}>
+                            {["60k", "50k", "40k", "30k", "20k", "10k", "0"].map((label) => (
+                                <span key={label} className={isLight ? "text-slate-400" : "text-slate-500"}>{label}</span>
+                            ))}
                         </div>
 
-                        {[
-                            { d: "Mon", s: 65, t: 30 },
-                            { d: "Tue", s: 80, t: 45 },
-                            { d: "Wed", s: 95, t: 60 },
-                            { d: "Thu", s: 50, t: 25 },
-                            { d: "Fri", s: 85, t: 50 },
-                            { d: "Sat", s: 30, t: 15 },
-                            { d: "Sun", s: 20, t: 10 },
-                            { d: "Mon", s: 75, t: 40 },
-                            { d: "Tue", s: 90, t: 65 },
-                            { d: "Wed", s: 88, t: 55 },
-                            { d: "Thu", s: 60, t: 35 },
-                            { d: "Fri", s: 92, t: 70 },
-                            { d: "Sat", s: 40, t: 20 },
-                            { d: "Sun", s: 25, t: 12 }
-                        ].map((day, i) => (
-                            <div key={i} className="flex-1 flex flex-col justify-end gap-1 h-full group relative">
-                                {/* Tooltip */}
-                                <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
-                                    <div className="font-bold">{day.d}</div>
-                                    <div>Students: {day.s}%</div>
-                                    <div>Teachers: {day.t}%</div>
-                                </div>
+                        {/* Bars + Grid */}
+                        <div className="flex-1 relative">
+                            {/* Plan Limit Line at ~83% height (50k / 60k) */}
+                            <div
+                                className="absolute left-0 right-0 border-t-2 border-dashed border-red-400/60 z-10 pointer-events-none"
+                                style={{ bottom: `calc(${(50 / 60) * 100}% + 24px)` }}
+                            />
 
-                                {/* Bars */}
-                                <div
-                                    className="w-full bg-blue-500/80 rounded-t-sm hover:bg-blue-500 transition-colors cursor-pointer"
-                                    style={{ height: `${day.s * 0.7}%` }}
-                                />
-                                <div
-                                    className="w-full bg-indigo-400/50 rounded-t-sm hover:bg-indigo-400 transition-colors cursor-pointer"
-                                    style={{ height: `${day.t * 0.5}%` }}
-                                />
+                            {/* Horizontal Grid Lines */}
+                            <div className="absolute inset-0 bottom-6 flex flex-col justify-between pointer-events-none">
+                                {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+                                    <div key={i} className={cn("w-full border-t", isLight ? "border-slate-100" : "border-slate-800")} />
+                                ))}
                             </div>
-                        ))}
+
+                            {/* Bars */}
+                            <div className="flex items-end gap-1.5 pb-6 relative z-10" style={{ height: "180px" }}>
+                                {[
+                                    { m: "Jan", v: 28000 },
+                                    { m: "Feb", v: 34000 },
+                                    { m: "Mar", v: 42000 },
+                                    { m: "Apr", v: 38000 },
+                                    { m: "May", v: 51000 },
+                                    { m: "Jun", v: 47000 },
+                                    { m: "Jul", v: 33000 },
+                                    { m: "Aug", v: 29000 },
+                                    { m: "Sep", v: 45000 },
+                                    { m: "Oct", v: 55000 },
+                                    { m: "Nov", v: 48000 },
+                                    { m: "Dec", v: 43000 },
+                                ].map((month) => {
+                                    const maxVal = 60000
+                                    const heightPct = (month.v / maxVal) * 100
+                                    const isOverLimit = month.v > 50000
+                                    const isMax = month.v === 55000
+
+                                    return (
+                                        <div key={month.m} className="flex-1 flex flex-col items-center justify-end gap-1 h-full group relative">
+                                            {/* Tooltip */}
+                                            <div className={cn(
+                                                "absolute -top-10 left-1/2 -translate-x-1/2 text-[10px] py-1.5 px-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20 shadow-lg",
+                                                isLight ? "bg-slate-800 text-white" : "bg-slate-700 text-white"
+                                            )}>
+                                                <span className="font-bold">{(month.v / 1000).toFixed(0)}k</span> credits
+                                            </div>
+
+                                            {/* Bar */}
+                                            <div
+                                                className={cn(
+                                                    "w-full rounded-t-md transition-all duration-200 group-hover:brightness-110 cursor-pointer",
+                                                    isOverLimit
+                                                        ? "bg-gradient-to-t from-red-500 to-orange-400"
+                                                        : "bg-gradient-to-t from-blue-600 to-blue-400"
+                                                )}
+                                                style={{ height: `${heightPct}%` }}
+                                            />
+
+                                            {/* Month Label */}
+                                            <span className={cn("text-[9px] font-semibold absolute -bottom-0", isLight ? "text-slate-400" : "text-slate-500")}>
+                                                {month.m}
+                                            </span>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Summary Row */}
+                    <div className={cn("mt-4 pt-4 border-t flex justify-between items-center gap-4", isLight ? "border-slate-100" : "border-slate-800")}>
+                        <div className="text-center">
+                            <p className={cn("text-[11px] font-medium uppercase tracking-wider", isLight ? "text-slate-400" : "text-slate-500")}>Total Used (YTD)</p>
+                            <p className={cn("text-lg font-bold mt-0.5", isLight ? "text-slate-900" : "text-white")}>493k <span className="text-xs font-normal text-slate-400">credits</span></p>
+                        </div>
+                        <div className={cn("w-px h-8", isLight ? "bg-slate-100" : "bg-slate-800")} />
+                        <div className="text-center">
+                            <p className={cn("text-[11px] font-medium uppercase tracking-wider", isLight ? "text-slate-400" : "text-slate-500")}>Plan Limit</p>
+                            <p className={cn("text-lg font-bold mt-0.5", isLight ? "text-slate-900" : "text-white")}>720k <span className="text-xs font-normal text-slate-400">/ year</span></p>
+                        </div>
+                        <div className={cn("w-px h-8", isLight ? "bg-slate-100" : "bg-slate-800")} />
+                        <div className="text-center">
+                            <p className={cn("text-[11px] font-medium uppercase tracking-wider", isLight ? "text-slate-400" : "text-slate-500")}>Overall Usage</p>
+                            <p className="text-lg font-bold mt-0.5 text-blue-500">68.5%</p>
+                        </div>
+                        <div className={cn("w-px h-8", isLight ? "bg-slate-100" : "bg-slate-800")} />
+                        <div className="text-center">
+                            <p className={cn("text-[11px] font-medium uppercase tracking-wider", isLight ? "text-slate-400" : "text-slate-500")}>Peak Month</p>
+                            <p className={cn("text-lg font-bold mt-0.5", "text-orange-500")}>Oct <span className="text-xs font-normal text-slate-400">55k</span></p>
+                        </div>
                     </div>
                 </motion.div>
 
