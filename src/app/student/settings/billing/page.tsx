@@ -4,10 +4,10 @@ import React, { useState } from "react"
 import { SettingsSection } from "@/components/settings/SettingsSection"
 import { SettingsCard, SettingsCardContent } from "@/components/settings/SettingsCard"
 import { Button } from "@/components/ui/button"
-import { CreditCard, Star, Download, Sparkles, Check, X } from "lucide-react"
+import { CreditCard, Star, Download, Sparkles, Check, X, CheckCircle } from "lucide-react"
 import { useStudentTheme } from "@/components/student/StudentThemeContext"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface PlanFeature {
     text: string;
@@ -82,13 +82,107 @@ export default function StudentBillingPage() {
     const [billingPeriod, setBillingPeriod] = useState<"annual" | "monthly">("annual")
     const isPro = true;
     const creditsUsedPercentage = 68;
+    const currentLimit = 1000; // Mock limit for student
+
+    const [isTopUpOpen, setIsTopUpOpen] = useState(false)
+    const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null)
+
+    const showToast = (msg: string, type: "success" | "error" = "success") => {
+        setToast({ msg, type })
+        setTimeout(() => setToast(null), 3000)
+    }
+
+    const handleTopUp = (percent: number) => {
+        const addedAmount = Math.floor(currentLimit * (percent / 100))
+        showToast(`Successfully added ${addedAmount.toLocaleString()} tokens (+${percent}%)!`)
+        setIsTopUpOpen(false)
+    }
 
     // Styles for high contrast light mode
     const lightCardStyles = "bg-white border-2 border-slate-300 shadow-md"
     const lightTextSecondary = "text-slate-800"
 
     return (
-        <div className="space-y-12 pb-12 max-w-5xl mx-auto">
+        <div className="space-y-12 pb-12 max-w-5xl mx-auto relative">
+            {/* ── TOAST ── */}
+            <AnimatePresence>
+                {toast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className={cn(
+                            "fixed top-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl text-sm font-medium",
+                            toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"
+                        )}
+                    >
+                        <CheckCircle className="w-4 h-4 shrink-0" />
+                        {toast.msg}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── TOP UP MODAL ── */}
+            <AnimatePresence>
+                {isTopUpOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className={cn(
+                                "w-full max-w-lg rounded-2xl p-6 shadow-2xl border",
+                                isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"
+                            )}
+                        >
+                            <div className="flex items-center justify-between mb-5">
+                                <div>
+                                    <h2 className={cn("text-xl font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Top Up Credits</h2>
+                                    <p className={cn("text-sm", isLight ? "text-slate-500" : "text-white/60")}>
+                                        Select a percentage to increase your current limit ({currentLimit.toLocaleString()} tokens).
+                                    </p>
+                                </div>
+                                <button onClick={() => setIsTopUpOpen(false)} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors self-start">
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 mt-6">
+                                {[
+                                    { pct: 10, price: "$2.99" },
+                                    { pct: 25, price: "$5.99" },
+                                    { pct: 50, price: "$9.99" },
+                                    { pct: 100, price: "$14.99" },
+                                ].map((opt) => (
+                                    <button
+                                        key={opt.pct}
+                                        onClick={() => handleTopUp(opt.pct)}
+                                        className={cn(
+                                            "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all hover:scale-[1.02]",
+                                            isLight
+                                                ? "bg-slate-50 border-slate-200 hover:border-blue-400 hover:bg-blue-50/50"
+                                                : "bg-slate-950/50 border-white/10 hover:border-blue-500 hover:bg-white/5"
+                                        )}
+                                    >
+                                        <div className="text-xl font-black text-blue-500 mb-1">+{opt.pct}%</div>
+                                        <div className={cn("text-sm font-semibold mb-2", isLight ? "text-slate-700" : "text-slate-200")}>
+                                            {(currentLimit * (opt.pct / 100)).toLocaleString()} Tokens
+                                        </div>
+                                        <div className="px-3 py-1 rounded bg-blue-500 text-white text-xs font-bold shadow-sm">
+                                            {opt.price}
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className="mt-6 flex justify-end">
+                                <button onClick={() => setIsTopUpOpen(false)} className={cn("px-4 py-2 text-sm font-medium rounded-lg transition-colors", isLight ? "hover:bg-slate-100 text-slate-600" : "hover:bg-slate-800 text-slate-300")}>Cancel</button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
             <div>
                 <h1 className={cn("text-3xl font-extrabold mb-2", isLight ? "text-slate-900" : "text-white")}>Billing & Plan</h1>
                 <p className={cn("font-medium", isLight ? "text-slate-600" : "text-blue-200/80")}>Manage your student plan, usage limits, and payment methods.</p>
@@ -130,14 +224,16 @@ export default function StudentBillingPage() {
                             <span className={cn("font-semibold", isLight ? "text-slate-900" : "text-white")}>12 days</span>
                         </div>
                         <div className="flex gap-3 w-full md:w-auto">
-                            {(creditsUsedPercentage >= 80 || isPro) && (
-                                <Button variant="outline" className={cn(
+                            <Button
+                                onClick={() => setIsTopUpOpen(true)}
+                                variant="outline"
+                                className={cn(
                                     "flex-1 md:flex-none font-semibold",
                                     isLight ? "text-blue-700 border-blue-200 hover:bg-blue-50" : "text-blue-400 border-blue-500/30 hover:bg-blue-500/20"
-                                )}>
-                                    <Sparkles className="w-4 h-4 mr-2" /> Top Up Credits
-                                </Button>
-                            )}
+                                )}
+                            >
+                                <Sparkles className="w-4 h-4 mr-2" /> Top Up Credits
+                            </Button>
                             {!isPro && (
                                 <Button className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20">
                                     Upgrade Plan

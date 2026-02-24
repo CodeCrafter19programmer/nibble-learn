@@ -1,7 +1,7 @@
 "use client"
 
-import React from "react"
-import { motion } from "framer-motion"
+import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import {
     CreditCard,
     CheckCircle2,
@@ -10,7 +10,9 @@ import {
     FileText,
     Zap,
     Users,
-    Download
+    Download,
+    X,
+    CheckCircle
 } from "lucide-react"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { cn } from "@/lib/utils"
@@ -23,15 +25,106 @@ export default function BillingOverview() {
     // Mock Data & Logic for Backend Implementation
     // TODO: Replace with actual data from backend
     const creditsUsedPercentage = 85 // Example: 85% used means 15% remaining
-    const showTopUp = creditsUsedPercentage >= 80 // Show Top Up if less than 20% credits remaining (i.e., usage >= 80%)
+    const currentLimit = 720000 // Mocked plan limit
 
     // TODO: Implement date check logic for backend
     // Only allow upgrade if within X days of billing cycle end or if billing cycle has ended
     const isBillingCycleEnd = true // Mocked as true for demonstration
     const showUpgrade = isBillingCycleEnd
 
+    const [isTopUpOpen, setIsTopUpOpen] = useState(false)
+    const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null)
+
+    const showToast = (msg: string, type: "success" | "error" = "success") => {
+        setToast({ msg, type })
+        setTimeout(() => setToast(null), 3000)
+    }
+
+    const handleTopUp = (percent: number) => {
+        const addedAmount = Math.floor(currentLimit * (percent / 100))
+        showToast(`Successfully added ${addedAmount.toLocaleString()} tokens (+${percent}%)!`)
+        setIsTopUpOpen(false)
+        // In reality, this would trigger a backend API checkout flow
+    }
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 relative pb-10">
+            {/* ── TOAST ── */}
+            <AnimatePresence>
+                {toast && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className={cn(
+                            "fixed top-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl text-sm font-medium",
+                            toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"
+                        )}
+                    >
+                        <CheckCircle className="w-4 h-4 shrink-0" />
+                        {toast.msg}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── TOP UP MODAL ── */}
+            <AnimatePresence>
+                {isTopUpOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className={cn("w-full max-w-lg rounded-2xl p-6 shadow-2xl border", isLight ? "bg-white border-slate-100" : "bg-slate-900 border-slate-800")}
+                        >
+                            <div className="flex items-center justify-between mb-5">
+                                <div>
+                                    <h2 className={cn("text-xl font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Top Up Credits</h2>
+                                    <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>
+                                        Select a percentage to increase your current limit ({currentLimit.toLocaleString()} tokens).
+                                    </p>
+                                </div>
+                                <button onClick={() => setIsTopUpOpen(false)} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors self-start">
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 mt-6">
+                                {[
+                                    { pct: 10, price: "$49" },
+                                    { pct: 25, price: "$99" },
+                                    { pct: 50, price: "$179" },
+                                    { pct: 100, price: "$299" },
+                                ].map((opt) => (
+                                    <button
+                                        key={opt.pct}
+                                        onClick={() => handleTopUp(opt.pct)}
+                                        className={cn(
+                                            "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all hover:scale-[1.02]",
+                                            isLight
+                                                ? "bg-slate-50 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50"
+                                                : "bg-slate-950/50 border-slate-800 hover:border-indigo-500 hover:bg-slate-900"
+                                        )}
+                                    >
+                                        <div className="text-xl font-black text-indigo-500 mb-1">+{opt.pct}%</div>
+                                        <div className={cn("text-sm font-semibold mb-2", isLight ? "text-slate-700" : "text-slate-200")}>
+                                            {(currentLimit * (opt.pct / 100)).toLocaleString()} Tokens
+                                        </div>
+                                        <div className="px-3 py-1 rounded bg-indigo-500 text-white text-xs font-bold shadow-sm">
+                                            {opt.price}
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+
+                            <div className="mt-6 flex justify-end">
+                                <button onClick={() => setIsTopUpOpen(false)} className={cn("px-4 py-2 text-sm font-medium rounded-lg transition-colors", isLight ? "hover:bg-slate-100 text-slate-600" : "hover:bg-slate-800 text-slate-300")}>Cancel</button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
             <div>
                 <h1 className={cn("text-2xl font-bold", isLight ? "text-slate-900" : "text-white")}>Billing & Subscription</h1>
                 <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>Manage your school's plan, billing details, and invoices.</p>
@@ -102,13 +195,14 @@ export default function BillingOverview() {
                         <span className={cn("font-medium", isLight ? "text-slate-900" : "text-white")}>March 1, 2026</span>
                     </div>
                     <div className="flex gap-3">
-                        {/* Top Up Button - Only appears when credits are low (< 20% remaining) */}
-                        {showTopUp && (
-                            <button className="px-4 py-2 rounded-lg text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-500/20 flex items-center gap-2">
-                                <Zap className="w-4 h-4" />
-                                Top Up Credits
-                            </button>
-                        )}
+                        {/* Top Up Button */}
+                        <button
+                            onClick={() => setIsTopUpOpen(true)}
+                            className="px-4 py-2 rounded-lg text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md shadow-indigo-500/20 flex items-center gap-2"
+                        >
+                            <Zap className="w-4 h-4" />
+                            Top Up Credits
+                        </button>
 
                         <Link href="/school/billing/invoices">
                             <button className={cn(
