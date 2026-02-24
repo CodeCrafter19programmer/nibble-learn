@@ -41,8 +41,7 @@ export default function BillingOverview() {
     }
 
     const handleTopUp = (percent: number) => {
-        const addedAmount = Math.floor(currentLimit * (percent / 100))
-        showToast(`Successfully added ${addedAmount.toLocaleString()} tokens (+${percent}%)!`)
+        showToast(`Successfully added +${percent}% credits!`)
         setIsTopUpOpen(false)
         // In reality, this would trigger a backend API checkout flow
     }
@@ -81,7 +80,7 @@ export default function BillingOverview() {
                                 <div>
                                     <h2 className={cn("text-xl font-bold mb-1", isLight ? "text-slate-900" : "text-white")}>Top Up Credits</h2>
                                     <p className={cn("text-sm", isLight ? "text-slate-500" : "text-slate-400")}>
-                                        Select a percentage to increase your current limit ({currentLimit.toLocaleString()} tokens).
+                                        Select a percentage to increase your current limit.
                                     </p>
                                 </div>
                                 <button onClick={() => setIsTopUpOpen(false)} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors self-start">
@@ -106,10 +105,7 @@ export default function BillingOverview() {
                                                 : "bg-slate-950/50 border-slate-800 hover:border-indigo-500 hover:bg-slate-900"
                                         )}
                                     >
-                                        <div className="text-xl font-black text-indigo-500 mb-1">+{opt.pct}%</div>
-                                        <div className={cn("text-sm font-semibold mb-2", isLight ? "text-slate-700" : "text-slate-200")}>
-                                            {(currentLimit * (opt.pct / 100)).toLocaleString()} Tokens
-                                        </div>
+                                        <div className="text-xl font-black text-indigo-500 mb-2">+{opt.pct}% Credits</div>
                                         <div className="px-3 py-1 rounded bg-indigo-500 text-white text-xs font-bold shadow-sm">
                                             {opt.price}
                                         </div>

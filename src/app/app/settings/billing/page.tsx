@@ -91,8 +91,7 @@ export default function TeacherBillingPage() {
     }
 
     const handleTopUp = (percent: number) => {
-        const addedAmount = Math.floor(currentLimit * (percent / 100))
-        showToast(`Successfully added ${addedAmount.toLocaleString()} tokens (+${percent}%)!`)
+        showToast(`Successfully added +${percent}% credits!`)
         setIsTopUpOpen(false)
     }
 
@@ -130,7 +129,7 @@ export default function TeacherBillingPage() {
                                 <div>
                                     <h2 className="text-xl font-bold mb-1 text-slate-900 dark:text-white">Top Up Credits</h2>
                                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                                        Select a percentage to increase your current limit ({currentLimit.toLocaleString()} tokens).
+                                        Select a percentage to increase your current limit.
                                     </p>
                                 </div>
                                 <button onClick={() => setIsTopUpOpen(false)} className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors self-start">
@@ -150,10 +149,7 @@ export default function TeacherBillingPage() {
                                         onClick={() => handleTopUp(opt.pct)}
                                         className="flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all hover:scale-[1.02] bg-slate-50 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 dark:bg-slate-950/50 dark:border-slate-800 dark:hover:border-indigo-500 dark:hover:bg-slate-900"
                                     >
-                                        <div className="text-xl font-black text-indigo-500 mb-1">+{opt.pct}%</div>
-                                        <div className="text-sm font-semibold mb-2 text-slate-700 dark:text-slate-200">
-                                            {(currentLimit * (opt.pct / 100)).toLocaleString()} Tokens
-                                        </div>
+                                        <div className="text-xl font-black text-indigo-500 mb-2">+{opt.pct}% Credits</div>
                                         <div className="px-3 py-1 rounded bg-indigo-500 text-white text-xs font-bold shadow-sm">
                                             {opt.price}
                                         </div>
