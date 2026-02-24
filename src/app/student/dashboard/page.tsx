@@ -68,33 +68,6 @@ export default function StudentDashboard() {
                 </div>
             </motion.div>
 
-            {/* Active Room Card - Keeping Colorful High Contrast */}
-            <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="border rounded-3xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden bg-gradient-to-r from-violet-600 to-indigo-600 border-indigo-200 shadow-xl shadow-indigo-200/50 dark:shadow-none dark:from-blue-900/40 dark:to-indigo-900/40 dark:border-blue-700/30"
-            >
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-
-                <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    <div>
-                        <div className="flex items-center gap-3 mb-2">
-                            <span className="px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 text-indigo-100 text-xs font-bold uppercase tracking-wider">
-                                Current Class
-                            </span>
-                            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                        </div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Ms. Johnson's Science Room</h2>
-                        <p className="text-indigo-100 max-w-xl font-medium">
-                            Today's focus: Understanding the solar system and planetary orbits. Use the Essay Assistant to draft your report.
-                        </p>
-                    </div>
-                    <button className="px-6 py-3 bg-white text-indigo-900 rounded-xl font-bold hover:bg-indigo-50 transition-all shadow-lg hover:shadow-indigo-500/20 active:scale-95 whitespace-nowrap dark:shadow-none">
-                        Enter Room →
-                    </button>
-                </div>
-            </motion.section>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Recommended Tools */}
