@@ -16,6 +16,7 @@ import {
     ChevronLeft,
     ChevronRight
 } from "lucide-react"
+import * as XLSX from "xlsx"
 import { useTheme } from "@/components/providers/ThemeContext"
 import { cn } from "@/lib/utils"
 
@@ -112,42 +113,37 @@ export default function StudentManagement() {
         showToast(`Student "${student.firstName} ${student.lastName}" added.`)
     }
 
-    // --- Bulk Import ---
+    // --- Bulk Import (CSV + XLS/XLSX via SheetJS) ---
     const handleImport = async () => {
         if (!importFile) return
         try {
-            const text = await importFile.text()
-            const lines = text.split("\n").map(l => l.trim()).filter(Boolean)
-            if (lines.length <= 1) { // Assuming header + at least 1 row
-                showToast("CSV is empty or invalid.", "error")
+            const arrayBuffer = await importFile.arrayBuffer()
+            const workbook = XLSX.read(arrayBuffer, { type: "array" })
+            const sheetName = workbook.SheetNames[0]
+            const sheet = workbook.Sheets[sheetName]
+
+            // Convert sheet to array-of-arrays (raw rows), skip header
+            const rows: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 })
+            const dataRows = rows.slice(1).filter(r => r.length >= 2 && String(r[0]).trim() && String(r[1]).trim())
+
+            if (dataRows.length === 0) {
+                showToast("No valid student records found in the file.", "error")
                 return
             }
 
-            const newStudents: Student[] = []
+            const newStudents: Student[] = dataRows.map((row, idx) => ({
+                id: Date.now() + idx,
+                firstName: String(row[0]).trim(),
+                lastName: String(row[1]).trim(),
+                code: generateCode(studentsData.length + idx),
+                status: "Active",
+                isNew: true
+            }))
 
-            lines.slice(1).forEach((line, idx) => {
-                const parts = line.split(",").map(p => p.trim())
-                if (parts.length >= 2 && parts[0] && parts[1]) {
-                    newStudents.push({
-                        id: Date.now() + idx,
-                        firstName: parts[0],
-                        lastName: parts[1],
-                        // Using current dataset length + current index of new element for unique sequential code
-                        code: generateCode(studentsData.length + newStudents.length),
-                        status: "Active",
-                        isNew: true
-                    })
-                }
-            })
-
-            if (newStudents.length > 0) {
-                setStudentsData(p => [...p, ...newStudents])
-                showToast(`Imported ${newStudents.length} students successfully.`)
-            } else {
-                showToast("No valid student records found.", "error")
-            }
-        } catch (e) {
-            showToast("Failed to parse the file.", "error")
+            setStudentsData(p => [...p, ...newStudents])
+            showToast(`Imported ${newStudents.length} student${newStudents.length !== 1 ? "s" : ""} successfully.`)
+        } catch {
+            showToast("Failed to parse the file. Please check the format.", "error")
         } finally {
             setIsImportOpen(false)
             setImportFile(null)
@@ -176,14 +172,22 @@ export default function StudentManagement() {
         setDeleteTarget(null)
     }
 
-    // --- Export ---
+    // --- Export as XLSX ---
     const handleExport = () => {
-        const csv = ["First Name,Last Name,Access Code,Status,Flag", ...filteredStudents.map(s => `${s.firstName},${s.lastName},${s.code},${s.status},${s.isNew ? "New" : "Old"}`)].join("\n")
-        const blob = new Blob([csv], { type: "text/csv" })
-        const link = document.createElement("a")
-        link.href = URL.createObjectURL(blob)
-        link.download = "students_export.csv"
-        link.click()
+        const rows = [
+            ["First Name", "Last Name", "Access Code", "Status", "Flag"],
+            ...filteredStudents.map(s => [
+                s.firstName,
+                s.lastName,
+                s.code,
+                s.status,
+                s.isNew ? "New" : "Old"
+            ])
+        ]
+        const worksheet = XLSX.utils.aoa_to_sheet(rows)
+        const workbook = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Students")
+        XLSX.writeFile(workbook, "students_export.xlsx")
     }
 
     const inputCls = cn(
@@ -296,14 +300,17 @@ export default function StudentManagement() {
                                 <div className={cn("border-2 border-dashed rounded-xl p-8 text-center flex flex-col items-center justify-center",
                                     isLight ? "border-slate-300 bg-slate-50 hover:bg-slate-100" : "border-slate-700 bg-slate-950/50 hover:bg-slate-900")}>
                                     <Upload className="w-8 h-8 text-slate-400 mb-3" />
-                                    <p className={cn("text-sm font-medium mb-1", isLight ? "text-slate-700" : "text-slate-300")}>
-                                        {importFile ? importFile.name : "Select a CSV file to upload"}
+                                    <p className={cn("text-sm font-medium mb-1 max-w-xs truncate", isLight ? "text-slate-700" : "text-slate-300")}>
+                                        {importFile ? importFile.name : "Select a spreadsheet or CSV to upload"}
                                     </p>
-                                    <p className="text-xs text-slate-500 mb-4">CSV should contain columns: First Name, Last Name</p>
+                                    <p className="text-xs text-slate-500 mb-4">
+                                        Supported: <span className="font-semibold">.csv</span>, <span className="font-semibold">.xls</span>, <span className="font-semibold">.xlsx</span><br />
+                                        Columns required: <span className="font-semibold">First Name</span>, <span className="font-semibold">Last Name</span>
+                                    </p>
                                     <label className="cursor-pointer">
                                         <input
                                             type="file"
-                                            accept=".csv"
+                                            accept=".csv,.xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                             className="hidden"
                                             onChange={e => {
                                                 if (e.target.files && e.target.files.length > 0) setImportFile(e.target.files[0])
