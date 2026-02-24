@@ -72,6 +72,16 @@ export default function BillingOverview() {
 
                             <div>
                                 <div className="flex justify-between text-xs font-medium mb-1.5">
+                                    <span className={isLight ? "text-slate-700" : "text-slate-300"}>Teacher Accounts</span>
+                                    <span className={isLight ? "text-slate-500" : "text-slate-400"}>120 / 150</span>
+                                </div>
+                                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="h-full bg-indigo-500 w-[80%] rounded-full" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="flex justify-between text-xs font-medium mb-1.5">
                                     <span className={isLight ? "text-slate-700" : "text-slate-300"}>Credits Usage</span>
                                     <span className={cn("font-bold", creditsUsedPercentage >= 80 ? "text-red-500" : "text-amber-600")}>{creditsUsedPercentage}% Used</span>
                                 </div>
