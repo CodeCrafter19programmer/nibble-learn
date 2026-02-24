@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
+    Activity,
     BarChart3,
     ShieldAlert,
     Settings,
@@ -24,12 +25,11 @@ interface SidebarProps {
     onMobileClose?: () => void
 }
 
-
-
 const navItems = [
     { href: "/school/dashboard", icon: LayoutDashboard, label: "Overview" },
     { href: "/school/students", icon: GraduationCap, label: "Students" },
     { href: "/school/teachers", icon: BookOpen, label: "Teachers" },
+    { href: "/school/activity", icon: Activity, label: "Activity" },
     { href: "/school/billing", icon: CreditCard, label: "Billing & Plans" },
     { href: "/school/settings", icon: Settings, label: "School Settings" },
 ]
