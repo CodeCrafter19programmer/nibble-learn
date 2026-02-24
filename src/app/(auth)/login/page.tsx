@@ -32,7 +32,7 @@ export default function LoginPage() {
         setIsLoading(false)
 
         // Routing Logic based on Selected Mode
-        if (loginMode === "student") {
+        if (loginMode === "student" || loginMode === "school") {
             window.location.href = "/student/dashboard"
         } else if (loginMode === "teacher") {
             window.location.href = "/app/dashboard"
